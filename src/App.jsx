@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 
 /* =====================================================================
-   PORTFOLIO — Kyle
+   PORTFOLIO: Kyle Potente
    Single-file prototype. In the real repo, split into:
    components/  data/  views/  hooks/  utils/
    The section markers below mirror that structure.
@@ -17,257 +17,262 @@ import {
    data/site.js
    --------------------------------------------------------------------- */
 const SITE = {
-  name: "Kyle",
+  name: "Kyle Potente",
   mark: "K.",
   tagline: "Fear of living an ordinary life.",
-  email: "hello@example.com",          // replace
-  linkedin: "https://linkedin.com/in/", // replace
-  resumeUrl: "/resume.pdf",             // add the PDF to public/
+  email: "kylep111604@gmail.com",
+  linkedin: "https://www.linkedin.com/in/kyle-potente-10159a330/",
+  github: "https://github.com/kylep16",
+  resumeUrl: "/resume.pdf",
   year: 2026,
 };
 
 const OUTFIT_MESSAGES = ["good choice.", "interesting.", "you might be onto something.", "fit approved."];
 
 /* ---------------------------------------------------------------------
-   data/caseStudies.js — replace placeholder copy; never invent metrics.
+   data/caseStudies.js. Never invent metrics.
    --------------------------------------------------------------------- */
 const CASE_STUDIES = {
-  /* ===================== PXI LABS =====================
-     Visual source: 52-screen PXI baseline PDF (not yet attached — every `grid` /
-     `visual` block below is an image slot labeled with the screens it should hold).
-     All interfaces in the baseline are confirmed shipped.
-     Figma reference (view-only, never edit): https://www.figma.com/design/uhHqKYbk3OrEvolgJbbHy2/PXI-Labs?node-id=231-108
-     TODO (private, not rendered): attach PDF; confirm timeline dates; confirm which
-     screens Kyle implemented in code vs. handed to engineering; no analytics yet.
-     ===================================================== */
+  /* PXI. All imagery exported from the 52-screen production baseline (PXI_Labs). */
   pxi: {
     slug: "pxi",
     name: "PXI Labs",
     year: "2026",
-    disciplines: "Head of Mobile UI Design · Product design · UI/UX · Interaction design · Front-end collaboration",
-    preview: "Shipped mobile experiences connecting event discovery, collaborative photography, social identity, memory organization and progression into one product ecosystem.",
-    tagline: "Designing an interconnected mobile social product — from event creation to a Passport that remembers where you've been.",
+    disciplines: "Mobile product design",
+    preview: "Shipped mobile UI connecting events, a shared camera, memories and identity into one product.",
+    tagline: "Designing an interconnected mobile social product, from event creation to a Passport that remembers where you have been.",
     role: "Head of Mobile UI Design",
-    impact: "52 screens and states across 10 product systems",
-    meta: { Role: "Head of Mobile UI Design / Product Design / UI/UX", Team: "Founder, engineering, design", Platform: "Mobile (iOS)", Tools: "Figma, React/TSX, CSS", Timeline: "2026" },
+    impact: "52 screens across 10 product systems",
+    meta: { Role: "Head of Mobile UI Design", Team: "Founder, engineering, design", Platform: "Mobile (iOS)", Tools: "Figma, React/TSX, CSS", Timeline: "June 2026 to present" },
     quick: {
-      Problem: "PXI needed a mobile product where events, a shared camera, memories, messaging and identity felt like one system rather than a set of unrelated utility screens.",
-      "My role": "Owned mobile UI design end to end: 52 shipped screens and states across event creation, camera, Scrapbook, social, Passport, Monthly Wrap, progression, Music Match, Face Match and verification.",
-      "Biggest decision": "Treating the profile as a travel Passport — passport number, visas, airport code, boarding pass, citizen approval — so identity, places and memories share one metaphor across the whole app.",
-      Outcome: "Shipped an end-to-end product lifecycle with consistent patterns: pill actions, bottom-anchored primary buttons, segmented navigation, story progress bars, ticket and passport graphics, and a badge family.",
-    },
-    summary: {
-      "The problem": "Early-stage products accumulate screens faster than they accumulate structure. PXI's features — events, a collaborative camera, memory galleries, messaging, a profile, recaps and gamification — each needed to feel like part of the same place, on a black mobile canvas that stayed usable.",
-      "My responsibility": "Design the mobile interface across the full user lifecycle, establish the interaction patterns that hold it together, collaborate with engineering on implementation, and take on growing responsibility for mobile UI quality and QA.",
-      "The result": "52 shipped screens and states organized into ten product systems, sharing one visual and interaction language.",
+      Problem: "PXI needed events, a collaborative camera, memories, messaging and identity to feel like one product rather than a set of unrelated utility screens.",
+      "My role": "Mobile UI design across the product: interface prototypes in Figma focused on accessibility and usability, front-end changes in TSX and CSS, and customer feedback folded back into the design.",
+      "Biggest decision": "Treating the profile as a travel Passport (passport number, visas, citizen approval) so identity, places and memories share one metaphor across the app.",
+      Outcome: "A 52-screen shipped baseline across ten product systems with consistent patterns: pill actions, bottom-anchored primary buttons, story progress bars, ticket and passport graphics, and a badge family.",
     },
     sections: [
-      { n: "01", title: "Product lifecycle", blocks: [
-        { type: "text", body: "PXI is a mobile social app built around events. I designed it as one connected journey rather than a set of features: join → create a profile and Passport → discover or create an event → join its shared camera → talk to attendees → save and organize memories → reflect monthly → build identity through levels, rankings and badges." },
-        { type: "grid", items: ["Join PXI", "Profile + Passport", "Discover / create event", "Shared event camera", "Messages", "Scrapbook", "Monthly Wrap", "Levels + badges"] },
-        { type: "callout", body: "Every screen below is shipped product work, not exploration." },
-      ]},
-      { n: "02", title: "Event creation and discovery", blocks: [
-        { type: "text", body: "An end-to-end flow: event name, image upload, location search with suggestions and bottom-sheet states, date and time, a final preview, Cancel and Create Event, then the completed event ticket. Events surface in the Studio feed with Create and Discover entry points and stacked event cards." },
-        { type: "grid", items: ["Event name + image", "Location search + sheet", "Date and time", "Event preview", "Event ticket", "Studio feed + stacked cards"] },
-        { type: "decision", constraint: "Location, date, imagery and naming all compete for one small screen, and users lose context when creation is split up.", response: "Broke creation into focused steps that keep the event's name and image visible throughout, held the primary action in the same bottom position on every step, and ended with a preview before commit.", result: "A creation flow that reads as one continuous object being assembled — and a ticket-style result that carries into discovery." },
-      ]},
-      { n: "03", title: "Authentication and onboarding", blocks: [
-        { type: "text", body: "Log in and sign up with Google, Apple and email (username, password, confirmation, Create Account), plus phone verification with Send Code and a progress state. Auth uses the same black canvas, purple identity and pill actions as the rest of the app so account setup feels like PXI, not a borrowed utility." },
-        { type: "text", body: "Onboarding introduces the product through three ideas, one screen each: Shared Albums (events create albums), One Lens for All (attendees contribute through one collaborative camera) and Passport (your identity and history)." },
-        { type: "grid", items: ["Log in / sign up", "Email registration", "Phone verification", "Shared Albums", "One Lens for All", "Passport intro"] },
-      ]},
-      { n: "04", title: "Shared event camera", blocks: [
-        { type: "text", body: "A camera that belongs to the event, not the phone. Capture is the primary action; 0.5x, 1x, 3x and 5x zoom sit within thumb reach; a preview and captured-image carousel give immediate feedback; Vault and Discard make the post-capture decision explicit. Vaulted photos feed the event's shared album and the user's Scrapbook." },
-        { type: "grid", items: ["Event camera + zoom", "Capture + preview", "Captured carousel", "Vault / Discard"] },
-      ]},
-      { n: "05", title: "Scrapbook and Gallery", blocks: [
-        { type: "text", body: "Memory organization designed to feel like a personal object rather than a camera roll. Time Travel is the landing experience; All Albums sorts by date and year; a traditional grid and full-image gallery cover structured browsing; scattered-photo and film-strip compositions cover expressive revisiting; Event Thread and Event Gallery return to a single night through conversation and imagery." },
-        { type: "grid", items: ["Time Travel", "All Albums by year", "Album grid", "Full-image gallery", "Scattered composition", "Film strip", "Event Thread", "Event Gallery"] },
-        { type: "callout", body: "Chronological, by event, structured, expressive, conversational, visual — six ways back to the same memory." },
-      ]},
-      { n: "06", title: "Social and messaging", blocks: [
-        { type: "text", body: "Circle with suggested users and Add actions, a Wall and photo feed, Event Thread and Event Gallery, plus Messages with direct messaging and a shared-media state. The pattern: participation in an event becomes an ongoing social graph instead of ending when the event does." },
-        { type: "grid", items: ["Circle + suggested users", "Wall / photo feed", "Messages", "Direct message + shared media"] },
-      ]},
-      { n: "07", title: "Profile and Passport", blocks: [
-        { type: "text", body: "Profile onboarding asks one question per screen — name, username, birthday, city, map location, airport, bio with a character counter, photo — with clear progress, large prompts, contextual microcopy and a strong primary action. The answers assemble into a Passport: cover, identity page, passport number, city, bio, citizen status, visas, a shareable profile and an Approved state." },
-        { type: "grid", items: ["Name / username / birthday", "City + map location", "Airport code + boarding pass", "Bio + photo", "Passport cover", "Identity page + visas", "Shareable profile", "Approved"] },
-        { type: "decision", constraint: "Profile data is the least interesting screen in most apps, but PXI needed identity to connect events, places, memories and progression.", response: "Translated a standard profile into a travel identity — passport, visas, airport codes, boarding pass, citizens, approval — and used the same metaphor everywhere the user's history appears.", result: "One system that ties the whole product together, from onboarding to Monthly Wrap to the leaderboard." },
-      ]},
-      { n: "08", title: "Monthly Wrap", blocks: [
-        { type: "text", body: "A story-format recap: events seen, new friends, cities visited, new artists discovered, ending in an identity label (\"Making you a Wanderer\"). Each statistic gets its own screen with a large editorial number, story progress indicators and background photography from the month. The screens are built from reusable templates so new recap categories can be added without new design." },
-        { type: "grid", items: ["Events seen", "New friends", "Cities visited", "Artists discovered", "Making you a Wanderer"] },
-      ]},
-      { n: "09", title: "Levels, rankings and badges", blocks: [
-        { type: "text", body: "Progression makes participation visible: current Passport level and badge, a leaderboard of ranked users, the next rank, level-up requirements, point categories and PXI Odyssey badges. Badges share consistent shapes and color families across the set." },
-        { type: "grid", items: ["Passport level + badge", "Leaderboard", "Next rank + requirements", "PXI Odyssey badges"] },
-      ]},
-      { n: "10", title: "Personalized discovery", blocks: [
-        { type: "text", body: "Music Match connects Spotify and surfaces events through listening compatibility, with a match-progress indicator and a Skip option so it never blocks the core flow." },
-        { type: "grid", items: ["Connect Spotify", "Match progress", "Personalized events", "Skip"] },
-      ]},
-      { n: "11", title: "Trust: Face Match and verification", blocks: [
-        { type: "text", body: "Face Match finds your photos across event albums — a sensitive feature that had to explain itself. The flow covers consent, how the scan works, FaceVector, the scan-disposal statement, privacy information, opt-out instructions and a Not Now action. Green identifies face matching; blue identifies consent." },
-        { type: "decision", constraint: "Introduce face scanning without eroding trust, in a product built for sharing photos of other people.", response: "Designed the consent sequence to answer six questions in order: what is collected, why, how it's processed, what is retained, how to decline, how to turn it off later.", result: "Users can opt in with the full picture, or skip with one tap — and the interface never promises more than the product does." },
-        { type: "grid", items: ["Consent", "Face-scan explanation", "FaceVector + disposal", "Privacy + opt-out", "Not Now"] },
-      ]},
-      { n: "12", title: "Visual and interaction system", blocks: [
-        { type: "text", body: "The language shared across all 52 screens: a black mobile canvas; purple as the primary identity; orange for music and destructive actions; green for face matching; blue for consent; high-contrast white type; pill-shaped actions; segmented navigation; story progress bars; ticket graphics, passport textures and boarding-pass structures; a badge family; large editorial statistics; image-led memory layouts; and primary actions consistently anchored to the bottom of the screen." },
-        { type: "grid", items: ["Color roles", "Pill actions + segmented nav", "Ticket / passport / boarding pass", "Badge family", "Editorial stats", "Image-led layouts"] },
-      ]},
-      { n: "13", title: "What shipped", blocks: [
-        { type: "list", items: [
-          "52 shipped mobile screens and states across ten product systems",
-          "End-to-end event creation, event discovery and Studio navigation",
-          "Authentication, account creation and phone verification",
-          "Profile onboarding and the PXI Passport identity system",
-          "Collaborative event camera with Vault and Discard",
-          "Scrapbook, Time Travel and Gallery experiences",
-          "Social discovery, Wall and direct messaging",
-          "Monthly Wrap story-driven recap",
-          "Passport progression, leaderboards and badges",
-          "Spotify Music Match onboarding",
-          "Face Match consent and privacy communication",
-          "Consistent interface patterns across every system, and growing ownership of mobile UI quality and QA",
+      { n: "01", title: "Context", blocks: [
+        { type: "text", body: "PXI is a mobile social app built around events. I joined an early-stage team in June 2026, working directly with the founder and engineers on the mobile interface across the full user lifecycle: join, build a profile and Passport, discover or create an event, shoot on its shared camera, talk to attendees, revisit memories, and build identity through levels and badges. The camera interface is one focus of my work; the screens below span the wider product." },
+        { type: "grid", items: [
+          { src: "/assets/pxi/signup.webp", label: "Sign up, in PXI's identity rather than a borrowed utility screen" },
+          { src: "/assets/pxi/studio-tickets.webp", label: "The Studio feed: events as stacked tickets" },
+          { src: "/assets/pxi/circle-wall.webp", label: "Circle and Wall: the social layer after the event" },
+          { src: "/assets/pxi/music-match.webp", label: "Music Match: discovery through listening compatibility" },
         ]},
       ]},
-      { n: "14", title: "Reflection", blocks: [
-        { type: "text", body: "PXI taught me to design an interconnected product rather than a set of screens — consistency has to survive a startup roadmap that changes weekly. It meant balancing an expressive identity against mobile usability, building trust around a sensitive feature, turning ordinary account data into something people want to show off, and designing both utility flows and emotional reflection experiences in the same voice." },
-        { type: "callout", body: "Interview talking points: the Passport metaphor · the Face Match consent order · why creation keeps context on every step · reusable Monthly Wrap templates · owning QA as the product grew." },
+      { n: "02", title: "Decision: capture to memory", blocks: [
+        { type: "decision", labels: ["The task and friction", "My decision", "The tradeoff"],
+          constraint: "At an event, taking a photo is a two-second action, but deciding what happens to that photo (keep, share, organize) usually gets pushed to a messy camera roll later.",
+          response: "The event camera is built around one primary capture action with zoom in thumb reach, and the post-capture choice is explicit and binary: Vault or Discard. Vaulted photos flow to the event album and the Scrapbook automatically.",
+          result: "The user makes a small decision immediately instead of a large one never. The cost is an extra tap per photo, which the flow absorbs by keeping both actions on the preview itself." },
+        { type: "grid", items: [
+          { src: "/assets/pxi/camera.webp", label: "The shared event camera: capture first, zoom in thumb reach" },
+          { src: "/assets/pxi/vault-discard.webp", label: "The post-capture decision: Vault or Discard, on the preview" },
+          { src: "/assets/pxi/scrapbook-scattered.webp", label: "Scrapbook, expressive: memories scattered like prints" },
+          { src: "/assets/pxi/scrapbook-filmstrip.webp", label: "Scrapbook, film strip: the same night as a roll" },
+        ]},
+        { type: "text", body: "Downstream, the Scrapbook gives those photos multiple ways back: albums by year, an event's own gallery, structured grids, and the expressive compositions above. It is designed to feel like a personal object, not a utility gallery." },
+        { type: "visual", src: "/assets/pxi/scrapbook-albums.webp", label: "All Albums: the structured route back through time" },
+      ]},
+      { n: "03", title: "Decision: Passport onboarding", blocks: [
+        { type: "decision", labels: ["The task and friction", "My decision", "The tradeoff"],
+          constraint: "Profile setup is the least interesting part of most apps: a stack of form fields with no payoff, in a product where identity needed to connect events, places and memories.",
+          response: "One question per screen with clear progress and strong primary actions, and every answer assembles into a travel Passport: cover, identity page, passport number, visas, and an Approved state at the end.",
+          result: "Ordinary account data becomes something people want to show off, and the metaphor carries through the whole app. The cost is a longer onboarding sequence than a single form, paced so each screen stays trivial to answer." },
+        { type: "grid", items: [
+          { src: "/assets/pxi/onboard-name.webp", label: "One question per screen: a name tag, not a form field" },
+          { src: "/assets/pxi/passport-cover.webp", label: "The Passport cover: your identity on PXI" },
+          { src: "/assets/pxi/passport-profile.webp", label: "The profile as passport: map, visas, citizen status" },
+          { src: "/assets/pxi/passport-approved.webp", label: "Approved: onboarding ends with citizenship, not a submit button" },
+        ]},
+      ]},
+      { n: "04", title: "Decision: Face Match consent", blocks: [
+        { type: "decision", labels: ["The task and friction", "My decision", "The tradeoff"],
+          constraint: "Face Match finds your photos in event albums. Face scanning is exactly the kind of feature that erodes trust when it appears without explanation.",
+          response: "The consent screen answers the questions in order: what is collected, why, how it is processed, what is retained, and how to turn it off later, with a plain Not Now action. Green identifies face matching; blue identifies consent.",
+          result: "Users opt in with the full picture or skip in one tap. The cost is deliberate friction in front of a headline feature, which is the point: the interface never promises more than the product does." },
+        { type: "visual", src: "/assets/pxi/face-match.webp", label: "Face Match: consent, mechanics, retention and opt-out on one screen, with Not Now always available" },
+      ]},
+      { n: "05", title: "The full scope", blocks: [
+        { type: "text", body: "The shipped baseline is 52 screens across ten product systems, all sharing one visual language on a black canvas: purple as primary identity, orange for music and destructive actions, high-contrast type, pill actions, and primary buttons anchored to the bottom of every screen." },
+        { type: "grid", items: [
+          { src: "/assets/pxi/create-name.webp", label: "Event creation: the event's name stays visible throughout" },
+          { src: "/assets/pxi/create-datetime.webp", label: "Date and time as a focused step" },
+          { src: "/assets/pxi/create-preview.webp", label: "The preview before commit: name, venue, city, date" },
+          { src: "/assets/pxi/wrap-artists.webp", label: "Monthly Wrap: each statistic gets an editorial screen" },
+          { src: "/assets/pxi/wrap-friends.webp", label: "Wrap templates make new recap categories cheap to add" },
+          { src: "/assets/pxi/passport-level.webp", label: "Passport level and leaderboard" },
+          { src: "/assets/pxi/badges.webp", label: "The Odyssey badge family: one shape system, distinct colors" },
+        ]},
+        { type: "list", items: [
+          "Event creation and discovery, ending in a ticket that carries into the Studio feed",
+          "Authentication and phone verification in PXI's visual identity",
+          "Product onboarding built on three ideas: shared albums, one lens for all, and the Passport",
+          "Shared event camera with Vault and Discard",
+          "Scrapbook, Time Travel and Gallery memory experiences",
+          "Circle, Wall, Event Thread and direct messaging",
+          "Profile onboarding and the Passport identity system",
+          "Monthly Wrap, a story-format recap built on reusable templates",
+          "Passport levels, leaderboard and the Odyssey badge family",
+          "Music Match through Spotify, and Face Match with its consent flow",
+        ]},
+      ]},
+      { n: "06", title: "What I own day to day", blocks: [
+        { type: "list", items: [
+          "Camera interface UI prototypes in Figma, focused on accessibility and usability",
+          "Front-end changes in TSX and CSS to improve experience and interface behavior",
+          "Gathering and analyzing customer feedback to refine the product design",
+          "Interface consistency across the ten systems above",
+        ]},
+      ]},
+      { n: "07", title: "Reflection", blocks: [
+        { type: "text", body: "PXI is teaching me to design a product rather than screens: consistency has to survive a roadmap that changes weekly. The hardest problems are balance problems. An expressive identity against mobile usability, trust against a sensitive feature, and emotional reflection experiences against utility flows, all in one voice." },
       ]},
     ],
   },
 
-  /* ===================== NEP2UNE =====================
-     Verified facts from Kyle. Sales ≠ profit. Interactive clothing customization
-     is conceptual unless stated otherwise (the studio on this site is a portfolio demo).
-     TODO (private): product photography for brand/apparel slots; release timeline;
-     ad creative examples; tech-pack example; inventory decision detail.
-     ===================================================== */
+  /* NEP2UNE. Figures per Kyle's resume: $120K+ lifetime sales, 15 countries,
+     12K+ followers, founded November 2021. Sales are lifetime sales, never profit. */
   nep2une: {
     slug: "nep2une",
     name: "NEP2UNE",
-    year: "2022 – present",
-    disciplines: "Founder · Brand · Product design · Shopify e-commerce · Marketing · Operations",
-    preview: "I didn't design for a hypothetical client. I founded the brand — $500 to $100K+ in sales across 17 countries.",
-    tagline: "Founder-led product, e-commerce and creative-technology work: from a $500 start to customers in 17 countries.",
-    role: "Founder — brand, product, e-commerce, marketing, operations",
-    impact: "$100K+ sales · 17 countries · 12K+ audience",
-    meta: { Role: "Founder and operator, NEP2UNE LLC", Team: "Solo founder with collaborators", Platform: "Apparel + Shopify", Tools: "Figma, Shopify, Illustrator, tech packs", Timeline: "~4.5 years, ongoing" },
+    year: "2021 to present",
+    disciplines: "Founder, brand and ecommerce",
+    preview: "I did not design for a hypothetical client. I founded the brand: $120K+ lifetime sales, 15 countries.",
+    tagline: "A founder story: product, brand, storefront, marketing and operations as one system.",
+    role: "Founder and creative director",
+    impact: "$120K+ lifetime sales, 15 countries",
+    meta: { Role: "Sole proprietor and creative director, NEP2UNE Design Studio", Team: "Solo founder with collaborators", Platform: "Apparel + Shopify", Tools: "Figma, Shopify, Illustrator, Photoshop, tech packs", Timeline: "November 2021 to present" },
     quick: {
-      Problem: "Turn roughly $500 into a real apparel brand: products people want, a store that sells them, releases that reach an audience, and operations that deliver — without a team or outside capital.",
-      "My role": "Everything: product concepts, mockups and tech packs, brand identity, the Shopify storefront and its optimization, ad creative, inventory planning, release strategy, fulfilment and customer operations.",
-      "Biggest decision": "Building the brand around a recognizable object — the NEP2UNE star — that shows up on garments, in campaigns and in the interactive customization concepts.",
-      Outcome: "$100,000+ lifetime sales, customers in 17 countries, an audience of 12,000+, four and a half years of continuous operation.",
-    },
-    summary: {
-      "The problem": "A brand is a system, not a logo: product, store, marketing, inventory and operations all have to work, and with $500 every mistake costs real money.",
-      "My responsibility": "Founder-level ownership of the whole loop — concept, design, production, e-commerce, marketing, inventory, fulfilment and learning from each release.",
-      "The result": "A brand that has operated for ~4.5 years, sold more than $100K, shipped to 17 countries and built an audience of 12,000+ — and the reason there's a shirt studio on this site.",
+      Problem: "Turn a small starting budget into a working apparel brand: products people want, a store that sells them, releases that reach an audience, and operations that deliver, without a team or outside capital.",
+      "My role": "All of it: product concepts, mockups and technical packs, brand identity, the Shopify storefront and its optimization, ad creative, inventory planning, release strategy, fulfilment and customer operations.",
+      "Biggest decision": "Building the brand around one recognizable object, the NEP2UNE star, carried across garments, campaigns and the customization concepts.",
+      Outcome: "$120,000+ lifetime sales, customers in 15 countries, 12,000+ followers and 120,000+ likes across social media, running since November 2021.",
     },
     sections: [
-      { n: "01", title: "Starting with $500", blocks: [
-        { type: "text", body: "NEP2UNE LLC began with approximately $500. That constraint shaped everything: small runs, releases planned around cash flow, creative produced in-house, and a store I could build and change myself." },
-        { type: "metrics", items: [["$500", "starting capital"], ["$100K+", "lifetime sales (not profit)"], ["17", "countries shipped to"], ["12K+", "audience"]] },
+      { n: "01", title: "The numbers, defined", blocks: [
+        { type: "metrics", items: [["$120K+", "lifetime sales, not profit"], ["15", "countries with customers"], ["12K+", "followers across social media"], ["4+ yrs", "in continuous operation"]] },
+        { type: "text", body: "Lifetime sales means gross sales across the brand's life: not revenue from a single release, and not the result of any one design change. Every decision below was made under real financial constraint, with each release funding the next." },
       ]},
-      { n: "02", title: "Brand and product identity", blocks: [
-        { type: "text", body: "The NEP2UNE star — a rounded, irregular four-point mark — became the recognizable element across the range: gingham star patches on tees, star patches on denim, and the detachable-star concept for customization. Product design and brand design were the same job." },
-        { type: "grid", items: ["Star mark", "Gingham star tee", "Star patch denim", "Lookbook / campaign"] },
+      { n: "02", title: "One object, everywhere", blocks: [
+        { type: "text", body: "The NEP2UNE star, a rounded irregular four-point mark, is the brand's recognizable element: gingham star patches on tees, star pockets on wide-leg denim, star tags on every garment. Product design and brand design were the same job." },
+        { type: "grid", items: [
+          { src: "/assets/nep/ph-star-detail.webp", label: "The gingham star on the chest: rivets at the points" },
+          { src: "/assets/nep/ph-star-tee.webp", label: "The star tee on model" },
+          { src: "/assets/nep/ph-pocket.webp", label: "Star pockets, embroidered and studded, on dark denim" },
+          { src: "/assets/nep/ph-flatlay.webp", label: "NDS dark denim: the star carried into hardware" },
+        ]},
       ]},
-      { n: "03", title: "Designing physical products", blocks: [
-        { type: "text", body: "I created product concepts, mockups and technical packs for production — silhouettes like wide-leg denim (star patch, NDS, belted) and star-patch tees. The garments on this site's hero character are those actual pieces." },
-        { type: "grid", items: ["Concept sketches", "Mockups", "Tech pack", "Production sample"] },
-        { type: "callout", body: "Try them on the character at the top of this site — every piece there is a real NEP2UNE garment." },
+      { n: "03", title: "The detachable star", blocks: [
+        { type: "text", body: "The most distinctive product idea: the star is not printed, it is a physical flannel piece riveted at four points, made to come off. Underneath, the back of the star is screen printed with a message the owner only sees when they detach it: a piece of me, with you." },
+        { type: "grid", items: [
+          { src: "/assets/nep/tp-star-on.webp", label: "Tech pack: star on, riveted at the corners" },
+          { src: "/assets/nep/tp-star-off.webp", label: "Tech pack: star off, rivets remain as the mark" },
+          { src: "/assets/nep/tp-colorways.webp", label: "Colorway system: shirt and flannel pairs" },
+        ]},
+        { type: "callout", body: "The Shirt Studio on this site grew out of this idea: a garment the owner changes themselves." },
       ]},
-      { n: "04", title: "Brand → e-commerce", blocks: [
-        { type: "text", body: "I designed, built and optimized the NEP2UNE Shopify store: translating the brand into product presentation, release pages and a checkout path, and iterating on the storefront as releases taught me what customers responded to." },
-        { type: "grid", items: ["Storefront", "Product page", "Release page", "Mobile"] },
+      { n: "04", title: "From concept to production", blocks: [
+        { type: "text", body: "I create the product concepts, mockups and technical packs that go to production: colorway systems, construction order for multi-layer pockets, fade references, custom leather and canvas tags, and the notes a manufacturer needs to get it right. Working to production constraints shaped the graphics themselves." },
+        { type: "grid", items: [
+          { src: "/assets/nep/tp-pocket.webp", label: "Custom pocket: spec drawing beside the produced sample" },
+          { src: "/assets/nep/tp-fade.webp", label: "Fade reference: how the wash should behave, front and back" },
+          { src: "/assets/nep/tp-sweats-tag.webp", label: "Tag copy in the brand's voice: adapt to everything" },
+          { src: "/assets/nep/tp-tag.webp", label: "The NDS EXP 02 label, used across the garment family" },
+        ]},
       ]},
-      { n: "05", title: "Releases and marketing", blocks: [
-        { type: "text", body: "Each release was planned end to end: product, inventory, advertising creative, launch timing and audience communication. I produced the ad creative myself and developed release strategies that grew an audience of more than 12,000." },
-        { type: "grid", items: ["Ad creative", "Launch campaign", "Email / social", "Release calendar"] },
+      { n: "05", title: "The garments", blocks: [
+        { type: "video", src: "/assets/video/cream-turn.mp4", poster: "/assets/video/cream-turn.webp", label: "NDS EXP 02, cream belted wide-leg: studio turn" },
+        { type: "video", src: "/assets/video/jacket-turn.mp4", poster: "/assets/video/jacket-turn.webp", label: "The N. work jacket over raw selvedge denim: the back carries the mark" },
+        { type: "grid", items: [
+          { src: "/assets/nep/ph-lookbook-duo.webp", label: "NDS Denim 01 lookbook" },
+          { src: "/assets/nep/ph-indigo-back.webp", label: "NDS Denim 03 Indigo, F/W 25 campaign" },
+          { src: "/assets/nep/ph-grey-model.webp", label: "NDS Denim 02 on model" },
+          { src: "/assets/nep/ph-green-pants.webp", label: "Star patch wide-leg, the pair on this site's hero figure" },
+        ]},
       ]},
-      { n: "06", title: "Inventory, production and operations", blocks: [
-        { type: "text", body: "With limited capital, inventory planning is risk management: how much to produce, in which sizes, and when. I managed production, fulfilment and customer operations, shipping to customers in 17 countries." },
-        { type: "decision", constraint: "Limited capital, real production minimums, and demand that is unknown until a release goes live.", response: "Planned inventory and release strategy together — sizing runs to what cash flow could absorb and using each launch's results to plan the next.", result: "Four and a half years of operation and $100K+ in sales without outside capital." },
+      { n: "06", title: "Store, releases and operations", blocks: [
+        { type: "text", body: "I designed and optimized the Shopify store around user statistics and tendencies, planned each release end to end, and produced the ad creative myself in Illustrator and Photoshop: work that grew the audience past 12,000 followers and 120,000 likes. Then the unglamorous half: inventory, purchasing, packing and shipping to customers in 15 countries." },
+        { type: "grid", items: [
+          { src: "/assets/nep/ph-lookbook-grid.webp", label: "Campaign photography, shot for release" },
+          { src: "/assets/nep/ph-fulfillment.webp", label: "Release day, the other side: a truck of orders leaving" },
+          { src: "/assets/nep/ph-retail.webp", label: "The clothes out in the world" },
+        ]},
       ]},
-      { n: "07", title: "Learning from performance", blocks: [
-        { type: "text", body: "Not every launch worked. Running the brand meant analyzing results honestly — what sold through, what sat, what the audience responded to — and adapting product, pricing and marketing on the next release. This is where design decisions became business decisions." },
+      { n: "07", title: "Inventory as risk management", blocks: [
+        { type: "decision", labels: ["The constraint", "My approach", "The result"],
+          constraint: "Limited capital, real production minimums, and demand that is unknown until a release goes live.",
+          response: "Inventory and release strategy planned together: run sizes matched to what cash flow could absorb, and each launch's sell-through used to plan the next.",
+          result: "Four-plus years of operation and $120K+ in lifetime sales without outside capital. Not every launch worked, and the ones that did not changed the next product, price and marketing decisions." },
       ]},
-      { n: "08", title: "Interactive brand experiences (conceptual)", blocks: [
-        { type: "text", body: "Conceptual direction I've explored for NEP2UNE: apparel customization where customers draw or upload artwork, detachable-star customization, visitor-created designs and a community gallery, and interactive product storytelling. The Shirt Studio and Visitor Gallery on this portfolio are working prototypes of those ideas — labeled here as concepts, not shipped NEP2UNE features." },
-        { type: "grid", items: ["Customization concept", "Detachable star", "Community gallery", "Interactive storytelling"] },
-      ]},
-      { n: "09", title: "Reflection", blocks: [
-        { type: "text", body: "NEP2UNE is where I learned that product design doesn't end at the screen. Concept, production, storefront, marketing, inventory and fulfilment are one system, and the designer who understands the whole loop makes better decisions at every point in it." },
-        { type: "callout", body: "Interview talking points: bootstrapping from $500 · the star as a system element · inventory as risk management · what a failed launch taught me · turning customization concepts into working prototypes." },
+      { n: "08", title: "Reflection", blocks: [
+        { type: "text", body: "NEP2UNE is where I learned that product design does not end at the screen. Concept, production, storefront, marketing, inventory and fulfilment are one system, and a designer who understands the whole loop makes better calls at every point in it." },
       ]},
     ],
   },
 
-  /* ===================== SWEAT2SWIM =====================
-     Verified against sweat2swim.com (Sept 2026). Built in Shopify's website builder —
-     no custom-theme code claims. No conversion / traffic / email metrics available.
-     TODO (private): storefront screenshots (desktop + mobile); confirm timeline;
-     theme/builder constraints; any custom CSS, apps or integrations.
-     ===================================================== */
+  /* SWEAT2SWIM. Role per resume: Remote Shopify Ecommerce Intern, June 2026 to present.
+     Verified against the live site. Shopify provides cart, checkout and accounts. */
   sweat2swim: {
     slug: "sweat2swim",
     name: "Sweat2Swim",
     year: "2026",
-    disciplines: "Shopify e-commerce · Front-end design · Merchandising · Release experiences",
-    preview: "The complete customer-facing Shopify storefront for Sweat2Swim's product releases — from collection discovery to cart.",
-    tagline: "Designing Sweat2Swim's customer-facing Shopify storefront: a cohesive path from release campaign to purchase.",
-    role: "Shopify e-commerce and front-end designer",
-    impact: "Live storefront at sweat2swim.com",
-    meta: { Role: "Shopify E-commerce and Front-End Designer", Team: "Brand founder, Kyle", Platform: "Web (Shopify, responsive)", Tools: "Shopify website builder, Figma", Timeline: "2026" },
+    disciplines: "Shopify ecommerce design",
+    preview: "Optimizing the customer-facing storefront for Sweat2Swim's releases, from landing page to cart.",
+    tagline: "A release-first Shopify storefront: one path from campaign to purchase.",
+    role: "Remote Shopify ecommerce intern",
+    impact: "Live at sweat2swim.com",
+    meta: { Role: "Remote Shopify Ecommerce Intern", Team: "Brand founders and me", Platform: "Web (Shopify), responsive", Tools: "Shopify website builder, Figma", Timeline: "June 2026 to present" },
     quick: {
-      Problem: "Sweat2Swim needed a storefront that could introduce each release, present a collection, and move a customer from discovery to checkout — built inside Shopify's website builder.",
-      "My role": "Designed the entire customer-facing e-commerce front end: release landing, collection navigation, merchandising, product pages, search, cart and account access, email capture and support entry points.",
-      "Biggest decision": "Organizing the store around releases and collections — leading with the active release and a single Shop Now action — instead of an undifferentiated catalog.",
-      Outcome: "A shipped, live storefront at sweat2swim.com used for the Summer of 1776 release, with Gametime and Shop All collections and a consistent product-card system.",
-    },
-    summary: {
-      "The problem": "A swim brand's site has to do two jobs at once: tell the story of a release and make buying simple. Most default storefronts do one at the expense of the other.",
-      "My responsibility": "The complete customer-facing storefront — release hero, collection navigation, product grid, product pages, cart, email signup and policy pages — designed and implemented in Shopify's website builder.",
-      "The result": "A release-focused store live at sweat2swim.com: 'Summer of 1776 — Performance, Redefined.' → Shop Now → product grid → product page → cart.",
+      Problem: "Sweat2Swim's storefront needed to introduce each release, present the collection, and move a customer from discovery to checkout, with better engagement than the default pages were producing.",
+      "My role": "Optimizing the customer-facing front end: landing pages, product presentation and ecommerce flow, plus building and integrating an email newsletter system for customer communication and retention.",
+      "Biggest decision": "Organizing the store around releases and collections, leading with the active drop and a single Shop Now action, instead of a flat catalog.",
+      Outcome: "A live storefront carrying the Summer of 1776 release and the S2S x FBSC collaboration, with Gametime and Shop All collections, consistent product cards, and an integrated newsletter.",
     },
     sections: [
-      { n: "01", title: "The customer journey", blocks: [
-        { type: "text", body: "The storefront is designed around a single path: arrive through a release campaign → understand the current collection → browse featured products → move between collections → open a product → review options → add to cart → continue to checkout → join the email list → find support." },
-        { type: "grid", items: ["Homepage / release hero", "Collection navigation", "Product grid", "Product page", "Cart", "Mobile"] },
+      { n: "01", title: "See it live", blocks: [
+        { type: "text", body: "The storefront is in production and shopping is open. The fastest way to evaluate this work is to use it." },
+        { type: "link", href: "https://sweat2swim.com", label: "Open sweat2swim.com" },
       ]},
-      { n: "02", title: "Release-focused merchandising", blocks: [
-        { type: "text", body: "The homepage opens on the active release — Summer of 1776, 'Performance, Redefined.' — with a full-bleed image and one action: Shop Now. Featured products (the S2S x FBSC Americana and Net Set pieces) follow immediately with consistent cards, imagery, names and prices, so a visitor can browse and compare without leaving the page." },
-        { type: "decision", constraint: "A seasonal brand with a small number of collections needs each release to feel like an event, but Shopify's default structure is a flat catalog.", response: "Led with the release hero and a single primary action, then organized navigation as Summer of 1776 / Gametime / Shop All so the current drop is first and the rest stays one tap away.", result: "A store that reads as a release, not a warehouse — while every product remains reachable through collections, search and Shop All." },
+      { n: "02", title: "The journey", blocks: [
+        { type: "text", body: "One path: arrive through a release campaign, understand the current collection, browse featured products, open a product, review options, add to cart, continue to checkout, join the email list. Every section carries one of those jobs and hands off to the next." },
+        { type: "grid", items: [
+          { src: "/assets/s2s/hero.webp", label: "The release hero: Summer of 1776, one positioning line, one action" },
+          { src: "/assets/s2s/collection.webp", label: "The collection page: campaign photography over a filterable grid" },
+          { src: "/assets/s2s/grid.webp", label: "Product cards: consistent names, imagery and pricing across the S2S x FBSC range" },
+          { src: "/assets/s2s/pdp.webp", label: "The product page: photography, story, fit and materials, then size and cart" },
+        ]},
       ]},
-      { n: "03", title: "Shipped storefront elements", blocks: [
-        { type: "list", items: ["Release hero, positioning line and Shop Now", "Collection navigation: Summer of 1776, Gametime, Shop All", "Featured product cards with imagery, names, prices and quick Add / Choose", "Product pages with options", "Search, account access and cart", "Email signup", "Contact, privacy choices, refund, shipping and terms pages"] },
-        { type: "grid", items: ["Hero", "Collections", "Product cards", "Footer: email + policies"] },
+      { n: "03", title: "Decision: release-first structure", blocks: [
+        { type: "decision", labels: ["The constraint", "My decision", "The tradeoff"],
+          constraint: "A seasonal brand with a few collections needs each release to feel like an event, but Shopify's default structure is a flat catalog.",
+          response: "Lead with the active release (Summer of 1776, with the Performance, Redefined positioning) and a single Shop Now action, then organize collections so the current drop is first and everything stays one tap away.",
+          result: "The store reads as a release, not a warehouse. The cost is that older products sit one level deeper, mitigated by Shop All and search." },
       ]},
-      { n: "04", title: "Brand and business balance", blocks: [
-        { type: "text", body: "Each section carries one of the site's jobs: the hero carries brand and release storytelling, the grid carries discovery and merchandising, product pages and cart carry shopping functionality, and the footer — contact, policies, email — carries customer trust." },
+      { n: "04", title: "What I work on vs. what Shopify provides", blocks: [
+        { type: "text", body: "Shopify provides the cart, checkout, accounts and the underlying commerce engine. My work is the customer-facing experience composed in the website builder: landing page hierarchy, product presentation, merchandising, the email newsletter system I created and integrated, and the trust surface of contact and policy pages. Design and optimization within platform constraints, not platform engineering." },
       ]},
-      { n: "05", title: "Working within Shopify", blocks: [
-        { type: "text", body: "The storefront was created in Shopify's website builder rather than a custom-coded theme. The design work was choosing and composing the builder's sections, imagery, hierarchy and copy into a branded experience within the platform's constraints — responsive by default, with Shopify handling cart, checkout and accounts." },
-        { type: "callout", body: "Constraints, custom CSS, apps and performance notes to be added once confirmed." },
+      { n: "05", title: "What shipped", blocks: [
+        { type: "list", items: [
+          "Optimized landing pages for engagement and performance, live at sweat2swim.com",
+          "Release landing with hero, positioning and Shop Now",
+          "Product presentation and ecommerce flow improvements across the S2S x FBSC collaboration",
+          "An email newsletter system, created and integrated for customer communication and retention",
+        ]},
       ]},
-      { n: "06", title: "What shipped", blocks: [
-        { type: "list", items: ["The complete customer-facing Shopify storefront used for releases", "The path from collection discovery through shopping", "Release landing and merchandising experiences", "Product browsing, navigation, search, cart access, account access, email capture and support entry points"] },
-      ]},
-      { n: "07", title: "Reflection", blocks: [
-        { type: "text", body: "Sweat2Swim is e-commerce design as hierarchy: which job each section does, and in what order a customer meets them. Working inside a builder meant the craft was in composition and merchandising decisions rather than code." },
-        { type: "callout", body: "Interview talking points: release-first structure · one primary action per screen · designing trust into the footer · what a builder gives you and what it takes away." },
+      { n: "06", title: "Reflection", blocks: [
+        { type: "text", body: "Ecommerce design is hierarchy: which job each section does and in what order a customer meets them. Working inside a builder puts the craft in composition and merchandising decisions rather than code, a useful constraint to ship against." },
       ]},
     ],
   },
 };
+
 /* ---------------------------------------------------------------------
-   data/changelog.js — newest first. Add one entry each Friday.
+   data/changelog.js: newest first. Add one entry each Friday.
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-09-09", tags: ["PXI", "NEP2UNE", "Sweat2Swim"], note: "Real work on screen: 21 PXI screens from the 52-screen baseline, NEP2UNE tech packs, campaign photography and studio turn videos, and the live Sweat2Swim storefront." },
   { date: "2026-09-08", tags: ["PXI", "Sweat2Swim", "NEP2UNE"], note: "Rewrote all three case studies around shipped work: PXI's ten product systems, the Sweat2Swim storefront, NEP2UNE's founder story." },
   { date: "2026-09-03", tags: ["Site"], note: "Hero character rebuilt as a paper-doll mannequin wearing real NEP2UNE garments. Visitor gallery became a finite exhibition." },
   { date: "2026-08-29", tags: ["Site"], note: "First build: interactive hero, case study templates, shirt studio and visitor gallery." },
@@ -278,7 +283,7 @@ const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { mon
 const CASE_ORDER = ["pxi", "nep2une", "sweat2swim"];
 
 /* ---------------------------------------------------------------------
-   data/garments.js — real NEP2UNE pieces (photographic die-cut stickers)
+   data/garments.js: real NEP2UNE pieces (photographic die-cut stickers)
    Add a piece: process its image (transparent bg + off-white border),
    add it to GARMENT_ASSETS at the bottom of this file, add an object here,
    tune `fit`. No component changes needed.
@@ -289,7 +294,7 @@ const GARMENTS = [
   { id: "denim-green", name: "Star patch wide denim", meta: ["NEP2UNE", "NDS 01", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
   { id: "denim-black", name: "NDS wide denim",        meta: ["NEP2UNE", "NDS 02", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 424, w: 180 } },
   { id: "denim-cream", name: "Belted wide denim",     meta: ["NEP2UNE", "NDS 03", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
-  // { id: "tee-white", name: "Gingham star tee — white", meta: ["NEP2UNE","HI I'M ✦","COTTON"], category: "top", z: 20, fit: { cx: 150, cy: 224, w: 200 } },
+  // { id: "tee-white", name: "Gingham star tee, white", meta: ["NEP2UNE","HI I'M ✦","COTTON"], category: "top", z: 20, fit: { cx: 150, cy: 224, w: 200 } },
 ];
 // layering order: body → top → outerwear → bottom → shoes → hat → accessory (z per garment)
 const CATEGORY_REGION = { top: "torso", outerwear: "torso", bottom: "legs", shoes: "legs", hat: "head", accessory: "torso" };
@@ -305,9 +310,10 @@ const STICKER_SLOTS = [
 const STAR_CURSOR_SRC = null;
 
 /* ---------------------------------------------------------------------
-   data/studio.js — shirt colors + stickers
+   data/studio.js: shirt colors + stickers
    --------------------------------------------------------------------- */
 const SHIRT_COLORS = ["#F4F2EC", "#1B1B1B", "#B7B2A4", "#2534E8", "#C8563C", "#D9C3A5", "#3F5E4A", "#E8D8E4"];
+const COLOR_NAMES = { "#F4F2EC": "Cream", "#1B1B1B": "Black", "#B7B2A4": "Stone", "#2534E8": "Cobalt", "#C8563C": "Rust", "#D9C3A5": "Sand", "#3F5E4A": "Forest", "#E8D8E4": "Lilac", "#111111": "Ink", "#E5B93B": "Gold" };
 const PEN_COLORS = ["#111111", "#F4F2EC", "#2534E8", "#C8563C", "#E5B93B", "#3F5E4A"];
 
 const STICKERS = {
@@ -327,7 +333,7 @@ const STICKERS = {
 };
 
 /* ---------------------------------------------------------------------
-   utils/storage.js — swappable persistence adapter
+   utils/storage.js: swappable persistence adapter
    Studio + gallery only talk to `storage.list()` / `storage.insert()`.
    Entry shape: { id, alias, color, drawing (dataURL), stickers[], createdAt, display }
    No email, no IP, no identifiers. For site analytics use a privacy-first
@@ -342,15 +348,20 @@ const memoryAdapter = (() => {
   };
 })();
 
-/* localStorage adapter — active. */
+/* localStorage adapter: active. */
 const localAdapter = {
   key: "kyle.gallery.v1",
-  async list() { try { return (JSON.parse(localStorage.getItem(this.key) || "[]")).filter(e => e.display); } catch { return []; } },
+  async list() {
+    try {
+      const mine = (JSON.parse(localStorage.getItem(this.key) || "[]")).filter(e => e.display);
+      return mine.length ? mine : seedGallery(); // samples by Kyle until this browser has saved shirts
+    } catch { return seedGallery(); }
+  },
   async insert(entry) { const all = JSON.parse(localStorage.getItem(this.key) || "[]"); localStorage.setItem(this.key, JSON.stringify([entry, ...all])); return entry; },
   async clear() { localStorage.removeItem(this.key); },
 };
 
-/* Supabase adapter — table `shirts` (id uuid, alias text null, color text,
+/* Supabase adapter: table `shirts` (id uuid, alias text null, color text,
    drawing text, stickers jsonb, display bool, created_at timestamptz):
 const supabaseAdapter = {
   async list() { const { data } = await supabase.from("shirts").select("*").eq("display", true).order("created_at", { ascending: false }).limit(60); return data ?? []; },
@@ -365,11 +376,11 @@ function seedGallery() {
     stickers, display: true, createdAt: Date.now() - daysAgo * 864e5,
   });
   return [
-    seed("Mara", "#2534E8", [{ id: 1, kind: "star", x: 0.5, y: 0.42, s: 2.6, r: -8 }], 2),
-    seed(null, "#F4F2EC", [{ id: 1, kind: "e404", x: 0.5, y: 0.35, s: 2.4, r: 0 }, { id: 2, kind: "cursor", x: 0.7, y: 0.65, s: 1.4, r: 20 }], 5),
-    seed("j.", "#C8563C", [{ id: 1, kind: "smiley", x: 0.42, y: 0.5, s: 2.2, r: 0 }, { id: 2, kind: "flame", x: 0.68, y: 0.3, s: 1.3, r: 15 }], 9),
-    seed("studio B", "#1B1B1B", [{ id: 1, kind: "ship", x: 0.5, y: 0.5, s: 2.8, r: -4 }], 14),
-    seed(null, "#3F5E4A", [{ id: 1, kind: "flower", x: 0.34, y: 0.4, s: 1.8, r: 0 }, { id: 2, kind: "flower", x: 0.66, y: 0.6, s: 1.4, r: 30 }], 20),
+    seed("Kyle · sample", "#2534E8", [{ id: 1, kind: "star", x: 0.5, y: 0.42, s: 2.6, r: -8 }], 2),
+    seed("Kyle · sample", "#F4F2EC", [{ id: 1, kind: "e404", x: 0.5, y: 0.35, s: 2.4, r: 0 }, { id: 2, kind: "cursor", x: 0.7, y: 0.65, s: 1.4, r: 20 }], 5),
+    seed("Kyle · sample", "#C8563C", [{ id: 1, kind: "smiley", x: 0.42, y: 0.5, s: 2.2, r: 0 }, { id: 2, kind: "flame", x: 0.68, y: 0.3, s: 1.3, r: 15 }], 9),
+    seed("Kyle · sample", "#1B1B1B", [{ id: 1, kind: "ship", x: 0.5, y: 0.5, s: 2.8, r: -4 }], 14),
+    seed("Kyle · sample", "#3F5E4A", [{ id: 1, kind: "flower", x: 0.34, y: 0.4, s: 1.8, r: 0 }, { id: 2, kind: "flower", x: 0.66, y: 0.6, s: 1.4, r: 30 }], 20),
   ];
 }
 
@@ -405,7 +416,7 @@ function useInView(threshold = 0.15) {
 }
 
 /* ---------------------------------------------------------------------
-   components/motion — Reveal (scroll), Magnetic (buttons), Cursor
+   components/motion: Reveal (scroll), Magnetic (buttons), Cursor
    --------------------------------------------------------------------- */
 function Reveal({ children, delay = 0, className = "", as: Tag = "div" }) {
   const [ref, v] = useInView(); const rm = useReducedMotion();
@@ -447,7 +458,7 @@ function Cursor() {
 }
 
 /* ---------------------------------------------------------------------
-   components/ui — Button, Section heading, placeholder
+   components/ui: Button, Section heading, placeholder
    --------------------------------------------------------------------- */
 function Button({ children, onClick, href, variant = "primary", icon: Icon, download, className = "", ariaLabel }) {
   const cls = `btn btn-${variant} ${className}`;
@@ -481,7 +492,7 @@ function Navigation({ route, go, scrollTo }) {
       <button className="mark" onClick={() => { setOpen(false); go({ name: "home" }); }} aria-label="Home">{SITE.mark}</button>
       <nav className="nav-center" aria-label="Primary">{links.map(([l, id]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}</nav>
       <div className="nav-right">
-        <a href={SITE.resumeUrl}>Résumé</a><a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        {SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}
         <button onClick={() => nav("contact")}>Contact</button>
       </div>
       <button className="nav-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(o => !o)}>{open ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}</button>
@@ -489,7 +500,7 @@ function Navigation({ route, go, scrollTo }) {
         <div className="nav-sheet" role="dialog" aria-label="Menu">
           {links.map(([l, id]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}
           <div className="nav-sheet-divider" />
-          <a href={SITE.resumeUrl}>Résumé</a><a href={SITE.linkedin}>LinkedIn</a><button onClick={() => nav("contact")}>Contact</button>
+          {SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}{SITE.linkedin && <a href={SITE.linkedin}>LinkedIn</a>}<button onClick={() => nav("contact")}>Contact</button>
         </div>
       )}
     </header>
@@ -497,7 +508,7 @@ function Navigation({ route, go, scrollTo }) {
 }
 
 /* ---------------------------------------------------------------------
-   components/Character — editorial figure + wardrobe drag-and-drop
+   components/Character: editorial figure + wardrobe drag-and-drop
    --------------------------------------------------------------------- */
 function Figure({ outfit, justEquipped, rm, target }) {
   const worn = Object.values(outfit).filter(Boolean).map(id => GARMENTS.find(g => g.id === id)).sort((a, b) => a.z - b.z);
@@ -602,7 +613,7 @@ function Character({ onComplete }) {
 }
 
 /* ---------------------------------------------------------------------
-   components/ProjectPreview — editorial project block (home)
+   components/ProjectPreview: editorial project block (home)
    --------------------------------------------------------------------- */
 function ProjectArt({ slug, hovered }) {
   // Tasteful placeholder compositions; swap for real imagery via lazy <img>.
@@ -619,9 +630,11 @@ function ProjectArt({ slug, hovered }) {
       <span className="art-label">Storefront</span>
     </div>);
   return (
-    <div className="art art-nep">
-      <svg viewBox="0 0 400 460" className="art-shirt" aria-hidden><ShirtPath color="#1B1B1B" /><text x="200" y="240" textAnchor="middle" fontFamily="Instrument Serif, serif" fontStyle="italic" fontSize="42" fill="#F4F2EC">nep2une</text></svg>
-      <span className="art-label">Apparel</span>
+    <div className="art art-nep2">
+      {["denim-green", "tee-black", "denim-cream"].map((k, i) => (
+        <img key={k} src={GARMENT_ASSETS[k].src} alt="" loading="lazy" decoding="async"
+             style={{ transform: `rotate(${(i - 1) * 5}deg) translateY(${i === 1 ? -3 : 3}%)` }} />))}
+      <span className="art-label">Real NEP2UNE garments, designed and produced by Kyle</span>
     </div>);
 }
 function ProjectPreview({ cs, go, index }) {
@@ -649,21 +662,17 @@ function ProjectPreview({ cs, go, index }) {
    --------------------------------------------------------------------- */
 function Home({ go, scrollTo }) {
   const [nudge, setNudge] = useState(false);
-  const [sub, setSub] = useState(0); const rm = useReducedMotion();
-  useEffect(() => { if (rm) return; const t = setInterval(() => setSub(s => (s + 1) % 3), 3200); return () => clearInterval(t); }, [rm]);
-  const subs = ["Where design meets development.", "Designer brain, developer hands.", "Ideas → interfaces → shipped."];
   return (
     <main id="main">
       {/* HERO */}
       <section className="hero" aria-labelledby="hero-h">
         <div className="hero-copy">
-          <p className="hero-now">Currently designing mobile experiences at PXI</p>
+          <p className="hero-now"><strong>Kyle Potente</strong> · Head of Mobile UI Design at PXI Labs</p>
           <h1 id="hero-h">I design experiences <em>and build them.</em></h1>
-          <p className="hero-sub" aria-live="polite"><span key={sub} className="hero-sub-in">{subs[sub]}</span></p>
-          <p className="hero-body">Product designer and frontend builder creating intuitive mobile products, digital experiences, and 0→1 ideas.</p>
+          <p className="hero-body">Product designer with a frontend background: shipping mobile UI at PXI, running my own apparel brand NEP2UNE ($120K+ lifetime sales, 15 countries), and optimizing Sweat2Swim's Shopify storefront.</p>
           <div className="hero-actions">
             <Button onClick={() => scrollTo("work")} icon={ArrowDown}>View my work</Button>
-            <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>
+            {SITE.resumeUrl && <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>}
           </div>
           <p className={"hero-nudge " + (nudge ? "show" : "")} aria-hidden={!nudge}>now see what I actually make <ArrowDown size={13} /></p>
         </div>
@@ -690,27 +699,31 @@ function Home({ go, scrollTo }) {
       <section id="about" className="about" aria-labelledby="about-h">
         <Reveal><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2></Reveal>
         <Reveal delay={80} className="about-body">
-          <p>I design product interfaces and then build them in React. That means I think through what a person should feel in an interaction and how that interaction actually gets implemented — states, edge cases, performance — at the same time. Most of my work has been in small teams where the distance between an idea and a shipped screen had to be short.</p>
+          <p>I design product interfaces and build them in React. Most of my work happens in small teams where the distance between an idea and a shipped screen has to be short: PXI's mobile app, my own brand NEP2UNE, and Sweat2Swim's storefront. I'm a computer science student at SDSU, graduating December 2026.</p>
           <div className="skills">
             {[["Design", ["Figma", "UI design", "UX", "Prototyping", "Interaction design", "Design systems"]],
               ["Development", ["React", "TypeScript", "TSX", "CSS", "Frontend development", "Shopify"]],
               ["Product", ["Product thinking", "Iteration", "A/B testing", "QA", "Startup environments"]]].map(([k, items]) => (
               <div key={k} className="skill-col"><h3>{k}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>))}
           </div>
+          <div className="built">
+            <h3>This site is part of the evidence</h3>
+            <p>Everything interactive here is code I can walk through: hash routing with focus management and per-page titles, a canvas drawing tool with a bounded print area and a 40-step undo/redo history, pointer-based sticker manipulation with keyboard alternatives (arrow keys nudge, plus and minus scale, r rotates), lazy-loaded garment cutouts processed from my own product photography, prefers-reduced-motion fallbacks throughout, and a storage adapter that keeps gallery shirts in this browser's localStorage with a marked swap point for Supabase. Designed by me, built in React with AI-assisted pair programming; every decision in it is mine to explain. The source is on my GitHub.</p>
+          </div>
         </Reveal>
       </section>
-
-      <Changelog />
 
       {/* CONTACT */}
       <section id="contact" className="contact" aria-labelledby="contact-h">
         <Reveal><h2 id="contact-h">Let's make something <em>people remember.</em></h2>
           <div className="contact-actions">
-            <Button href={SITE.resumeUrl} icon={ArrowUpRight}>View résumé</Button>
-            <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>
-            <Button href={SITE.linkedin} variant="ghost" icon={ArrowUpRight}>LinkedIn</Button>
-            <Button href={"mailto:" + SITE.email} variant="ghost">Email me</Button>
-          </div></Reveal>
+            {SITE.resumeUrl && <Button href={SITE.resumeUrl} icon={ArrowUpRight}>View résumé</Button>}
+            {SITE.resumeUrl && <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>}
+            {SITE.linkedin && <Button href={SITE.linkedin} variant="ghost" icon={ArrowUpRight}>LinkedIn</Button>}
+            {SITE.email && <Button href={"mailto:" + SITE.email} variant="ghost">Email me</Button>}
+            {SITE.github && <Button href={SITE.github} variant="ghost" icon={ArrowUpRight}>GitHub</Button>}
+          </div>
+          {!(SITE.email || SITE.linkedin || SITE.resumeUrl) && <p className="contact-note">Direct links are being connected. Meanwhile, find me on LinkedIn: Kyle Potente.</p>}</Reveal>
       </section>
     </main>
   );
@@ -723,7 +736,7 @@ function MiniWall() {
 }
 
 /* ---------------------------------------------------------------------
-   views/CaseStudy — recruiter-first template
+   views/CaseStudy: recruiter-first template
    --------------------------------------------------------------------- */
 function CaseStudy({ cs, go }) {
   const [quick, setQuick] = useState(true);
@@ -752,11 +765,10 @@ function CaseStudy({ cs, go }) {
       </section>
 
       {!quick && (<>
-        <section className="summary">{Object.entries(cs.summary).map(([k, v]) => <Reveal key={k}><h2>{k}</h2><p>{v}</p></Reveal>)}</section>
         {cs.sections.map(s => (
           <Reveal as="section" key={s.n} className="cs-section" >
             <div className="cs-section-head"><span className="cs-n">{s.n}</span><h2>{s.title}</h2></div>
-            <div className="cs-blocks">{s.blocks.map((b, i) => <Block key={i} b={b} i={i} />)}</div>
+            <div className="cs-blocks">{s.blocks.map((b, i) => <Block key={i} b={b} />)}</div>
           </Reveal>
         ))}
       </>)}
@@ -768,25 +780,43 @@ function CaseStudy({ cs, go }) {
     </main>
   );
 }
-function Block({ b, i }) {
+function Block({ b }) {
   switch (b.type) {
     case "text": return <p className="cs-text">{b.body}</p>;
     case "callout": return <p className="cs-callout">{b.body}</p>;
     case "list": return <ul className="cs-list">{b.items.map(x => <li key={x}>{x}</li>)}</ul>;
-    case "visual": return <Placeholder label={b.label} ratio={b.ratio} tone={i} />;
-    case "grid": return <div className="cs-grid">{b.items.map((x, j) => <Placeholder key={x} label={x} ratio="4/5" tone={j} />)}</div>;
-    case "beforeAfter": return <div className="cs-ba"><div><Placeholder label={b.before} ratio="9/16" tone={1} /><span>Before</span></div><div><Placeholder label={b.after} ratio="9/16" tone={0} /><span>After</span></div></div>;
-    case "decision": return (
-      <div className="decision">
-        {[["Technical constraint", b.constraint], ["Design response", b.response], ["Result", b.result]].map(([k, v]) => <div key={k}><h3>{k}</h3><p>{v}</p></div>)}
-      </div>);
+    case "video": return (
+      <figure className="cs-fig">
+        <video src={b.src} poster={b.poster} muted loop autoPlay playsInline preload="metadata" controls={false} aria-label={b.label} />
+        <figcaption>{b.label}</figcaption>
+      </figure>);
+    case "link": return <p><a className="textlink" href={b.href} target="_blank" rel="noreferrer">{b.label} <ArrowUpRight size={13} aria-hidden /></a></p>;
+    case "visual": return b.src ? (
+      <figure className="cs-fig"><img src={b.src} alt={b.alt || b.label} loading="lazy" decoding="async" /><figcaption>{b.label}</figcaption></figure>) : null;
+    case "grid": {
+      const real = (b.items || []).filter(x => typeof x === "object" && x.src);
+      if (!real.length) return null; // asset slots stay hidden until real imagery exists
+      return <div className="cs-grid">{real.map(x => <figure key={x.src} className="cs-fig"><img src={x.src} alt={x.alt || x.label} loading="lazy" decoding="async" /><figcaption>{x.label}</figcaption></figure>)}</div>;
+    }
+    case "beforeAfter": return (b.beforeSrc && b.afterSrc) ? (
+      <div className="cs-ba">
+        <figure className="cs-fig"><img src={b.beforeSrc} alt={b.before} loading="lazy" /><figcaption>Before: {b.before}</figcaption></figure>
+        <figure className="cs-fig"><img src={b.afterSrc} alt={b.after} loading="lazy" /><figcaption>After: {b.after}</figcaption></figure>
+      </div>) : null;
+    case "decision": {
+      const labels = b.labels || ["Constraint", "Decision", "Result"];
+      return (
+        <div className="decision">
+          {[[labels[0], b.constraint], [labels[1], b.response], [labels[2], b.result]].map(([k, v]) => <div key={k}><h3>{k}</h3><p>{v}</p></div>)}
+        </div>);
+    }
     case "metrics": return <div className="metrics">{b.items.map(([v, l]) => <div key={l} className="metric"><strong>{v}</strong><span>{l}</span></div>)}</div>;
     default: return null;
   }
 }
 
 /* ---------------------------------------------------------------------
-   components/Shirt — shared shirt geometry + artwork renderer
+   components/Shirt: shared shirt geometry + artwork renderer
    Print area in viewBox(0 0 400 460): x118 y140 w164 h210
    --------------------------------------------------------------------- */
 const PRINT = { x: 118, y: 140, w: 164, h: 210 };
@@ -818,7 +848,7 @@ function ShirtArtwork({ entry, showPrintArea = false }) {
 }
 
 /* ---------------------------------------------------------------------
-   views/Studio — T-shirt designer (canvas drawing + sticker layer)
+   views/Studio: T-shirt designer (canvas drawing + sticker layer)
    --------------------------------------------------------------------- */
 function Studio({ go, onSaved }) {
   const [color, setColor] = useState(SHIRT_COLORS[0]);
@@ -915,11 +945,11 @@ function Studio({ go, onSaved }) {
         {/* tools */}
         <aside className={"tools " + (mob ? "tools-mobile" : "")} aria-label="Tools">
           {mob && <div className="seg seg-tabs">{[["color", Palette, "Color"], ["draw", PenLine, "Draw"], ["sticker", StickerIcon, "Stickers"]].map(([k, I, l]) => <button key={k} className={panel === k ? "on" : ""} onClick={() => { setPanel(k); if (k === "draw") setTool("pen"); if (k === "sticker") setTool("sticker"); }}><I size={14} /> {l}</button>)}</div>}
-          {(!mob || panel === "color") && <div className="tool-group"><h2>Shirt</h2><div className="swatches">{SHIRT_COLORS.map(c => <button key={c} className={"sw " + (color === c ? "on" : "")} style={{ background: c }} onClick={() => changeColor(c)} aria-label={`Shirt color ${c}`} aria-pressed={color === c} />)}</div></div>}
+          {(!mob || panel === "color") && <div className="tool-group"><h2>Shirt</h2><div className="swatches">{SHIRT_COLORS.map(c => <button key={c} className={"sw " + (color === c ? "on" : "")} style={{ background: c }} onClick={() => changeColor(c)} aria-label={`Shirt color: ${COLOR_NAMES[c] || c}`} aria-pressed={color === c} />)}</div></div>}
           {(!mob || panel === "draw") && <div className="tool-group"><h2>Draw</h2>
             <div className="seg"><button className={tool === "pen" ? "on" : ""} onClick={() => setTool("pen")} aria-pressed={tool === "pen"}><PenLine size={14} /> Pen</button><button className={tool === "eraser" ? "on" : ""} onClick={() => setTool("eraser")} aria-pressed={tool === "eraser"}><Eraser size={14} /> Eraser</button></div>
             <label className="range">Size <input type="range" min="2" max="14" value={pen} onChange={e => setPen(+e.target.value)} /></label>
-            <div className="swatches small">{PEN_COLORS.map(c => <button key={c} className={"sw " + (penColor === c ? "on" : "")} style={{ background: c }} onClick={() => { setPenColor(c); setTool("pen"); }} aria-label={`Pen color ${c}`} aria-pressed={penColor === c} />)}</div>
+            <div className="swatches small">{PEN_COLORS.map(c => <button key={c} className={"sw " + (penColor === c ? "on" : "")} style={{ background: c }} onClick={() => { setPenColor(c); setTool("pen"); }} aria-label={`Pen color: ${COLOR_NAMES[c] || c}`} aria-pressed={penColor === c} />)}</div>
           </div>}
           {(!mob || panel === "sticker") && <div className="tool-group"><h2>Stickers</h2>
             <div className="sticker-tray">{Object.entries(STICKERS).map(([k, s]) => <button key={k} onClick={() => addSticker(k)} aria-label={`Add ${s.label} sticker`} title={s.label}><StickerGlyph kind={k} /></button>)}</div>
@@ -945,13 +975,13 @@ function Studio({ go, onSaved }) {
                 </div>))}
             </div>
           </div>
-          <p className="stage-hint">{tool === "sticker" ? "Drag stickers. Corner handle resizes and rotates. Arrow keys nudge, + / – scale, r rotates." : "Draw inside the dotted print area."}</p>
+          <p className="stage-hint">{tool === "sticker" ? "Drag stickers. Corner handle resizes and rotates. Arrow keys nudge, + and - scale, r rotates." : "Draw inside the dotted print area."}</p>
         </div>
       </div>
 
       <div className="studio-foot">
         <Button onClick={() => setPhase("tag")} icon={ArrowRight}>Leave my mark</Button>
-        {!hasContent && <span className="muted">Add something first — even a scribble counts.</span>}
+        {!hasContent && <span className="muted">Add something first. Even a scribble counts.</span>}
       </div>
 
       {phase === "tag" && (
@@ -970,7 +1000,7 @@ function Studio({ go, onSaved }) {
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
 /* ---------------------------------------------------------------------
-   components/FrameSequence — the cinematic framing moment
+   components/FrameSequence: the cinematic framing moment
    stages: 0 controls gone → 1 lift → 2 gallery + frame → 3 pull back → 4 plaque → 5 done
    --------------------------------------------------------------------- */
 function FrameSequence({ entry, go }) {
@@ -1010,7 +1040,7 @@ function MuseumTag({ entry, n }) {
 }
 
 /* ---------------------------------------------------------------------
-   views/Gallery — visitor wall
+   views/Gallery: visitor wall
    --------------------------------------------------------------------- */
 const VISITOR_LINES = ["wow I love that shirt", "what do you think it means?", "I'd wear that", "wait this one's sick", "who made this?", "look at that one", "I like this one", "the details are crazy"];
 const rnd = (a, b) => a + Math.random() * (b - a);
@@ -1091,7 +1121,8 @@ function Gallery({ go }) {
       <div className="gallery-head">
         <button className="back" onClick={() => go({ name: "home", anchor: "play" })}><ChevronLeft size={14} /> Home</button>
         <h1>Visitor gallery</h1>
-        <p>Shirts designed by people who came through here. <button className="textlink" onClick={() => go({ name: "studio" })}>Add yours <ArrowRight size={13} /></button></p>
+        <p>Shirts made in the studio hang here. <button className="textlink" onClick={() => go({ name: "studio" })}>Add yours <ArrowRight size={13} /></button></p>
+        <p className="gallery-note">Saved shirts live in this browser only. Until yours arrive, the samples on the wall are mine.</p>
       </div>
       {items && items.length === 0 && <p className="empty">The wall is empty. Be the first to hang something.</p>}
 
@@ -1160,40 +1191,83 @@ function Footer({ go, scrollTo, route }) {
   const nav = id => route.name !== "home" ? go({ name: "home", anchor: id }) : scrollTo(id);
   return (
     <footer className="foot">
-      <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><p className="muted foot-stamp">Updated {fmtDate(LAST_UPDATED)}</p></div>
+      <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><button className="foot-stamp" onClick={() => go({ name: "changelog" })}>Updated {fmtDate(LAST_UPDATED)} · changelog</button></div>
       <div className="foot-cols">
-        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => nav("play")}>Play</button><a href={SITE.resumeUrl}>Résumé</a></div>
-        <div><h3>Contact</h3><a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href={"mailto:" + SITE.email}>Email</a></div>
+        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => nav("play")}>Play</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
+        <div><h3>Contact</h3>{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.email && <a href={"mailto:" + SITE.email}>Email</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}<button onClick={() => nav("contact")}>Contact section</button></div>
       </div>
     </footer>
   );
 }
 
 /* ---------------------------------------------------------------------
-   App — routing + page transitions
+   App: hash routing, titles, focus management
    --------------------------------------------------------------------- */
+const VALID_PAGES = ["studio", "gallery", "changelog"];
+function parseHash() {
+  const h = (window.location.hash || "").replace(/^#\/?/, "");
+  const p = h.split("/");
+  if (p[0] === "work" && CASE_STUDIES[p[1]]) return { name: "case", slug: p[1] };
+  if (VALID_PAGES.includes(p[0])) return { name: p[0] };
+  return { name: "home" };
+}
+const hashFor = r => r.name === "case" ? `#/work/${r.slug}` : r.name === "home" ? "#/" : `#/${r.name}`;
+
+function ChangelogPage({ go }) {
+  return (
+    <main id="main" className="case">
+      <button className="back" onClick={() => go({ name: "home" })}><ChevronLeft size={14} /> Home</button>
+      <Changelog />
+    </main>
+  );
+}
+
 export default function App() {
-  const [route, setRoute] = useState({ name: "home" }); const [fade, setFade] = useState(false); const rm = useReducedMotion();
+  const [route, setRoute] = useState(parseHash);
+  const pendingAnchor = useRef(null); const rm = useReducedMotion();
   const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" });
   const go = next => {
-    if (rm) { setRoute(next); window.scrollTo(0, 0); return; }
-    setFade(true); setTimeout(() => { setRoute(next); window.scrollTo(0, 0); setFade(false); }, 260);
+    pendingAnchor.current = next.anchor || null;
+    const h = hashFor(next);
+    if (window.location.hash === h || (h === "#/" && window.location.hash === "")) setRoute(next);
+    else window.location.hash = h;
   };
-  useEffect(() => { if (route.anchor) { const t = setTimeout(() => scrollTo(route.anchor), 80); return () => clearTimeout(t); } }, [route]);
-  const view = route.name === "case" ? <CaseStudy cs={CASE_STUDIES[route.slug]} go={go} /> : route.name === "studio" ? <Studio go={go} /> : route.name === "gallery" ? <Gallery go={go} /> : <Home go={go} scrollTo={scrollTo} />;
+  useEffect(() => {
+    const f = () => setRoute(parseHash());
+    window.addEventListener("hashchange", f);
+    return () => window.removeEventListener("hashchange", f);
+  }, []);
+  useEffect(() => {
+    const cs = route.name === "case" ? CASE_STUDIES[route.slug] : null;
+    document.title =
+      route.name === "home" ? "Kyle Potente | Product Designer Who Builds" :
+      cs ? cs.name + " | Kyle Potente" :
+      route.name === "studio" ? "Shirt Studio | Kyle Potente" :
+      route.name === "gallery" ? "Visitor Gallery | Kyle Potente" : "Changelog | Kyle Potente";
+    const a = pendingAnchor.current; pendingAnchor.current = null;
+    if (a) { const t = setTimeout(() => scrollTo(a), 80); return () => clearTimeout(t); }
+    window.scrollTo(0, 0);
+    const m = document.getElementById("main");
+    if (m) { m.setAttribute("tabindex", "-1"); m.focus({ preventScroll: true }); }
+  }, [route]);
+  const view = route.name === "case" ? <CaseStudy cs={CASE_STUDIES[route.slug]} go={go} />
+    : route.name === "studio" ? <Studio go={go} />
+    : route.name === "gallery" ? <Gallery go={go} />
+    : route.name === "changelog" ? <ChangelogPage go={go} />
+    : <Home go={go} scrollTo={scrollTo} />;
   return (
     <div className="site" data-route={route.name}>
       <style>{CSS}</style>
       <a href="#main" className="skip">Skip to content</a>
       <Cursor />
       <Navigation route={route} go={go} scrollTo={scrollTo} />
-      <div className={"page " + (fade ? "page-out" : "")}>{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
+      <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
     </div>
   );
 }
 
 /* ---------------------------------------------------------------------
-   styles — tokens + components (would be globals.css + modules)
+   styles: tokens + components (would be globals.css + modules)
    --------------------------------------------------------------------- */
 const CSS = `
 .magnetic{display:inline-block}
@@ -1244,20 +1318,20 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .back{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--mute)}.back:hover{color:var(--ink)}
 
 /* hero */
-.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,64px);padding:clamp(24px,5vh,56px) var(--pad) clamp(40px,7vh,80px);min-height:calc(100vh - 62px);align-items:center;position:relative}
-.hero-now{font-size:13px;color:var(--mute);margin-bottom:22px}
-.hero h1{font-size:clamp(44px,6.6vw,96px);max-width:12ch}
-.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,32px);margin-top:18px;height:1.3em;overflow:hidden;color:var(--char)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);padding:clamp(20px,4vh,44px) var(--pad) clamp(32px,5vh,56px);align-items:center;position:relative}
+.hero-now{font-size:14px;color:var(--mute);margin-bottom:20px}.hero-now strong{color:var(--ink);font-weight:600}
+.hero h1{font-size:clamp(40px,6vw,84px);max-width:13ch}
+.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,32px);margin-top:18px;min-height:1.4em;line-height:1.4;color:var(--char)}
 .hero-sub-in{display:inline-block;animation:subin .7s var(--ease)}
-@keyframes subin{from{opacity:0;transform:translateY(60%)}to{opacity:1;transform:none}}
-.hero-body{max-width:44ch;margin-top:18px;color:var(--char);font-size:17px}
+@keyframes subin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero-body{max-width:46ch;margin-top:16px;color:var(--char);font-size:17px;line-height:1.55}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
 .hero-nudge{margin-top:28px;font-family:var(--serif);font-style:italic;font-size:18px;display:inline-flex;gap:6px;align-items:center;opacity:0;transform:translateY(6px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .hero-nudge.show{opacity:1;transform:none}
 .hero-figure{position:relative;justify-self:center;width:100%;max-width:560px}
 .character{position:relative;display:flex;flex-direction:column;align-items:center}
 .figure-zone{position:relative;width:56%;padding:12px}
-.figure{width:100%;height:auto;max-height:68vh;display:block}
+.figure{width:100%;height:auto;max-height:58vh;display:block}
 .figure image{transform-box:view-box}
 .region-hot{fill:var(--paper-2)}
 .region-ring{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 5;opacity:.6;animation:ringin .3s var(--ease)}
@@ -1344,6 +1418,20 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .log .textlink{margin-top:20px}
 .foot-stamp{font-size:12px;margin-top:2px}
 @media (max-width:760px){.log-item{grid-template-columns:1fr;gap:6px}.log-tags{text-align:left}}
+
+/* figures + notes + built */
+.cs-fig{margin:0}.cs-fig img{width:100%;height:auto;display:block;border-radius:3px;border:1px solid var(--line)}
+.cs-fig figcaption{font-size:13px;color:var(--mute);margin-top:8px;line-height:1.45}
+.cs-fig video{width:100%;height:auto;display:block;border-radius:3px;border:1px solid var(--line);background:var(--paper-2)}
+@media (prefers-reduced-motion:reduce){.cs-fig video{display:none}.cs-fig:has(video)::before{content:"";display:block;width:100%;aspect-ratio:9/16;background:var(--paper-2);border-radius:3px}}
+.gallery-note{margin-top:6px;font-size:13px;color:var(--mute)}
+.contact-note{margin-top:18px;font-size:14px;color:var(--mute)}
+.built{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);max-width:62ch}
+.built h3{font-size:14px;margin-bottom:10px}
+.built p{font-size:15px;line-height:1.55;color:var(--char)}
+.art-nep2{gap:3%}.art-nep2 img{width:23%;height:auto;filter:drop-shadow(0 18px 26px rgba(0,0,0,.18));transition:transform .8s var(--ease)}
+.foot-stamp{font-size:12px;color:var(--mute);margin-top:2px;text-align:left}.foot-stamp:hover{color:var(--ink)}
+[data-route=changelog] .log{border-top:0;padding:24px 0 40px}
 
 /* footer */
 .foot{border-top:1px solid var(--line);padding:48px var(--pad);display:flex;justify-content:space-between;gap:40px;font-size:14px}
@@ -1490,7 +1578,7 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 `;
 
 /* ---------------------------------------------------------------------
-   assets/clothes — processed NEP2UNE garment stickers (transparent WebP data URIs)
+   assets/clothes: processed NEP2UNE garment stickers (transparent WebP data URIs)
    In the repo: move to /assets/clothes/*.webp and set src to the path.
    --------------------------------------------------------------------- */
 const GARMENT_ASSETS = {
