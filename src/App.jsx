@@ -263,6 +263,18 @@ const CASE_STUDIES = {
     ],
   },
 };
+/* ---------------------------------------------------------------------
+   data/changelog.js — newest first. Add one entry each Friday.
+   date: ISO. tags: which projects the week touched. note: one line, plain.
+   --------------------------------------------------------------------- */
+const CHANGELOG = [
+  { date: "2026-09-08", tags: ["PXI", "Sweat2Swim", "NEP2UNE"], note: "Rewrote all three case studies around shipped work: PXI's ten product systems, the Sweat2Swim storefront, NEP2UNE's founder story." },
+  { date: "2026-09-03", tags: ["Site"], note: "Hero character rebuilt as a paper-doll mannequin wearing real NEP2UNE garments. Visitor gallery became a finite exhibition." },
+  { date: "2026-08-29", tags: ["Site"], note: "First build: interactive hero, case study templates, shirt studio and visitor gallery." },
+];
+const LAST_UPDATED = CHANGELOG[0].date;
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
 const CASE_ORDER = ["pxi", "nep2une", "sweat2swim"];
 
 /* ---------------------------------------------------------------------
@@ -687,6 +699,8 @@ function Home({ go, scrollTo }) {
           </div>
         </Reveal>
       </section>
+
+      <Changelog />
 
       {/* CONTACT */}
       <section id="contact" className="contact" aria-labelledby="contact-h">
@@ -1117,6 +1131,28 @@ function Gallery({ go }) {
   );
 }
 
+function Changelog() {
+  const [open, setOpen] = useState(false);
+  const shown = open ? CHANGELOG : CHANGELOG.slice(0, 3);
+  return (
+    <section id="changelog" className="log" aria-labelledby="log-h">
+      <div className="log-head">
+        <h2 id="log-h">Still building</h2>
+        <p>This portfolio updates weekly with work from PXI, Sweat2Swim and NEP2UNE. Last updated {fmtDate(LAST_UPDATED)}.</p>
+      </div>
+      <ol className="log-list">
+        {shown.map(e => (
+          <Reveal as="li" key={e.date} className="log-item">
+            <time dateTime={e.date}>{fmtDate(e.date)}</time>
+            <p className="log-note">{e.note}</p>
+            <p className="log-tags">{e.tags.join(" · ")}</p>
+          </Reveal>))}
+      </ol>
+      {CHANGELOG.length > 3 && <button className="textlink" onClick={() => setOpen(o => !o)}>{open ? "Show less" : `All ${CHANGELOG.length} updates`}</button>}
+    </section>
+  );
+}
+
 /* ---------------------------------------------------------------------
    components/Footer
    --------------------------------------------------------------------- */
@@ -1124,7 +1160,7 @@ function Footer({ go, scrollTo, route }) {
   const nav = id => route.name !== "home" ? go({ name: "home", anchor: id }) : scrollTo(id);
   return (
     <footer className="foot">
-      <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p></div>
+      <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><p className="muted foot-stamp">Updated {fmtDate(LAST_UPDATED)}</p></div>
       <div className="foot-cols">
         <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => nav("play")}>Play</button><a href={SITE.resumeUrl}>Résumé</a></div>
         <div><h3>Contact</h3><a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a><a href={"mailto:" + SITE.email}>Email</a></div>
@@ -1294,6 +1330,20 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .contact{padding:clamp(80px,12vw,160px) var(--pad);border-top:1px solid var(--line);text-align:center}
 .contact h2{font-size:clamp(40px,6vw,88px);max-width:14ch;margin:0 auto}
 .contact-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+
+/* changelog */
+.log{padding:clamp(60px,9vw,110px) var(--pad);border-top:1px solid var(--line)}
+.log-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.log-head h2{font-size:clamp(28px,3vw,40px)}
+.log-head p{font-size:14px;color:var(--mute);max-width:46ch}
+.log-list{list-style:none;margin:0;padding:0}
+.log-item{display:grid;grid-template-columns:150px 1fr 180px;gap:24px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
+.log-item time{font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
+.log-note{font-size:16px;line-height:1.5;color:var(--char);max-width:62ch}
+.log-tags{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);text-align:right}
+.log .textlink{margin-top:20px}
+.foot-stamp{font-size:12px;margin-top:2px}
+@media (max-width:760px){.log-item{grid-template-columns:1fr;gap:6px}.log-tags{text-align:left}}
 
 /* footer */
 .foot{border-top:1px solid var(--line);padding:48px var(--pad);display:flex;justify-content:space-between;gap:40px;font-size:14px}
