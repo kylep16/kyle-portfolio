@@ -1316,7 +1316,7 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .hero-figure{position:relative;justify-self:center;width:100%;max-width:560px}
 .character{position:relative;display:flex;flex-direction:column;align-items:center}
 .figure-zone{position:relative;width:56%;padding:12px}
-.figure{width:100%;height:auto;max-height:58vh;display:block}
+.figure{width:100%;height:auto;max-height:38vh;display:block}
 .figure image{transform-box:view-box}
 .region-hot{fill:var(--paper-2)}
 .region-ring{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 5;opacity:.6;animation:ringin .3s var(--ease)}
@@ -1338,7 +1338,7 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .wardrobe-instruction{margin-top:5px;font-size:12px;color:var(--mute);line-height:1.4}
 .reset-outfit{margin-top:10px;min-height:44px;padding:8px 16px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
 .reset-outfit:disabled{opacity:.4;cursor:default}
-@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero-figure{max-width:440px}.figure-zone{width:52%}.figure{max-height:42vh}}
+@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero-figure{max-width:440px}.figure-zone{width:52%}.figure{max-height:36vh}}
 @media (max-width:380px){.garment-tray{gap:6px}.garment{padding:10px 4px}.garment img{height:68px}.g-name{font-size:10px}}
 
 /* work */
