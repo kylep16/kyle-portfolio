@@ -27,7 +27,7 @@ const SITE = {
   year: 2026,
 };
 
-const OUTFIT_MESSAGES = ["good choice.", "interesting.", "you might be onto something.", "fit approved."];
+
 
 /* ---------------------------------------------------------------------
    data/caseStudies.js. Never invent metrics.
@@ -291,19 +291,12 @@ const CASE_ORDER = ["pxi", "nep2une", "sweat2swim"];
 const GARMENTS = [
   { id: "tee-black",   name: "Gingham star tee",      meta: ["NEP2UNE", "HI I'M ✦", "COTTON"], category: "top",    z: 20, fit: { cx: 150, cy: 231, w: 204 } },
   { id: "denim-green", name: "Star patch wide denim", meta: ["NEP2UNE", "NDS 01", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
-  { id: "denim-black", name: "NDS wide denim",        meta: ["NEP2UNE", "NDS 02", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 424, w: 180 } },
+  { id: "denim-black", name: "NDS wide denim",        meta: ["NEP2UNE", "NDS 02", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 189 } },
   { id: "denim-cream", name: "Belted wide denim",     meta: ["NEP2UNE", "NDS 03", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
   // { id: "tee-white", name: "Gingham star tee, white", meta: ["NEP2UNE","HI I'M ✦","COTTON"], category: "top", z: 20, fit: { cx: 150, cy: 224, w: 200 } },
 ];
 // layering order: body → top → outerwear → bottom → shoes → hat → accessory (z per garment)
 const CATEGORY_REGION = { top: "torso", outerwear: "torso", bottom: "legs", shoes: "legs", hat: "head", accessory: "torso" };
-// loose sticker positions around the figure (desktop); up to 6 visible, rest behind "more clothes +"
-const STICKER_SLOTS = [
-  { left: "-6%", top: "4%", rot: -3 }, { right: "-8%", top: "8%", rot: 2 },
-  { left: "-4%", top: "54%", rot: -1 }, { right: "-6%", top: "58%", rot: 3 },
-  { left: "22%", top: "84%", rot: -2 }, { right: "20%", top: "84%", rot: 1 },
-];
-
 /* Exact NEP2UNE star cursor: paste the cleaned transparent PNG/SVG as a data URI.
    Until it's provided, the cursor falls back to a small dot. */
 const STAR_CURSOR_SRC = null;
@@ -512,21 +505,17 @@ function Navigation({ route, go, scrollTo }) {
 function Figure({ outfit, justEquipped, rm, target }) {
   const worn = Object.values(outfit).filter(Boolean).map(id => GARMENTS.find(g => g.id === id)).sort((a, b) => a.z - b.z);
   return (
-    <svg viewBox="0 0 300 640" className="figure" aria-label="Pictogram figure wearing your chosen NEP2UNE pieces" role="img">
-      {/* paper-doll mannequin: white body, black outline */}
-      <g fill="var(--paper)" stroke="var(--ink)" strokeWidth="3" strokeLinejoin="round">
-        <circle cx="150" cy="72" r="44" />
-        <rect x="136" y="112" width="28" height="30" rx="6" />
-        {/* arms: hang slightly away from the torso so sleeves read naturally */}
-        <rect x="70" y="146" width="28" height="182" rx="14" transform="rotate(8 84 146)" />
-        <rect x="202" y="146" width="28" height="182" rx="14" transform="rotate(-8 216 146)" />
-        {/* legs */}
+    <svg viewBox="0 0 300 600" className="figure" aria-label="Pictogram figure wearing your chosen NEP2UNE pieces" role="img">
+      {/* Rounded figure sized to the actual garment silhouettes. */}
+      <g fill="var(--paper)" stroke="var(--ink)" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M137 108 L137 145 L163 145 L163 108" />
+        <circle cx="150" cy="76" r="38" />
+        <path d="M111 154 Q88 158 85 189 L74 319 Q73 337 85 339 Q99 341 102 323 L118 205 M189 154 Q212 158 215 189 L226 319 Q227 337 215 339 Q201 341 198 323 L182 205" />
         <g className={target === "legs" ? "region-hot" : ""}>
-          <rect x="104" y="300" width="44" height="304" rx="14" />
-          <rect x="152" y="300" width="44" height="304" rx="14" />
+          <path d="M111 299 L113 555 L140 555 L150 340 L160 555 L187 555 L189 299 Z" />
+          <path d="M113 550 Q104 553 99 564 Q97 571 107 572 L140 572 L140 550 Z M160 550 L160 572 L193 572 Q203 571 201 564 Q196 553 187 550 Z" />
         </g>
-        {/* torso: broad rounded shoulders tapering to the waist, hips flare slightly */}
-        <path className={target === "torso" ? "region-hot" : ""} d="M104 138 C112 132 188 132 196 138 C206 146 208 160 206 176 L200 246 C198 270 198 290 202 310 L98 310 C102 290 102 270 100 246 L94 176 C92 160 94 146 104 138 Z" />
+        <path className={target === "torso" ? "region-hot" : ""} d="M126 141 Q150 135 174 141 Q195 145 195 173 L184 251 L188 313 L112 313 L116 251 L105 173 Q105 145 126 141 Z" />
       </g>
       {/* region hints while dragging */}
       {target === "torso" && <path d="M96 128 C106 120 194 120 204 128 C218 138 218 160 214 180 L208 252 L212 322 L88 322 L92 252 L86 180 C82 160 82 138 96 128 Z" className="region-ring" />}
@@ -544,29 +533,26 @@ function GarmentSticker({ g, on, style, onPointerDown, onClick, onKeyDown, ghost
     <button className={"garment " + (on ? "is-on " : "") + (ghost ? "is-ghost" : "")} style={style}
       onPointerDown={onPointerDown} onClick={onClick} onKeyDown={onKeyDown} aria-pressed={on} aria-label={`${on ? "Take off" : "Wear"} ${g.name}`} data-cursor>
       <img src={GARMENT_ASSETS[g.id].src} alt="" draggable="false" loading="lazy" decoding="async" />
-      <span className="g-meta" aria-hidden>{g.meta.join("  ·  ")}</span>
+      <span className="g-name" aria-hidden>{g.name}</span>
+      <span className="garment-check" aria-hidden>{on ? "✓" : ""}</span>
     </button>
   );
 }
 
-function Character({ onComplete }) {
+function Character() {
   const [outfit, setOutfit] = useState({});
-  const [msg, setMsg] = useState(null); const [just, setJust] = useState(null);
-  const [drag, setDrag] = useState(null); const [target, setTarget] = useState(null); const [page, setPage] = useState(0);
+  const [just, setJust] = useState(null);
+  const [drag, setDrag] = useState(null); const [target, setTarget] = useState(null);
   const zone = useRef(null); const rm = useReducedMotion(); const mob = useIsMobile();
-  const completed = useRef(false); const outfitRef = useRef({});
-  const categories = [...new Set(GARMENTS.map(g => g.category))];
+  const outfitRef = useRef({});
 
   const equip = useCallback(id => {
     const g = GARMENTS.find(x => x.id === id); const o = outfitRef.current;
     const next = { ...o, [g.category]: o[g.category] === id ? undefined : id };
     outfitRef.current = next; setOutfit(next);
-    const done = categories.every(c => next[c]);
-    if (next[g.category]) { setJust(id); setMsg(done ? "fit approved." : OUTFIT_MESSAGES[Object.values(next).filter(Boolean).length % 3]); }
-    else setMsg(null);
-    if (done && !completed.current) { completed.current = true; onComplete?.(); }
-    setTimeout(() => setJust(null), 700);
-  }, [onComplete]);
+    if (next[g.category]) setJust(id);
+    else setJust(null);
+  }, []);
 
   const startDrag = (e, g) => {
     if (mob) return; e.preventDefault();
@@ -583,8 +569,6 @@ function Character({ onComplete }) {
     window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
   };
 
-  const perPage = STICKER_SLOTS.length; const pages = Math.ceil(GARMENTS.length / perPage);
-  const visible = mob ? GARMENTS : GARMENTS.slice(page * perPage, page * perPage + perPage);
   const isOn = id => Object.values(outfit).includes(id);
   const dragG = drag && GARMENTS.find(g => g.id === drag.id);
 
@@ -592,20 +576,19 @@ function Character({ onComplete }) {
     <div className={"character " + (mob ? "is-mobile" : "")}>
       <div ref={zone} className="figure-zone" data-cursor>
         <Figure outfit={outfit} justEquipped={just} rm={rm} target={target} />
-        <p className={"figure-msg " + (msg ? "show" : "")} aria-live="polite">{msg}</p>
+
       </div>
-      <p className="wardrobe-hint">Style me. {mob ? "Tap a piece to wear it." : "Drag a piece onto the figure, or click it."}
-        {Object.values(outfit).some(Boolean) && <button className="reset-outfit" onClick={() => { outfitRef.current = {}; setOutfit({}); setMsg(null); }}>Reset outfit</button>}
-      </p>
-      <div className={mob ? "garment-tray" : "garment-cloud"} role="group" aria-label="NEP2UNE garments">
-        {visible.map((g, i) => {
-          const slot = STICKER_SLOTS[i] || {}; const style = mob ? {} : { left: slot.left, right: slot.right, top: slot.top, "--rot": slot.rot + "deg" };
-          return <GarmentSticker key={g.id} g={g} on={isOn(g.id)} style={style} ghost={drag?.id === g.id}
-            onPointerDown={e => startDrag(e, g)} onClick={() => { if (mob) equip(g.id); }}
-            onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); equip(g.id); } }} />;
-        })}
-        {!mob && pages > 1 && <button className="more-clothes" onClick={() => setPage(p => (p + 1) % pages)}>more clothes +</button>}
+      <div className="wardrobe-caption">
+        <p className="wardrobe-hint">Style a look with pieces I designed.</p>
+        <p className="wardrobe-instruction">{mob ? "Tap a piece to wear or remove it." : "Click a piece to wear it, or drag it onto the figure."}</p>
       </div>
+      <div className="garment-tray" role="group" aria-label="NEP2UNE garments">
+        {GARMENTS.map(g => (
+          <GarmentSticker key={g.id} g={g} on={isOn(g.id)} ghost={drag?.id === g.id}
+            onPointerDown={e => startDrag(e, g)} onClick={e => { if (mob || e.detail === 0) equip(g.id); }} />
+        ))}
+      </div>
+      <button className="reset-outfit" disabled={!Object.values(outfit).some(Boolean)} onClick={() => { outfitRef.current = {}; setOutfit({}); setJust(null); }}>Reset outfit</button>
       {dragG && !rm && <img src={GARMENT_ASSETS[dragG.id].src} alt="" className="garment-drag" style={{ transform: `translate(${drag.x}px,${drag.y}px) translate(-50%,-50%) scale(1.04)` }} aria-hidden />}
     </div>
   );
@@ -666,7 +649,6 @@ function ProjectPreview({ cs, go, index }) {
    views/Home
    --------------------------------------------------------------------- */
 function Home({ go, scrollTo }) {
-  const [nudge, setNudge] = useState(false);
   return (
     <main id="main">
       {/* HERO */}
@@ -679,9 +661,8 @@ function Home({ go, scrollTo }) {
             <Button onClick={() => scrollTo("work")} icon={ArrowDown}>View my work</Button>
             {SITE.resumeUrl && <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>}
           </div>
-          <p className={"hero-nudge " + (nudge ? "show" : "")} aria-hidden={!nudge}>now see what I actually make <ArrowDown size={13} /></p>
         </div>
-        <div className="hero-figure"><Character onComplete={() => setNudge(true)} /></div>
+        <div className="hero-figure"><Character /></div>
       </section>
 
       {/* WORK */}
@@ -1332,8 +1313,6 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 @keyframes subin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .hero-body{max-width:46ch;margin-top:16px;color:var(--char);font-size:17px;line-height:1.55}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
-.hero-nudge{margin-top:28px;font-family:var(--serif);font-style:italic;font-size:18px;display:inline-flex;gap:6px;align-items:center;opacity:0;transform:translateY(6px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.hero-nudge.show{opacity:1;transform:none}
 .hero-figure{position:relative;justify-self:center;width:100%;max-width:560px}
 .character{position:relative;display:flex;flex-direction:column;align-items:center}
 .figure-zone{position:relative;width:56%;padding:12px}
@@ -1342,23 +1321,25 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .region-hot{fill:var(--paper-2)}
 .region-ring{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 5;opacity:.6;animation:ringin .3s var(--ease)}
 @keyframes ringin{from{opacity:0;transform:scale(1.05)}to{opacity:.6}}
-.garment-cloud{position:absolute;inset:0;pointer-events:none}
-.garment{position:absolute;width:24%;pointer-events:auto;transform:rotate(var(--rot,0deg));transition:transform .35s var(--ease),filter .35s var(--ease),opacity .25s;filter:drop-shadow(0 6px 10px rgba(0,0,0,.12));touch-action:none;user-select:none;-webkit-user-select:none}
-.garment img{width:100%;height:auto;display:block;pointer-events:none}
-.garment:hover{transform:rotate(calc(var(--rot,0deg) * .3)) scale(1.04);filter:drop-shadow(0 12px 18px rgba(0,0,0,.18));z-index:5}
-.garment.is-on{opacity:.45}.garment.is-ghost{opacity:.15}
-.g-meta{position:absolute;left:50%;top:100%;transform:translate(-50%,2px);white-space:nowrap;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);opacity:0;transition:opacity .25s}
-.garment:hover .g-meta,.garment:focus-visible .g-meta{opacity:1}
+.garment-tray{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;margin-top:18px}
+.garment{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0;padding:12px 6px 10px;border:1px solid var(--line);border-radius:8px;transition:background .2s,border-color .2s;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+@media (pointer:fine){.garment{touch-action:none}}
+.garment img{width:100%;height:88px;object-fit:contain;display:block;pointer-events:none}
+.garment:hover{background:var(--paper-2);border-color:var(--mute)}
+.garment.is-on{background:var(--paper-2);border-color:var(--ink)}
+.garment.is-ghost img{opacity:.3}
+.g-name{font-size:11px;line-height:1.35;text-align:center;min-height:30px}
+.garment-check{position:absolute;top:5px;right:7px;font-size:14px;line-height:1}
 .garment-drag{position:fixed;left:0;top:0;width:150px;z-index:80;pointer-events:none;filter:drop-shadow(0 18px 24px rgba(0,0,0,.25))}
-.more-clothes{position:absolute;right:0;bottom:-6px;pointer-events:auto;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--mute)}.more-clothes:hover{color:var(--ink)}
-.garment-tray{display:flex;gap:14px;overflow-x:auto;padding:8px 4px 12px;width:100%;scrollbar-width:none}.garment-tray .garment{position:static;flex:0 0 auto;width:96px;transform:none}
-.figure-msg{position:absolute;left:8%;top:6%;font-family:var(--serif);font-style:italic;font-size:22px;opacity:0;transform:translateY(6px);transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
-.figure-msg.show{opacity:1;transform:none}
 .snap-in{animation:snap .6s cubic-bezier(.34,1.56,.64,1)}
 @keyframes snap{0%{opacity:0;transform:scale(1.08) translateY(-10px)}100%{opacity:1;transform:none}}
-.wardrobe-hint{color:var(--mute);margin-top:8px;line-height:1.4;font-family:var(--serif);font-style:italic;font-size:15px;display:flex;gap:14px;align-items:baseline}
-.reset-outfit{font-family:var(--sans);font-style:normal;font-size:12px;color:var(--mute);text-decoration:underline;text-underline-offset:3px}.reset-outfit:hover{color:var(--ink)}
-@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero-figure{max-width:440px}.figure-zone{width:52%}.figure{max-height:48vh}}
+.wardrobe-caption{text-align:center;margin-top:8px}
+.wardrobe-hint{font-size:15px;color:var(--ink);line-height:1.4}
+.wardrobe-instruction{margin-top:5px;font-size:12px;color:var(--mute);line-height:1.4}
+.reset-outfit{margin-top:10px;min-height:44px;padding:8px 16px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
+.reset-outfit:disabled{opacity:.4;cursor:default}
+@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero-figure{max-width:440px}.figure-zone{width:52%}.figure{max-height:42vh}}
+@media (max-width:380px){.garment-tray{gap:6px}.garment{padding:10px 4px}.garment img{height:68px}.g-name{font-size:10px}}
 
 /* work */
 .section-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 var(--pad) 28px;border-bottom:1px solid var(--line);margin:0 0 56px}
