@@ -615,13 +615,19 @@ function Character({ onComplete }) {
    components/ProjectPreview: editorial project block (home)
    --------------------------------------------------------------------- */
 function ProjectArt({ slug, hovered }) {
-  // Tasteful placeholder compositions; swap for real imagery via lazy <img>.
+  // Use the actual product screens for PXI's project card and case-study hero.
   if (slug === "pxi") return (
     <div className="art art-pxi">
-      {[0, 1, 2].map(i => <div key={i} className="phone" style={{ transform: `translate(${(i - 1) * (hovered ? 116 : 108)}%, ${i === 1 ? -6 : 0}%) rotate(${(i - 1) * 3}deg)` }}>
-        <div className="phone-bar" /><div className="phone-block" style={{ height: "38%" }} /><div className="phone-row" /><div className="phone-row short" /><div className="phone-block" style={{ height: "22%", marginTop: "auto" }} />
-      </div>)}
-      <span className="art-label">PXI mobile screens</span>
+      {[
+        ["camera", "PXI shared camera with capture and zoom controls"],
+        ["passport-cover", "PXI personal Passport cover"],
+        ["studio-tickets", "PXI Event Studio with event tickets and discovery"],
+      ].map(([screen, alt], i) => (
+        <img key={screen} className="pxi-preview-screen" src={`/assets/pxi/${screen}.webp`}
+             alt={alt} width={508} height={1100} loading="lazy" decoding="async"
+             style={{ "--screen-rotation": `${(i - 1) * 3}deg`, "--screen-lift": i === 1 && hovered ? "-6px" : "0px" }} />
+      ))}
+      <span className="art-label">Shared camera, personal Passport, and event discovery.</span>
     </div>);
   if (slug === "sweat2swim") return (
     <div className="art art-s2s">
@@ -1364,6 +1370,12 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .8s var(--ease);transform:translate(var(--px),var(--py))}
 .project-link:hover .art{transform:translate(var(--px),var(--py)) scale(1.015)}
 .art-label{position:absolute;right:16px;bottom:12px;font-size:11px;color:var(--mute);letter-spacing:.02em}
+.art-pxi{gap:4%;padding:24px 20px 48px;--px:0px;--py:0px}
+.pxi-preview-screen{display:block;width:auto;height:100%;max-width:27%;object-fit:contain;border-radius:12px;filter:drop-shadow(0 14px 16px rgba(0,0,0,.18));transform:translateY(var(--screen-lift)) rotate(var(--screen-rotation));transition:transform .4s var(--ease)}
+.art-pxi .art-label{left:12px;right:12px;bottom:12px;text-align:center}
+.project-media:has(.art-pxi) .project-cta{top:14px;bottom:auto}
+@media (max-width:640px){.art-pxi{gap:4%;padding:16px 12px 42px}.art-pxi .art-label{font-size:10px;line-height:1.35}.pxi-preview-screen{border-radius:6px}}
+@media (prefers-reduced-motion:reduce){.art-pxi,.pxi-preview-screen{transition:none!important}.pxi-preview-screen{transform:rotate(var(--screen-rotation))}}
 .phone{position:absolute;width:20%;max-width:180px;min-width:110px;aspect-ratio:9/19;background:#fff;border-radius:18px;border:1px solid var(--line);padding:10px;display:flex;flex-direction:column;gap:8px;transition:transform .8s var(--ease);box-shadow:0 20px 40px -20px rgba(0,0,0,.25)}
 .phone-bar{width:36%;height:4px;background:var(--line);border-radius:2px;align-self:center}.phone-block{background:var(--paper-2);border-radius:8px}.phone-row{height:8px;background:var(--paper-2);border-radius:4px}.phone-row.short{width:60%}
 .phone:nth-child(2) .phone-block:first-of-type{background:var(--accent)}
