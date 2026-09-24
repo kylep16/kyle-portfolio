@@ -1280,6 +1280,7 @@ const CSS = `
 :root{--paper:#F5F4EF;--paper-2:#ECEAE3;--ink:#000;--char:#2B2B2B;--mute:#77756D;--line:#DAD8CF;--accent:#2534E8;--gold:#B79A3A;--gold-2:#E4CC7A;
  --serif:'Instrument Serif',Georgia,serif;--sans:'Schibsted Grotesk',system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--pad:clamp(20px,5vw,72px)}
 *{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper)}
 .site{font-family:var(--sans);color:var(--ink);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
 .site,.site a,.site button{cursor:none}
 @media (pointer:coarse),(max-width:767px){.site,.site a,.site button{cursor:auto}}
