@@ -22,9 +22,9 @@ export function ChapterNav({ sections, label = 'Page chapters', sidebar = false 
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
-    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('scroll', schedule, { passive: true, capture: true });
     window.addEventListener('resize', schedule);
-    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule, true); window.removeEventListener('resize', schedule); };
   }, [sections]);
   useEffect(() => {
     const element = nav.current;

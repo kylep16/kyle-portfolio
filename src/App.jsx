@@ -6,7 +6,7 @@ import GlassDock from "./GlassDock.jsx";
 import CursorTrail from "./CursorTrail.jsx";
 import "./playground.css";
 import { CASE_STUDIES, CASE_ORDER } from "./caseStudies.js";
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import {
   ArrowRight, X, Undo2, Redo2,
   Trash2, Eraser, PenLine, Sticker as StickerIcon, Palette, ChevronLeft,
@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Recentered the hero in the space above the dock, reserved a separate reading area so navigation cannot cover text, and replaced the outlined corner badge with Kyle Potente’s name. Simplified the clothing-rail footer to a direct nep2une.shop link, removed Portfolio from the top links, and returned Work to the dock." },
   { date: "2026-10-04", tags: ["Site"], note: "Moved Resume, LinkedIn, Portfolio, and GitHub to the top-right header. Added About Me to a compact bottom dock alongside NEP2UNE and Create, linking to the homepage bio from every page." },
   { date: "2026-10-04", tags: ["Site"], note: "Replaced the glass top navigation with a minimal outlined name badge and LinkedIn, Email, and Resume links. Kept the bottom dock as the main navigation on every page and adjusted the hero and reading offsets for the simpler header." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Anchored every steel hook to the rack across screen sizes and carousel depth. Hanger bodies now swing from the hook joint with damped pendulum physics; mouse and touch swipes pull the rack directly before springing onto the next garment." },
@@ -218,8 +219,9 @@ function ModalDialog({ children, label, labelledBy, onClose }) {
   useEffect(() => { close.current = onClose; }, [onClose]);
   useEffect(() => {
     const previous = document.activeElement;
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const scroll = document.querySelector('.portfolio-scroll');
+    const overflow = scroll.style.overflow;
+    scroll.style.overflow = "hidden";
     const focusable = () => [...element.current.querySelectorAll('button:not([disabled]),a[href],input,select,textarea,[tabindex="0"]')];
     (element.current.querySelector('[autofocus]') || focusable()[0] || element.current).focus();
     const key = event => {
@@ -232,7 +234,7 @@ function ModalDialog({ children, label, labelledBy, onClose }) {
       }
     };
     document.addEventListener('keydown', key);
-    return () => { document.body.style.overflow = overflow; document.removeEventListener('keydown', key); previous?.focus({ preventScroll: true }); };
+    return () => { scroll.style.overflow = overflow; document.removeEventListener('keydown', key); previous?.focus({ preventScroll: true }); };
   }, []);
   return <div ref={element} className="modal-bg" role="dialog" aria-modal="true" aria-label={label} aria-labelledby={labelledBy} tabIndex={-1} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>{children}</div>;
 }
@@ -241,15 +243,20 @@ function ModalDialog({ children, label, labelledBy, onClose }) {
    components/PortfolioHeader
    --------------------------------------------------------------------- */
 function PortfolioHeader({ go }) {
-  return <header className="portfolio-header">
-    <a className="portfolio-badge" href="#/" aria-label="Kyle Potente home" onClick={event => { event.preventDefault(); go({ name: "home" }); }}>
-      <span className="portfolio-monogram" aria-hidden="true">{SITE.mark}</span>
-      <span>{SITE.name}</span>
-    </a>
-    <nav className="portfolio-contact" aria-label="Portfolio and professional links">
+  const header = useRef(null);
+  useLayoutEffect(() => {
+    const element = header.current;
+    const measure = () => element.closest('.site').style.setProperty('--header-height', `${element.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return <header ref={header} className="portfolio-header">
+    <a className="portfolio-name" href="#/" aria-label="Kyle Potente home" onClick={event => { event.preventDefault(); go({ name: "home" }); }}>{SITE.name}</a>
+    <nav className="portfolio-contact" aria-label="Professional links">
       <a href={SITE.resumeUrl} target="_blank" rel="noreferrer">Resume</a>
       <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-      <a href="#/" onClick={event => { event.preventDefault(); go({ name: "home", anchor: "work" }); }}>Portfolio</a>
       <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>
     </nav>
   </header>;
@@ -670,9 +677,16 @@ function ChangelogPage({ go }) {
 }
 
 export default function App() {
+  const scroll = useRef(null);
   const [route, setRoute] = useState(parseHash);
   const pendingAnchor = useRef(null); const rm = useReducedMotion();
-  const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" });
+  const scrollTo = id => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: rm ? "auto" : "smooth", block: "start" });
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+  };
   const go = next => {
     pendingAnchor.current = next.anchor || null;
     const h = hashFor(next);
@@ -694,7 +708,7 @@ export default function App() {
       route.name === "gallery" ? "Visitor Museum | Kyle Potente" : "Changelog | Kyle Potente";
     const a = pendingAnchor.current; pendingAnchor.current = null;
     if (a) { const t = setTimeout(() => scrollTo(a), 80); return () => clearTimeout(t); }
-    window.scrollTo(0, 0);
+    scroll.current.scrollTo(0, 0);
     const m = document.getElementById("main");
     if (m) { m.setAttribute("tabindex", "-1"); m.focus({ preventScroll: true }); }
   }, [route]);
@@ -709,8 +723,10 @@ export default function App() {
       <style>{CSS}</style>
       <a href="#main" className="skip">Skip to content</a>
       <CursorTrail />
-      <PortfolioHeader go={go} />
-      <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
+      <div ref={scroll} className="portfolio-scroll" tabIndex={-1}>
+        <PortfolioHeader go={go} />
+        <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
+      </div>
       <GlassDock scrollTo={scrollTo} go={go} route={route} />
     </div>
   );
@@ -724,8 +740,8 @@ const CSS = `
 :root{--paper:#F5F4EF;--paper-2:#ECEAE3;--ink:#000;--char:#2B2B2B;--mute:#77756D;--line:#DAD8CF;--accent:#2534E8;--gold:#B79A3A;--gold-2:#E4CC7A;
  --serif:'Instrument Serif',Georgia,serif;--sans:Helvetica,'Helvetica Neue',Arial,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--pad:clamp(20px,5vw,72px)}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--paper)}
-.site{font-family:var(--sans);color:var(--ink);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
+html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--paper)}
+.site{--dock-clearance:128px;--header-height:76px;height:100dvh;overflow:hidden;font-family:var(--sans);color:var(--ink);background:var(--paper);min-height:0;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
 .site a,.site button,.site [role=button]{cursor:pointer}
 h1,h2,h3{margin:0;font-weight:400}
 h1,.site h2{font-family:var(--serif);letter-spacing:-.01em;line-height:1.02}
@@ -736,20 +752,20 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:100}.skip:focus{left:8px}
 .muted{color:var(--mute)}
+.portfolio-scroll{height:calc(100dvh - var(--dock-clearance));overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-padding:0 0 16px;outline:none}
 .page{transition:opacity .26s var(--ease),transform .26s var(--ease)}.page-out{opacity:0;transform:translateY(6px)}
 .cursor-trail{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
 .cursor-trail[hidden]{display:none}
 .site input,.site textarea{cursor:text}
 
 /* Minimal identity and contact header. The dock owns site navigation. */
-.portfolio-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px var(--pad)}
-.portfolio-badge{display:inline-flex;align-items:center;gap:14px;min-height:48px;padding:5px 14px 5px 10px;border:1.5px solid var(--ink);border-radius:3px;font:500 16px/1.2 monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
-.portfolio-monogram{font:400 34px/1 var(--serif);letter-spacing:-.06em;text-transform:none}
+.portfolio-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px var(--pad)}
+.portfolio-name{display:inline-flex;align-items:center;min-height:44px;font:600 16px/1.2 var(--sans);letter-spacing:.02em;white-space:nowrap}
 .portfolio-contact{display:flex;align-items:center;gap:28px;font:400 13px/1.2 monospace;letter-spacing:.1em;text-transform:uppercase}
 .portfolio-contact>a{display:flex;align-items:center;min-height:44px;position:relative}
 .portfolio-contact>a::after{content:"";position:absolute;bottom:8px;left:0;right:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .2s}
 .portfolio-contact>a:hover::after,.portfolio-contact>a:focus-visible::after{transform:scaleX(1)}
-@media(max-width:600px){.portfolio-header{padding:18px 24px 8px;gap:8px 16px;flex-wrap:wrap}.portfolio-badge{min-height:42px;padding:4px 10px;gap:10px;font-size:12px;letter-spacing:.08em}.portfolio-monogram{font-size:28px}.portfolio-contact{gap:14px;font-size:10px;letter-spacing:.06em;margin-left:auto}}
+@media(max-width:600px){.portfolio-header{padding:12px 24px 4px;gap:8px 16px;flex-wrap:wrap}.portfolio-name{font-size:15px}.portfolio-contact{gap:14px;font-size:10px;letter-spacing:.06em;margin-left:auto}}
 @media(prefers-reduced-motion:reduce){.portfolio-contact>a::after{transition:none}}
 
 /* buttons */
@@ -845,7 +861,7 @@ a{color:inherit;text-decoration:none}
 [data-route=changelog] .log{border-top:0;padding:24px 0 40px}
 
 /* footer */
-.foot{border-top:1px solid var(--line);padding:48px var(--pad) 125px;display:flex;justify-content:space-between;gap:40px;font-size:14px}
+.foot{border-top:1px solid var(--line);padding:48px var(--pad);display:flex;justify-content:space-between;gap:40px;font-size:14px}
 .mark-lg{font-family:var(--serif);font-size:40px;line-height:1}.foot-tag{font-family:var(--serif);font-style:italic;font-size:18px;margin:14px 0 6px}
 .foot-cols{display:flex;gap:64px}.foot-cols h3{font-size:13px;color:var(--mute);margin-bottom:8px}.foot-cols div{display:flex;flex-direction:column}.foot-cols a,.foot-cols button{text-align:left;padding:3px 0}
 @media (max-width:640px){.foot{flex-direction:column}.foot-cols{gap:40px}}

@@ -184,6 +184,6 @@ export default function ClothingRail({ reduced }) {
       </div>)}
     </div>
     <div className="rail-controls"><button type="button" aria-label="Previous garment" onClick={() => step(-1)}><ChevronLeft size={18} /></button><div className="rail-caption" aria-live={paused || engaged || reduced ? 'polite' : 'off'} aria-atomic="true"><span>{product.catalogName}</span><small>{product.category} · {String(active + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}</small></div><button type="button" aria-label="Next garment" onClick={() => step(1)}><ChevronRight size={18} /></button>{!reduced && <button type="button" className="rail-pause" aria-label={paused ? 'Play clothing animation' : 'Pause clothing animation'} onClick={() => setPaused(value => !value)}>{paused ? <Play size={13} /> : <Pause size={13} />}</button>}</div>
-    <div className="rail-footer"><p className="rail-hint">Scroll sideways. Give it a little swing.</p><a href={`https://nep2une.shop/products/${product.id}`} target="_blank" rel="noreferrer">View this piece <ArrowUpRight size={12} /></a></div>
+    <div className="rail-footer"><a href="https://nep2une.shop" target="_blank" rel="noreferrer">nep2une.shop <ArrowUpRight size={12} /></a></div>
   </div>;
 }

@@ -41,7 +41,7 @@
 
 /* Case studies use a persistent side index, separate from archive chapters. */
 .case-layout{max-width:1400px;display:grid;grid-template-columns:170px minmax(0,1fr);gap:clamp(32px,4vw,64px);padding-top:48px}
-.case-sidebar{position:sticky;top:24px;align-self:start;max-height:calc(100svh - 48px);overflow-y:auto;scrollbar-width:thin}
+.case-sidebar{position:sticky;top:24px;align-self:start;max-height:calc(100dvh - var(--dock-clearance) - 48px);overflow-y:auto;scrollbar-width:thin}
 .case-index-label{font-size:9px;letter-spacing:.12em;color:var(--mute);margin:35px 0 13px;padding-left:12px}
 .chapter-nav-side{position:static;display:flex;flex-direction:column;gap:3px;padding:0 0 0 0;border:0;border-left:1px solid #dce0d6;margin:0;background:transparent;backdrop-filter:none;overflow:visible}
 .chapter-nav-side>a{font-size:12px;line-height:1.5;padding:9px 12px;border-radius:0 8px 8px 0;border-left:2px solid transparent;margin-left:-1px}

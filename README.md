@@ -27,11 +27,15 @@ The connected GitHub repository deploys to Vercel on updates to `main`.
 | Current garments and future photo slots | `src/brandData.js` | `#/creations` |
 | Shirt creator, visitor gallery, site details, changelog | `src/App.jsx` | `#/studio`, `#/gallery`, `#/changelog` |
 
-The header contains a home badge plus Resume, LinkedIn, Portfolio, and GitHub
-links. Portfolio opens selected work. The compact dock stays on every page:
-About Me opens the homepage bio, NEP2UNE opens the garment archive, and Create
-opens the shirt studio. The studio links directly to the
-museum; saved designs use localStorage and remain local to the visitor's browser.
+The header shows Kyle Potente’s name plus Resume, LinkedIn, and GitHub links.
+The dock stays on every page: Work opens selected projects, About Me opens the
+homepage bio, NEP2UNE opens the garment archive, and Create opens the shirt
+studio. The studio links directly to the museum; saved designs use localStorage
+and remain local to the visitor’s browser.
+
+The page scrolls within a reading area above the dock, whose measured height
+reserves space so it cannot cover text. The homepage hero uses the remaining
+height beneath the header. The rail links directly to nep2une.shop.
 
 `src/GlassDock.jsx` owns shortcut destinations. `src/playground.css` styles the
 studio, save dialog, framing sequence, and museum in the shared editorial palette.
