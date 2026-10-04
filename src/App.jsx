@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Anchored every steel hook to the rack across screen sizes and carousel depth. Hanger bodies now swing from the hook joint with damped pendulum physics; mouse and touch swipes pull the rack directly before springing onto the next garment." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Fitted steel shoulder wires inside the shirt and jacket collars and downsized the pants clips. Restored the native cursor with a fading electric-blue, white, and lime-green motion trail, disabled for touch and reduced-motion preferences." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Shortened the steel hanger hooks and lifted shirts, jackets, and pants closer to the rail. Re-aligned the shoulder wires, neckline layers, and waistband clips with the raised garments." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Added the official NEP2UNE logo to a dedicated clothing-archive shortcut and made Create open the shirt builder. Restyled the studio, framing moment, and visitor museum with the portfolio’s paper palette, Helvetica controls, rounded panels, and consistent exhibit frames. Kept drawing, stickers, undo/redo, and browser-local saving." },

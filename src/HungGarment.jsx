@@ -23,7 +23,7 @@ function Clip({ x, y, metal }) {
   </g>;
 }
 
-export default function HungGarment({ product }) {
+export default function HungGarment({ product, bodyRef }) {
   const uid = useId();
   const metal = `url(#${uid}-metal)`;
   const shoulder = `${uid}-shoulder`;
@@ -45,15 +45,19 @@ export default function HungGarment({ product }) {
       </g>
       {!pants && <clipPath id={`${uid}-neck`}><path d={`M${160 - fit.neck} 30H${160 + fit.neck}V39Q160 51 ${160 - fit.neck} 39Z`} /></clipPath>}
     </defs>
-    <g data-layer="behind">
-      {pants ? <path d={`M${clips[0] - 11} ${clipY - 6}H${clips[1] + 11}M160 30V${clipY - 6}`} fill="none" stroke={metal} strokeWidth="3.4" strokeLinecap="round" /> : <use href={`#${shoulder}`} />}
+    <g className="hanger-body" ref={bodyRef}>
+      <g data-layer="behind">
+        {pants ? <path d={`M${clips[0] - 11} ${clipY - 6}H${clips[1] + 11}M160 30V${clipY - 6}`} fill="none" stroke={metal} strokeWidth="3.4" strokeLinecap="round" /> : <use href={`#${shoulder}`} />}
+      </g>
+      <image className="rail-garment-image" href={product.image} x={x} y={y} width={fit.width} height={fit.height} preserveAspectRatio="none" />
+      <g className="hanger-front" data-layer="front">
+        {!pants && <use href={`#${shoulder}`} clipPath={`url(#${uid}-neck)`} />}
+        {pants && clips.map((position, index) => <Clip key={index} x={position} y={clipY} metal={metal} />)}
+      </g>
     </g>
-    <image className="rail-garment-image" href={product.image} x={x} y={y} width={fit.width} height={fit.height} preserveAspectRatio="none" />
-    <g className="hanger-front" data-layer="front">
-      {!pants && <use href={`#${shoulder}`} clipPath={`url(#${uid}-neck)`} />}
+    <g className="hanger-hook">
       <path d={hookShape} fill="none" stroke="#727c77" strokeWidth="3.2" strokeLinecap="round" />
       <path d={hookShape} fill="none" stroke="#e5e9e2" strokeWidth="1.2" strokeLinecap="round" />
-      {pants && clips.map((position, index) => <Clip key={index} x={position} y={clipY} metal={metal} />)}
     </g>
   </svg>;
 }
