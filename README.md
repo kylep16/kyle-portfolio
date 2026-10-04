@@ -63,12 +63,6 @@ public https://nep2une.shop storefront and its product JSON. Product description
 use confirmed materials and construction details. Website publication dates are
 not claimed as release dates. Eight garments are included in `src/brandData.js`.
 
-The case-study hierarchy was informed by https://www.cindyly.design/work/reddit:
-short overview, metadata, clear section headings, decisions, captions, reflection,
-and chapter navigation. Case studies have a sticky side index on desktop and a
-scrollable chapter bar on mobile, with the current section highlighted as you
-read. Project content and outcomes are Kyle's existing work.
-
 PXI's older public camera assets are explicitly labeled as the shipped baseline.
 The newer camera direction is a prototype. The new disc section is a media
 walkthrough template until its states, purpose, status, and approved exports are
