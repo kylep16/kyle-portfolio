@@ -2,15 +2,15 @@ import { useEffect, useId, useRef, useState } from "react";
 import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, FileText, FolderOpen, Code2, Mail, Pause, Play, Shirt } from "lucide-react";
 import "./home.css";
 
-// Add new clothing photography here. Empty slots are intentional until assets arrive.
+// A short preview of the full NEP2UNE archive.
 const CLOTHING_SHOWCASE = [
-  { id: "collection", title: "The collection", src: null, alt: "" },
-  { id: "details", title: "A closer look", src: null, alt: "" },
-  { id: "process", title: "From sketch to stitch", src: null, alt: "" },
+  { id: "collection", title: "VESSEL / the lookbook", src: "/assets/nep/current/exp-04-bl-vessel-2.webp", alt: "NEP2UNE VESSEL styled in a full outfit" },
+  { id: "details", title: "SWEATS 02 / detachable stars", src: "/assets/nep/current/sweats-02-gray-1.webp", alt: "The detachable stars on NEP2UNE SWEATS 02" },
+  { id: "process", title: "CANVAS / lace & construction", src: "/assets/nep/current/exp-02-canvas-jacket-navy-2.webp", alt: "Lace construction on the NEP2UNE canvas jacket" },
 ];
 
 const PROJECT_COPY = {
-  pxi: { title: "Making nights into memories.", summary: "Shared cameras, event discovery, and a Passport that connects it all.", status: "Mobile product", detail: "Mobile UI & frontend implementation" },
+  pxi: { title: "Making nights into memories.", summary: "Camera personality, interaction prototypes, and a shared event experience.", status: "Mobile product", detail: "Mobile UI & frontend implementation" },
   nep2une: { title: "A brand built from scratch.", summary: "Design, storefront, and releases for my independent clothing brand.", status: "Founder", detail: "$120K+ lifetime sales" },
   sweat2swim: { title: "From first look to checkout.", summary: "Shopify release pages and a storefront designed around the collection.", status: "E-commerce", detail: "Shopify storefront design" },
 };
@@ -164,7 +164,7 @@ function GlassDock({ site, scrollTo, go }) {
     <a href={site.resumeUrl} target="_blank" rel="noreferrer">{item("Resume", FileText, "dock-cream")}</a>
     <a href={site.linkedin} target="_blank" rel="noreferrer">{item("LinkedIn", LinkedInMark, "dock-blue")}</a>
     <a href={site.github} target="_blank" rel="noreferrer">{item("GitHub", Code2, "dock-gray")}</a>
-    <button type="button" onClick={() => go({ name: "studio" })}>{item("Create", Shirt, "dock-pink")}</button>
+    <button type="button" onClick={() => go({ name: "creations" })}>{item("Create", Shirt, "dock-pink")}</button>
   </nav>;
 }
 
@@ -185,7 +185,7 @@ export default function Home({ go, scrollTo, site, garments, garmentAssets, proj
       <div className="clothing-windows">{CLOTHING_SHOWCASE.map((piece, index) => <div key={piece.id} className={`clothing-window clothing-window-${index}`}><div className="window-bar"><span>● ● ●</span><span>{piece.title}</span><span /></div>
         {piece.src ? <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" /> : <div className="clothing-placeholder"><Shirt size={index === 0 ? 56 : 38} strokeWidth={.7} aria-hidden="true" /><span>{piece.title}</span><small>Coming into focus soon.</small></div>}
       </div>)}</div>
-      <div id="play" className="create-strip"><p>A little room to play.<br /><em>Make something of your own.</em></p><div><button type="button" className="home-pill" onClick={() => go({ name: "studio" })}>Create a shirt <ArrowUpRight size={16} /></button><a href="#/gallery" onClick={event => { event.preventDefault(); go({ name: "gallery" }); }}>Visitor gallery <ArrowUpRight size={15} /></a></div></div>
+      <div id="play" className="create-strip"><p>The garments. The shoots.<br /><em>The story behind it all.</em></p><div><a className="home-pill" href="#/creations">Explore NEP2UNE <ArrowUpRight size={16} /></a><button type="button" onClick={() => go({ name: "studio" })}>Create a shirt <ArrowUpRight size={15} /></button></div></div>
     </section>
     <section id="about" className="home-about" aria-labelledby="about-h"><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2><div><p>I’m Kyle, a product designer with a computer science background. I design mobile experiences at PXI Labs, build Shopify storefronts, and run NEP2UNE, my independent clothing brand.</p><p className="home-skills">Figma · React · TypeScript · CSS · Shopify · Interaction design</p></div></section>
     <section id="contact" className="home-contact" aria-labelledby="contact-h"><h2 id="contact-h">Let’s make something <em>people remember.</em></h2><a className="home-pill" href={`mailto:${site.email}`}><Mail size={17} /> Say hello <ArrowUpRight size={16} /></a></section>

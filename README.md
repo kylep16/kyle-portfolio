@@ -1,49 +1,75 @@
-# Welcome To My Portfolio!
+# Kyle Potente's Portfolio
 
-Vite + React. Single-component app in `src/App.jsx`.
+React + Vite. The app keeps a compact homepage, three editorial case studies,
+a NEP2UNE creations archive, a shirt studio, and a local visitor gallery.
 
 ## Run locally
-    npm install
-    npm run dev
+
+```sh
+npm ci
+npm run dev
+npm run build
+npm run lint
+```
 
 ## Deploy
-Push to GitHub, import the repo at vercel.com. Vite is auto-detected.
-Every push to `main` redeploys.
 
-## Weekly case study updates
-All case study content lives in the `CASE_STUDIES` object at the top of
-`src/App.jsx`. Edit copy, sections, and metrics there — no component changes needed.
+The connected GitHub repository deploys to Vercel on updates to `main`.
 
-    git add . && git commit -m "Week of __ update" && git push
+## Content and routes
 
-## Before sending to recruiters
-- Put your résumé at `public/resume.pdf`
-- Fill in `SITE.email`, `SITE.linkedin`, `SITE.resumeUrl` in `src/App.jsx`
-- Add the NEP2UNE star cursor: set `STAR_CURSOR_SRC` to `/assets/star.png`
+| Content | File | Route |
+| --- | --- | --- |
+| Short homepage and animated hanger rail | `src/Home.jsx`, `src/home.css` | `#/` |
+| Case-study copy and approved media | `src/caseStudies.js` | `#/work/pxi`, `#/work/nep2une`, `#/work/sweat2swim` |
+| Case-study renderer and shared media panels | `src/CaseStudy.jsx`, `src/editorial.css` | All case-study routes |
+| Brand story and lookbook | `src/Creations.jsx` | `#/creations` |
+| Current garments and future photo slots | `src/brandData.js` | `#/creations` |
+| Shirt creator, visitor gallery, site details, changelog | `src/App.jsx` | `#/studio`, `#/gallery`, `#/changelog` |
 
-## Assets
-- `public/assets/clothes/*.webp` — die-cut NEP2UNE garment stickers
-- Add garments: drop the processed image in that folder, add an object to `GARMENTS`
+Create in the main navigation and glass dock opens the NEP2UNE archive. The shirt
+creator remains accessible from the archive and homepage. Gallery data uses
+localStorage; it is local to the visitor's browser.
 
-## Gallery storage
-Uses `localStorage` (see `utils/storage` section in `src/App.jsx`).
-A Supabase adapter is written and commented there — swap `const storage = ...` to enable.
+## Photography template
 
-## Homepage layout (October 2026)
-The homepage lives in `src/Home.jsx`, with styling in `src/home.css`.
-It leads with a short introduction and a hanger carousel, followed by the
-three case-study cards and a clothing photography section. Full case studies,
-the shirt creator and the visitor gallery retain their existing routes.
+`public/NEP2UNE_Photo_Upload_Template.md` is downloadable from the creations page.
+It lists the next campaign's setting, outfit, detail, candid, and sample slots.
+Add a chapter in `src/Creations.jsx` with a title, short narrative, captions, and
+credits, replacing its `MediaSlot` components with `Figure` components. Images
+live in `public/assets/nep/`. Use `fit="contain"` for uncropped photos or UI exports;
+use `fit="cover"` only when a crop preserves the subject.
 
-- Add carousel pieces to `GARMENTS` and `GARMENT_ASSETS` in `src/App.jsx`.
-- Add future clothing photography to `CLOTHING_SHOWCASE` in `src/Home.jsx`:
-  set each slot's `src` to a public asset path and write its `alt` text.
-- Update concise homepage project copy in `PROJECT_COPY`.
-- Add dated updates to `CHANGELOG` in `src/App.jsx`; the footer uses the newest date.
-- The rail supports arrows, keyboard, horizontal wheel input and touch swipes.
-  Its automatic motion pauses on hover/focus, while offscreen, or in a hidden tab.
-  Reduced-motion preferences disable autoplay and animated card transitions.
+All editorial media panels use a bounded 4:3 stage, at most 453 × 340 CSS pixels.
+On narrow screens they form one column. The garment index has a separate 4:5
+product stage, with front photography and a detail revealed on hover or focus.
 
-Typography is served locally from `public/assets/fonts`; the third-party font
-licenses are alongside the files. `Kyle Block` is an original block display font.
-Rebuild it with `python scripts/build-block-font.py` (requires `fonttools`).
+## Sources and design status
+
+The October 2026 catalog snapshot and current photography come from the owner's
+public https://nep2une.shop storefront and its product JSON. Product descriptions
+use confirmed materials and construction details. Website publication dates are
+not claimed as release dates. Eight garments are included in `src/brandData.js`.
+
+The case-study hierarchy was informed by https://www.cindyly.design/work/reddit:
+short overview, metadata, clear section headings, decisions, captions, reflection,
+and chapter navigation. Project content and outcomes are Kyle's existing work.
+
+PXI's older public camera assets are explicitly labeled as the shipped baseline.
+The newer camera direction is a prototype. The new disc section is a media
+walkthrough template until its states, purpose, status, and approved exports are
+provided. No new private Figma screenshots are included in this release.
+
+## Homepage motion and typography
+
+Add hanger pieces to `GARMENTS` and `GARMENT_ASSETS` in `src/App.jsx`. The rail
+supports arrows, keyboard, horizontal wheel input, and touch swipes. Autoplay
+pauses on hover/focus, offscreen, and in hidden tabs. Reduced motion disables
+carousel autoplay, card transitions, and garment entrance animation.
+
+Body copy uses `Helvetica, 'Helvetica Neue', Arial, sans-serif`, with an OS font
+fallback where Helvetica is unavailable. Instrument Serif is served locally;
+its license is in `public/assets/fonts`. Kyle Block is an original display font.
+Rebuild it with `python scripts/build-block-font.py` (requires fonttools).
+
+Add updates to `CHANGELOG` in `src/App.jsx`; the footer uses the newest date.
