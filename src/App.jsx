@@ -8,7 +8,7 @@ import "./playground.css";
 import { CASE_STUDIES, CASE_ORDER } from "./caseStudies.js";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
-  ArrowRight, Menu, X, Undo2, Redo2,
+  ArrowRight, X, Undo2, Redo2,
   Trash2, Eraser, PenLine, Sticker as StickerIcon, Palette, ChevronLeft,
 } from "lucide-react";
 
@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site"], note: "Replaced the glass top navigation with a minimal outlined name badge and LinkedIn, Email, and Resume links. Kept the bottom dock as the main navigation on every page and adjusted the hero and reading offsets for the simpler header." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Anchored every steel hook to the rack across screen sizes and carousel depth. Hanger bodies now swing from the hook joint with damped pendulum physics; mouse and touch swipes pull the rack directly before springing onto the next garment." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Fitted steel shoulder wires inside the shirt and jacket collars and downsized the pants clips. Restored the native cursor with a fading electric-blue, white, and lime-green motion trail, disabled for touch and reduced-motion preferences." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Shortened the steel hanger hooks and lifted shirts, jackets, and pants closer to the rail. Re-aligned the shoulder wires, neckline layers, and waistband clips with the raised garments." },
@@ -236,31 +237,20 @@ function ModalDialog({ children, label, labelledBy, onClose }) {
 }
 
 /* ---------------------------------------------------------------------
-   components/Navigation
+   components/PortfolioHeader
    --------------------------------------------------------------------- */
-function Navigation({ route, go, scrollTo }) {
-  const [open, setOpen] = useState(false); const [scrolled, setScrolled] = useState(false);
-  useEffect(() => { const f = () => setScrolled(window.scrollY > 24); window.addEventListener("scroll", f, { passive: true }); return () => window.removeEventListener("scroll", f); }, []);
-  const links = [["Work", "work"], ["NEP2UNE", "creations"], ["Create", "studio"], ["About", "about"]];
-  const nav = id => { setOpen(false); if (["creations", "studio"].includes(id)) { go({ name: id }); return; } if (route.name !== "home") { go({ name: "home", anchor: id }); } else scrollTo(id); };
-  return (
-    <header className={"nav " + (scrolled ? "nav-scrolled" : "")}>
-      <button className="mark" onClick={() => { setOpen(false); go({ name: "home" }); }} aria-label="Home">{route.name === "home" ? SITE.name : SITE.mark}</button>
-      <nav className="nav-center" aria-label="Primary">{links.map(([l, id]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}</nav>
-      <div className="nav-right">
-        {SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}
-        <button onClick={() => nav("contact")}>Contact</button>
-      </div>
-      <button className="nav-burger" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(o => !o)}>{open ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}</button>
-      {open && (
-        <div className="nav-sheet" role="dialog" aria-label="Menu">
-          {links.map(([l, id]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}
-          <div className="nav-sheet-divider" />
-          {SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}{SITE.linkedin && <a href={SITE.linkedin}>LinkedIn</a>}<button onClick={() => nav("contact")}>Contact</button>
-        </div>
-      )}
-    </header>
-  );
+function PortfolioHeader({ go }) {
+  return <header className="portfolio-header">
+    <a className="portfolio-badge" href="#/" aria-label="Kyle Potente home" onClick={event => { event.preventDefault(); go({ name: "home" }); }}>
+      <span className="portfolio-monogram" aria-hidden="true">{SITE.mark}</span>
+      <span>{SITE.name}</span>
+    </a>
+    <nav className="portfolio-contact" aria-label="Contact links">
+      <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href={`mailto:${SITE.email}`}>Email</a>
+      <a href={SITE.resumeUrl} target="_blank" rel="noreferrer">Resume</a>
+    </nav>
+  </header>;
 }
 
 /* ---------------------------------------------------------------------
@@ -717,9 +707,9 @@ export default function App() {
       <style>{CSS}</style>
       <a href="#main" className="skip">Skip to content</a>
       <CursorTrail />
-      <Navigation route={route} go={go} scrollTo={scrollTo} />
+      <PortfolioHeader go={go} />
       <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
-      {["home", "creations", "studio", "gallery"].includes(route.name) && <GlassDock site={SITE} scrollTo={scrollTo} go={go} route={route} />}
+      <GlassDock site={SITE} scrollTo={scrollTo} go={go} route={route} />
     </div>
   );
 }
@@ -749,18 +739,16 @@ a{color:inherit;text-decoration:none}
 .cursor-trail[hidden]{display:none}
 .site input,.site textarea{cursor:text}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px var(--pad);font-size:14px;transition:background .3s,backdrop-filter .3s}
-.nav-scrolled{background:rgba(245,244,239,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.mark{font-family:var(--serif);font-size:24px;line-height:1;justify-self:start}
-.nav-center{display:flex;gap:28px}.nav-right{justify-self:end;display:flex;gap:22px}
-.nav a,.nav-center button,.nav-right button{position:relative;padding:4px 0}
-.nav-center button::after,.nav-right a::after,.nav-right button::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
-.nav-center button:hover::after,.nav-right a:hover::after,.nav-right button:hover::after{transform:scaleX(1)}
-.nav-burger{display:none;justify-self:end}
-.nav-sheet{position:absolute;top:100%;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);padding:12px var(--pad) 24px;display:flex;flex-direction:column;gap:4px;font-size:20px;font-family:var(--serif)}
-.nav-sheet button,.nav-sheet a{text-align:left;padding:10px 0}.nav-sheet-divider{height:1px;background:var(--line);margin:8px 0}
-@media (max-width:820px){.nav{grid-template-columns:1fr auto}.nav-center,.nav-right{display:none}.nav-burger{display:block}}
+/* Minimal identity and contact header. The dock owns site navigation. */
+.portfolio-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px var(--pad)}
+.portfolio-badge{display:inline-flex;align-items:center;gap:14px;min-height:48px;padding:5px 14px 5px 10px;border:1.5px solid var(--ink);border-radius:3px;font:500 16px/1.2 monospace;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.portfolio-monogram{font:400 34px/1 var(--serif);letter-spacing:-.06em;text-transform:none}
+.portfolio-contact{display:flex;align-items:center;gap:28px;font:400 13px/1.2 monospace;letter-spacing:.1em;text-transform:uppercase}
+.portfolio-contact>a{display:flex;align-items:center;min-height:44px;position:relative}
+.portfolio-contact>a::after{content:"";position:absolute;bottom:8px;left:0;right:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.portfolio-contact>a:hover::after,.portfolio-contact>a:focus-visible::after{transform:scaleX(1)}
+@media(max-width:600px){.portfolio-header{padding:18px 24px 8px;gap:8px 16px;flex-wrap:wrap}.portfolio-badge{min-height:42px;padding:4px 10px;gap:10px;font-size:12px;letter-spacing:.08em}.portfolio-monogram{font-size:28px}.portfolio-contact{gap:14px;font-size:10px;letter-spacing:.06em;margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.portfolio-contact>a::after{transition:none}}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;gap:10px;height:46px;padding:0 20px;border-radius:2px;font-size:14px;font-weight:500;transition:background .25s,color .25s,border-color .25s;border:1px solid var(--ink)}
@@ -855,7 +843,7 @@ a{color:inherit;text-decoration:none}
 [data-route=changelog] .log{border-top:0;padding:24px 0 40px}
 
 /* footer */
-.foot{border-top:1px solid var(--line);padding:48px var(--pad);display:flex;justify-content:space-between;gap:40px;font-size:14px}
+.foot{border-top:1px solid var(--line);padding:48px var(--pad) 125px;display:flex;justify-content:space-between;gap:40px;font-size:14px}
 .mark-lg{font-family:var(--serif);font-size:40px;line-height:1}.foot-tag{font-family:var(--serif);font-style:italic;font-size:18px;margin:14px 0 6px}
 .foot-cols{display:flex;gap:64px}.foot-cols h3{font-size:13px;color:var(--mute);margin-bottom:8px}.foot-cols div{display:flex;flex-direction:column}.foot-cols a,.foot-cols button{text-align:left;padding:3px 0}
 @media (max-width:640px){.foot{flex-direction:column}.foot-cols{gap:40px}}

@@ -8,7 +8,7 @@ function LinkedInMark() {
 export default function GlassDock({ site, scrollTo, go, route }) {
   const item = (label, Icon, className) => <><span className={`dock-tile ${className}`}><Icon size={23} strokeWidth={1.6} aria-hidden="true" /></span><span className="dock-label">{label}</span></>;
   const visit = (event, name) => { event.preventDefault(); go({ name }); };
-  return <nav className="glass-dock" aria-label="Portfolio shortcuts" onPointerMove={event => { const box = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty('--glass-x', `${(event.clientX - box.left) / box.width * 100}%`); }} onPointerLeave={event => event.currentTarget.style.setProperty('--glass-x', '35%')}>
+  return <nav className="glass-dock" aria-label="Main navigation" onPointerMove={event => { const box = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty('--glass-x', `${(event.clientX - box.left) / box.width * 100}%`); }} onPointerLeave={event => event.currentTarget.style.setProperty('--glass-x', '35%')}>
     <button type="button" onClick={() => route.name === 'home' ? scrollTo('work') : go({ name: 'home', anchor: 'work' })}>{item('Work', FolderOpen, 'dock-blue')}</button>
     <a href={site.resumeUrl} target="_blank" rel="noreferrer">{item('Resume', FileText, 'dock-cream')}</a>
     <a href={site.linkedin} target="_blank" rel="noreferrer">{item('LinkedIn', LinkedInMark, 'dock-blue')}</a>
