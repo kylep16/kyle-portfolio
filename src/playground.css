@@ -52,6 +52,6 @@
  .site[data-route=studio] .modal,.site[data-route=gallery] .modal{padding:25px}.site[data-route=studio] .modal h2{font-size:36px}.site .frame-seq{padding-top:30px;gap:24px}.site .frame-actions{gap:10px}.site .frame-seq .framed{width:min(68vw,240px)}
 }
 @media(max-width:700px){
- .site .glass-dock{width:360px;max-width:calc(100vw - 16px);padding:9px 6px 8px;gap:2px}.site .glass-dock .dock-nep .dock-label{font-size:10px}.site .glass-dock .dock-sage .nep2une-mark{width:37px}
+ .site .glass-dock{width:232px;max-width:calc(100vw - 16px);padding:9px 6px 8px;gap:2px}.site .glass-dock .dock-nep .dock-label{font-size:10px}.site .glass-dock .dock-sage .nep2une-mark{width:37px}
 }
 @media(prefers-reduced-motion:reduce){.site .studio-hist button,.site .sticker-tray button,.site .frame-btn,.site .sw{transition:none}.site .frame-btn:hover{transform:none}.site .modal,.site .modal-bg{animation:none}}

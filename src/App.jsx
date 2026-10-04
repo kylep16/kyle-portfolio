@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site"], note: "Moved Resume, LinkedIn, Portfolio, and GitHub to the top-right header. Added About Me to a compact bottom dock alongside NEP2UNE and Create, linking to the homepage bio from every page." },
   { date: "2026-10-04", tags: ["Site"], note: "Replaced the glass top navigation with a minimal outlined name badge and LinkedIn, Email, and Resume links. Kept the bottom dock as the main navigation on every page and adjusted the hero and reading offsets for the simpler header." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Anchored every steel hook to the rack across screen sizes and carousel depth. Hanger bodies now swing from the hook joint with damped pendulum physics; mouse and touch swipes pull the rack directly before springing onto the next garment." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Fitted steel shoulder wires inside the shirt and jacket collars and downsized the pants clips. Restored the native cursor with a fading electric-blue, white, and lime-green motion trail, disabled for touch and reduced-motion preferences." },
@@ -245,10 +246,11 @@ function PortfolioHeader({ go }) {
       <span className="portfolio-monogram" aria-hidden="true">{SITE.mark}</span>
       <span>{SITE.name}</span>
     </a>
-    <nav className="portfolio-contact" aria-label="Contact links">
-      <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-      <a href={`mailto:${SITE.email}`}>Email</a>
+    <nav className="portfolio-contact" aria-label="Portfolio and professional links">
       <a href={SITE.resumeUrl} target="_blank" rel="noreferrer">Resume</a>
+      <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+      <a href="#/" onClick={event => { event.preventDefault(); go({ name: "home", anchor: "work" }); }}>Portfolio</a>
+      <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>
     </nav>
   </header>;
 }
@@ -709,7 +711,7 @@ export default function App() {
       <CursorTrail />
       <PortfolioHeader go={go} />
       <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
-      <GlassDock site={SITE} scrollTo={scrollTo} go={go} route={route} />
+      <GlassDock scrollTo={scrollTo} go={go} route={route} />
     </div>
   );
 }

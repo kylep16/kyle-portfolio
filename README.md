@@ -27,9 +27,10 @@ The connected GitHub repository deploys to Vercel on updates to `main`.
 | Current garments and future photo slots | `src/brandData.js` | `#/creations` |
 | Shirt creator, visitor gallery, site details, changelog | `src/App.jsx` | `#/studio`, `#/gallery`, `#/changelog` |
 
-The header contains a home badge plus LinkedIn, Email, and Resume links. The
-glass dock handles site navigation on every page. NEP2UNE opens the garment
-archive and Create opens the shirt studio. The studio links directly to the
+The header contains a home badge plus Resume, LinkedIn, Portfolio, and GitHub
+links. Portfolio opens selected work. The compact dock stays on every page:
+About Me opens the homepage bio, NEP2UNE opens the garment archive, and Create
+opens the shirt studio. The studio links directly to the
 museum; saved designs use localStorage and remain local to the visitor's browser.
 
 `src/GlassDock.jsx` owns shortcut destinations. `src/playground.css` styles the
