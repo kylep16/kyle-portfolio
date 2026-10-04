@@ -53,7 +53,9 @@ not claimed as release dates. Eight garments are included in `src/brandData.js`.
 
 The case-study hierarchy was informed by https://www.cindyly.design/work/reddit:
 short overview, metadata, clear section headings, decisions, captions, reflection,
-and chapter navigation. Project content and outcomes are Kyle's existing work.
+and chapter navigation. Case studies have a sticky side index on desktop and a
+scrollable chapter bar on mobile, with the current section highlighted as you
+read. Project content and outcomes are Kyle's existing work.
 
 PXI's older public camera assets are explicitly labeled as the shipped baseline.
 The newer camera direction is a prototype. The new disc section is a media
@@ -65,7 +67,10 @@ provided. No new private Figma screenshots are included in this release.
 The hanger carousel shares the eight product identities in `src/brandData.js`.
 Its catalog names match the public storefront, and each selected piece links to
 its product page. Add a product there and prepare a transparent, trimmed image
-in `public/assets/clothes/rail/`. Rebuild the existing cutouts with
+in `public/assets/clothes/rail/`, then add its measured fit in `src/HungGarment.jsx`.
+That component layers the real photograph between the hanger shoulders and
+foreground hardware. Pants use two front clips positioned over the waistband;
+tops show a wooden hanger at the neckline. Rebuild the existing cutouts with
 `python scripts/build-rail-assets.py` (requires Pillow).
 
 `src/ClothingRail.jsx` runs a spring for horizontal travel and a damped pendulum
@@ -77,10 +82,13 @@ pauses on hover/focus, offscreen, and in hidden tabs. Reduced motion disables
 carousel autoplay, travel springs, hanger swing, card transitions, and garment
 entrance animation. Glass navigation uses translucent layers, backdrop blur,
 saturation, rim highlights, and an opaque fallback when blur is unavailable.
+The mobile dock uses a more opaque surface, bold labels, and larger touch targets
+to stay readable over campaign photography.
 
 Body copy uses `Helvetica, 'Helvetica Neue', Arial, sans-serif`, with an OS font
 fallback where Helvetica is unavailable. Instrument Serif is served locally;
-its license is in `public/assets/fonts`. Kyle Block is an original display font.
-Rebuild it with `python scripts/build-block-font.py` (requires fonttools).
+its license is in `public/assets/fonts`. The clothing showcase heading also uses
+bold Helvetica. The original Kyle Block font and its build script are retained
+as archived assets.
 
 Add updates to `CHANGELOG` in `src/App.jsx`; the footer uses the newest date.

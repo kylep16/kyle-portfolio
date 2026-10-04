@@ -98,8 +98,8 @@ export default function Home({ go, scrollTo, site, projects, order }) {
   const reduced = useMotionPreference();
   return <main id="main" className="portfolio-home">
     <section className="home-hero" aria-labelledby="home-hero-h">
-      <div className="home-hero-copy"><p className="home-eyebrow">HELLO, I’M KYLE.</p><h1 id="home-hero-h">I design<br />experiences.<br /><em>And build them.</em></h1>
-        <p className="home-hero-description">Product designer & frontend developer.<br />From mobile moments to clothes you keep.</p>
+      <div className="home-hero-copy"><p className="home-eyebrow">HELLO, I’M KYLE.</p><h1 id="home-hero-h">I design how<br />things look, feel,<br /><em>and work.</em></h1>
+        <p className="home-hero-description">Product & UI/UX designer with a fashion designer’s eye.<br />Thoughtful details, from the interface to the garment.</p>
         <p className="home-hero-role">Head of Mobile UI Design @ PXI Labs<br />SDSU · Computer Science · December 2026</p>
         <button type="button" className="home-work-link" onClick={() => scrollTo("work")}>Explore my work <ArrowDown size={16} aria-hidden="true" /></button>
       </div>
@@ -108,7 +108,7 @@ export default function Home({ go, scrollTo, site, projects, order }) {
     </section>
     <SelectedWork projects={projects} order={order} go={go} />
     <section id="clothes" className="clothing-showcase" aria-labelledby="clothes-h">
-      <div className="home-section-head"><div><p className="home-eyebrow">02 / OFF THE SCREEN</p><h2 id="clothes-h" className="block-heading">Clothes<br />I’ve made.</h2></div><p>NEP2UNE. From a sketch to something you can wear.</p></div>
+      <div className="home-section-head"><div><p className="home-eyebrow">02 / OFF THE SCREEN</p><h2 id="clothes-h" className="clothes-heading">Clothes<br />I’ve made.</h2></div><p>NEP2UNE. From a sketch to something you can wear.</p></div>
       <div className="clothing-windows">{CLOTHING_SHOWCASE.map((piece, index) => <div key={piece.id} className={`clothing-window clothing-window-${index}`}><div className="window-bar"><span>● ● ●</span><span>{piece.title}</span><span /></div>
         {piece.src ? <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" /> : <div className="clothing-placeholder"><Shirt size={index === 0 ? 56 : 38} strokeWidth={.7} aria-hidden="true" /><span>{piece.title}</span><small>Coming into focus soon.</small></div>}
       </div>)}</div>
