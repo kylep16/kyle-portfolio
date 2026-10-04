@@ -44,6 +44,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Shortened the steel hanger hooks and lifted shirts, jackets, and pants closer to the rail. Re-aligned the shoulder wires, neckline layers, and waistband clips with the raised garments." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Added the official NEP2UNE logo to a dedicated clothing-archive shortcut and made Create open the shirt builder. Restyled the studio, framing moment, and visitor museum with the portfolio’s paper palette, Helvetica controls, rounded panels, and consistent exhibit frames. Kept drawing, stickers, undo/redo, and browser-local saving." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Switched shirt and jacket hangers to polished steel, preserving each garment’s fitted neckline, foreground layering, and pendulum swing." },
   { date: "2026-10-04", tags: ["Site", "PXI", "NEP2UNE", "Sweat2Swim"], note: "Fitted wooden shoulder hangers and front-facing waistband clips to each carousel garment. Connected the hero copy to product, UI/UX, and fashion design, set the clothing showcase heading in Helvetica, added a sticky case-study side index, and improved mobile dock contrast and touch targets." },
