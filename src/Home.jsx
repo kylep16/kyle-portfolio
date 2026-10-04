@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, ChevronLeft, ChevronRight, FileText, FolderOpen, Code2, Mail, Pause, Play, Shirt } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowDown, ArrowUpRight, FileText, FolderOpen, Code2, Mail, Shirt } from "lucide-react";
 import "./home.css";
+import ClothingRail from "./ClothingRail.jsx";
 
 // A short preview of the full NEP2UNE archive.
 const CLOTHING_SHOWCASE = [
@@ -24,81 +25,6 @@ function useMotionPreference() {
     return () => query.removeEventListener("change", change);
   }, []);
   return reduced;
-}
-
-function Hanger({ bottom }) {
-  const gradient = useId();
-  return <svg className="rail-hanger" viewBox="0 0 240 96" aria-hidden="true">
-    <defs><linearGradient id={gradient} x2="0" y2="1"><stop stopColor="#929493" /><stop offset=".45" stopColor="#eceeec" /><stop offset="1" stopColor="#777b78" /></linearGradient></defs>
-    <path d="M120 32V25c0-8 14-7 14-16 0-10-17-11-21-1" fill="none" stroke="#8b8f8c" strokeWidth="3" strokeLinecap="round" />
-    <path d="M120 32 17 80Q9 87 20 88h200q11-1 3-8L120 32Z" fill="none" stroke={`url(#${gradient})`} strokeWidth="5" strokeLinejoin="round" />
-    {bottom && <g fill="#737873"><rect x="54" y="80" width="12" height="17" rx="3" /><rect x="174" y="80" width="12" height="17" rx="3" /></g>}
-  </svg>;
-}
-
-function ClothingRail({ garments, assets }) {
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [engaged, setEngaged] = useState(false);
-  const reduced = useMotionPreference();
-  const stage = useRef(null);
-  const gesture = useRef(null);
-  const wheelAt = useRef(0);
-  const count = garments.length;
-  const step = direction => setActive(value => (value + direction + count) % count);
-
-  useEffect(() => {
-    if (reduced || paused || engaged || count < 2) return;
-    // Move the hangers from left to right. Stop when the rail is offscreen.
-    const timer = window.setInterval(() => {
-      if (document.hidden || !stage.current) return;
-      const rect = stage.current.getBoundingClientRect();
-      if (rect.bottom > 0 && rect.top < window.innerHeight) setActive(value => (value - 1 + count) % count);
-    }, 3800);
-    return () => window.clearInterval(timer);
-  }, [reduced, paused, engaged, count]);
-
-  useEffect(() => {
-    const element = stage.current;
-    const wheel = event => {
-      // Keep ordinary vertical scrolling available for the page.
-      if (Math.abs(event.deltaX) < Math.abs(event.deltaY) && !event.shiftKey) return;
-      const delta = event.deltaX || event.deltaY;
-      if (Math.abs(delta) < 8) return;
-      event.preventDefault();
-      if (performance.now() - wheelAt.current < 450) return;
-      wheelAt.current = performance.now();
-      setPaused(true);
-      setActive(value => (value + (delta > 0 ? 1 : -1) + count) % count);
-    };
-    element.addEventListener("wheel", wheel, { passive: false });
-    return () => element.removeEventListener("wheel", wheel);
-  }, [count]);
-
-  return <div className="clothing-rail" onPointerEnter={() => setEngaged(true)} onPointerLeave={() => setEngaged(false)} onFocusCapture={() => setEngaged(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setEngaged(false); }}>
-    <div ref={stage} className="rail-stage" role="region" aria-roledescription="carousel" aria-label="NEP2UNE clothing designed by Kyle" tabIndex={0}
-      onKeyDown={event => { if (["ArrowLeft", "ArrowRight"].includes(event.key)) { event.preventDefault(); setPaused(true); step(event.key === "ArrowRight" ? 1 : -1); } }}
-      onTouchStart={event => { gesture.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }}
-      onTouchEnd={event => { if (!gesture.current) return; const dx = event.changedTouches[0].clientX - gesture.current.x; const dy = event.changedTouches[0].clientY - gesture.current.y; if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) { setPaused(true); step(dx < 0 ? 1 : -1); } gesture.current = null; }}>
-      <div className="rail-line" aria-hidden="true" />
-      {garments.map((garment, index) => {
-        let offset = (index - active + count) % count;
-        if (offset > count / 2) offset -= count;
-        const selected = offset === 0;
-        return <div key={garment.id} className={`rail-piece ${garment.category === "bottom" ? "rail-bottom" : "rail-top"}`} aria-hidden={!selected} style={{ "--offset": offset, "--distance": Math.abs(offset), zIndex: count - Math.abs(offset) }}>
-          <Hanger bottom={garment.category === "bottom"} />
-          <img src={assets[garment.id].src} alt={garment.name} draggable="false" width={280} height={360} decoding="async" />
-        </div>;
-      })}
-    </div>
-    <div className="rail-controls">
-      <button type="button" aria-label="Previous garment" onClick={() => { setPaused(true); step(-1); }}><ChevronLeft size={18} /></button>
-      <div className="rail-caption" aria-live={paused || engaged || reduced ? "polite" : "off"} aria-atomic="true"><span>{garments[active].name}</span><small>NEP2UNE · {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</small></div>
-      <button type="button" aria-label="Next garment" onClick={() => { setPaused(true); step(1); }}><ChevronRight size={18} /></button>
-      {!reduced && <button type="button" className="rail-pause" aria-label={paused ? "Play clothing animation" : "Pause clothing animation"} onClick={() => setPaused(value => !value)}>{paused ? <Play size={13} /> : <Pause size={13} />}</button>}
-    </div>
-    <p className="rail-hint">A few things I’ve made. Scroll sideways or take a look →</p>
-  </div>;
 }
 
 function ProjectVisual({ slug }) {
@@ -159,7 +85,7 @@ function LinkedInMark() {
 
 function GlassDock({ site, scrollTo, go }) {
   const item = (label, Icon, className) => <><span className={`dock-tile ${className}`}><Icon size={23} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></>;
-  return <nav className="glass-dock" aria-label="Portfolio shortcuts">
+  return <nav className="glass-dock" aria-label="Portfolio shortcuts" onPointerMove={event => { const box = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty("--glass-x", `${(event.clientX - box.left) / box.width * 100}%`); }} onPointerLeave={event => event.currentTarget.style.setProperty("--glass-x", "35%")} >
     <button type="button" onClick={() => scrollTo("work")}>{item("Work", FolderOpen, "dock-blue")}</button>
     <a href={site.resumeUrl} target="_blank" rel="noreferrer">{item("Resume", FileText, "dock-cream")}</a>
     <a href={site.linkedin} target="_blank" rel="noreferrer">{item("LinkedIn", LinkedInMark, "dock-blue")}</a>
@@ -168,7 +94,8 @@ function GlassDock({ site, scrollTo, go }) {
   </nav>;
 }
 
-export default function Home({ go, scrollTo, site, garments, garmentAssets, projects, order }) {
+export default function Home({ go, scrollTo, site, projects, order }) {
+  const reduced = useMotionPreference();
   return <main id="main" className="portfolio-home">
     <section className="home-hero" aria-labelledby="home-hero-h">
       <div className="home-hero-copy"><p className="home-eyebrow">HELLO, I’M KYLE.</p><h1 id="home-hero-h">I design<br />experiences.<br /><em>And build them.</em></h1>
@@ -176,7 +103,7 @@ export default function Home({ go, scrollTo, site, garments, garmentAssets, proj
         <p className="home-hero-role">Head of Mobile UI Design @ PXI Labs<br />SDSU · Computer Science · December 2026</p>
         <button type="button" className="home-work-link" onClick={() => scrollTo("work")}>Explore my work <ArrowDown size={16} aria-hidden="true" /></button>
       </div>
-      <ClothingRail garments={garments} assets={garmentAssets} />
+      <ClothingRail reduced={reduced} />
       <span className="hero-corner-note">DESIGNED WITH INTENTION. BUILT TO BE USED.</span>
     </section>
     <SelectedWork projects={projects} order={order} go={go} />

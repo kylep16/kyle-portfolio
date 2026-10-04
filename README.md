@@ -62,10 +62,21 @@ provided. No new private Figma screenshots are included in this release.
 
 ## Homepage motion and typography
 
-Add hanger pieces to `GARMENTS` and `GARMENT_ASSETS` in `src/App.jsx`. The rail
+The hanger carousel shares the eight product identities in `src/brandData.js`.
+Its catalog names match the public storefront, and each selected piece links to
+its product page. Add a product there and prepare a transparent, trimmed image
+in `public/assets/clothes/rail/`. Rebuild the existing cutouts with
+`python scripts/build-rail-assets.py` (requires Pillow).
+
+`src/ClothingRail.jsx` runs a spring for horizontal travel and a damped pendulum
+for hanger rotation. Pointer movement nudges the selected garment. The motion
+loop stops when the hangers settle, leave the viewport, or the tab is hidden.
+The physics unit checks run with `node --test scripts/test-hanger-physics.mjs`. The rail
 supports arrows, keyboard, horizontal wheel input, and touch swipes. Autoplay
 pauses on hover/focus, offscreen, and in hidden tabs. Reduced motion disables
-carousel autoplay, card transitions, and garment entrance animation.
+carousel autoplay, travel springs, hanger swing, card transitions, and garment
+entrance animation. Glass navigation uses translucent layers, backdrop blur,
+saturation, rim highlights, and an opaque fallback when blur is unavailable.
 
 Body copy uses `Helvetica, 'Helvetica Neue', Arial, sans-serif`, with an OS font
 fallback where Helvetica is unavailable. Instrument Serif is served locally;

@@ -42,6 +42,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-03", tags: ["Site", "NEP2UNE"], note: "UX refinement: bold Helvetica on the NEP2UNE hero, liquid-glass navigation and dock, and eight accurately named catalog garments on the homepage hanger rail. Added spring-driven travel, pendulum swing, pointer nudges, product links, and reduced-motion support." },
   { date: "2026-10-03", tags: ["Site", "PXI", "NEP2UNE", "Sweat2Swim"], note: "Added a NEP2UNE creations archive with eight current garments, lookbook chapters, process photography, and a downloadable photo template. Switched body text to Helvetica and rebuilt all three case studies with short editorial sections and uniformly sized image panels. Refocused PXI on the camera redesign and reserved media slots for the new disc walkthrough." },
   { date: "2026-10-03", tags: ["Site", "PXI", "NEP2UNE"], note: "Homepage overhaul: left-aligned introduction, horizontal hanger carousel, glass dock, stacked project-card reveal, and a custom block-font clothing showcase. Shortened the recruiter read while keeping the detailed case studies and shirt creator available." },
   { date: "2026-09-09", tags: ["PXI", "NEP2UNE", "Sweat2Swim"], note: "Real work on screen: 21 PXI screens from the 52-screen baseline, NEP2UNE tech packs, campaign photography and studio turn videos, and the live Sweat2Swim storefront." },
@@ -54,21 +55,6 @@ const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { mon
 
 
 
-/* ---------------------------------------------------------------------
-   data/garments.js: real NEP2UNE pieces (photographic die-cut stickers)
-   Add a piece: process its image (transparent bg + off-white border),
-   add it to GARMENT_ASSETS at the bottom of this file, add an object here,
-   tune `fit`. No component changes needed.
-   fit = { cx, cy, w } in figure viewBox units (0 0 300 640); height follows aspect.
-   --------------------------------------------------------------------- */
-const GARMENTS = [
-  { id: "tee-black",   name: "Gingham star tee",      meta: ["NEP2UNE", "HI I'M ✦", "COTTON"], category: "top",    z: 20, fit: { cx: 150, cy: 231, w: 204 } },
-  { id: "denim-green", name: "Star patch wide denim", meta: ["NEP2UNE", "NDS 01", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
-  { id: "denim-black", name: "NDS wide denim",        meta: ["NEP2UNE", "NDS 02", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 189 } },
-  { id: "denim-cream", name: "Belted wide denim",     meta: ["NEP2UNE", "NDS 03", "DENIM"],   category: "bottom", z: 10, fit: { cx: 150, cy: 430, w: 178 } },
-  // { id: "tee-white", name: "Gingham star tee, white", meta: ["NEP2UNE","HI I'M ✦","COTTON"], category: "top", z: 20, fit: { cx: 150, cy: 224, w: 200 } },
-];
-// layering order: body → top → outerwear → bottom → shoes → hat → accessory (z per garment)
 /* Exact NEP2UNE star cursor: paste the cleaned transparent PNG/SVG as a data URI.
    Until it's provided, the cursor falls back to a small dot. */
 const STAR_CURSOR_SRC = null;
@@ -712,7 +698,7 @@ export default function App() {
     : route.name === "studio" ? <Studio go={go} />
     : route.name === "gallery" ? <Gallery go={go} />
     : route.name === "changelog" ? <ChangelogPage go={go} />
-    : <Home go={go} scrollTo={scrollTo} site={SITE} garments={GARMENTS} garmentAssets={GARMENT_ASSETS} projects={CASE_STUDIES} order={CASE_ORDER} />;
+    : <Home go={go} scrollTo={scrollTo} site={SITE} projects={CASE_STUDIES} order={CASE_ORDER} />;
   return (
     <div className="site" data-route={route.name}>
       <style>{CSS}</style>
@@ -1003,26 +989,3 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .empty{text-align:center;margin-top:80px;color:var(--mute)}
 @media (max-width:640px){.wall-item{width:calc(110px * var(--sc))}}
 `;
-
-/* ---------------------------------------------------------------------
-   assets/clothes: processed NEP2UNE garment stickers (transparent WebP data URIs)
-   In the repo: move to /assets/clothes/*.webp and set src to the path.
-   --------------------------------------------------------------------- */
-const GARMENT_ASSETS = {
-  "tee-black": {
-    "src": "/assets/clothes/tee-black.webp",
-    "aspect": 1.0689
-  },
-  "denim-green": {
-    "src": "/assets/clothes/denim-green.webp",
-    "aspect": 0.6838
-  },
-  "denim-black": {
-    "src": "/assets/clothes/denim-black.webp",
-    "aspect": 0.7284
-  },
-  "denim-cream": {
-    "src": "/assets/clothes/denim-cream.webp",
-    "aspect": 0.6811
-  }
-};
