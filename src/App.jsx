@@ -2,6 +2,8 @@ import "./fonts.css";
 import Home from "./Home.jsx";
 import CaseStudy from "./CaseStudy.jsx";
 import Creations from "./Creations.jsx";
+import GlassDock from "./GlassDock.jsx";
+import "./playground.css";
 import { CASE_STUDIES, CASE_ORDER } from "./caseStudies.js";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
@@ -42,6 +44,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Added the official NEP2UNE logo to a dedicated clothing-archive shortcut and made Create open the shirt builder. Restyled the studio, framing moment, and visitor museum with the portfolio’s paper palette, Helvetica controls, rounded panels, and consistent exhibit frames. Kept drawing, stickers, undo/redo, and browser-local saving." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Switched shirt and jacket hangers to polished steel, preserving each garment’s fitted neckline, foreground layering, and pendulum swing." },
   { date: "2026-10-04", tags: ["Site", "PXI", "NEP2UNE", "Sweat2Swim"], note: "Fitted wooden shoulder hangers and front-facing waistband clips to each carousel garment. Connected the hero copy to product, UI/UX, and fashion design, set the clothing showcase heading in Helvetica, added a sticky case-study side index, and improved mobile dock contrast and touch targets." },
   { date: "2026-10-03", tags: ["Site", "NEP2UNE"], note: "UX refinement: bold Helvetica on the NEP2UNE hero, liquid-glass navigation and dock, and eight accurately named catalog garments on the homepage hanger rail. Added spring-driven travel, pendulum swing, pointer nudges, product links, and reduced-motion support." },
@@ -140,19 +143,19 @@ function seedGallery() {
    hooks/
    --------------------------------------------------------------------- */
 function useReducedMotion() {
-  const [r, setR] = useState(false);
+  const [r, setR] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   useEffect(() => {
     const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setR(m.matches); const f = e => setR(e.matches); m.addEventListener("change", f);
+    const f = e => setR(e.matches); m.addEventListener("change", f);
     return () => m.removeEventListener("change", f);
   }, []);
   return r;
 }
 function useIsMobile() {
-  const [m, setM] = useState(false);
+  const [m, setM] = useState(() => window.matchMedia("(max-width: 767px), (pointer: coarse)").matches);
   useEffect(() => {
     const q = window.matchMedia("(max-width: 767px), (pointer: coarse)");
-    setM(q.matches); const f = e => setM(e.matches); q.addEventListener("change", f);
+    const f = e => setM(e.matches); q.addEventListener("change", f);
     return () => q.removeEventListener("change", f);
   }, []);
   return m;
@@ -231,14 +234,39 @@ function Placeholder({ label, ratio = "4/3", className = "", tone = 0 }) {
   );
 }
 
+function ModalDialog({ children, label, labelledBy, onClose }) {
+  const element = useRef(null);
+  const close = useRef(onClose);
+  useEffect(() => { close.current = onClose; }, [onClose]);
+  useEffect(() => {
+    const previous = document.activeElement;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusable = () => [...element.current.querySelectorAll('button:not([disabled]),a[href],input,select,textarea,[tabindex="0"]')];
+    (element.current.querySelector('[autofocus]') || focusable()[0] || element.current).focus();
+    const key = event => {
+      if (event.key === "Escape") { event.preventDefault(); close.current(); }
+      if (event.key === "Tab") {
+        const list = focusable(); const first = list[0]; const last = list.at(-1);
+        if (!first) { event.preventDefault(); return; }
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === element.current)) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', key);
+    return () => { document.body.style.overflow = overflow; document.removeEventListener('keydown', key); previous?.focus({ preventScroll: true }); };
+  }, []);
+  return <div ref={element} className="modal-bg" role="dialog" aria-modal="true" aria-label={label} aria-labelledby={labelledBy} tabIndex={-1} onClick={event => { if (event.target === event.currentTarget) onClose(); }}>{children}</div>;
+}
+
 /* ---------------------------------------------------------------------
    components/Navigation
    --------------------------------------------------------------------- */
 function Navigation({ route, go, scrollTo }) {
   const [open, setOpen] = useState(false); const [scrolled, setScrolled] = useState(false);
   useEffect(() => { const f = () => setScrolled(window.scrollY > 24); window.addEventListener("scroll", f, { passive: true }); return () => window.removeEventListener("scroll", f); }, []);
-  const links = [["Work", "work"], ["Create", "creations"], ["About", "about"]];
-  const nav = id => { setOpen(false); if (id === "creations") { go({ name: "creations" }); return; } if (route.name !== "home") { go({ name: "home", anchor: id }); } else scrollTo(id); };
+  const links = [["Work", "work"], ["NEP2UNE", "creations"], ["Create", "studio"], ["About", "about"]];
+  const nav = id => { setOpen(false); if (["creations", "studio"].includes(id)) { go({ name: id }); return; } if (route.name !== "home") { go({ name: "home", anchor: id }); } else scrollTo(id); };
   return (
     <header className={"nav " + (scrolled ? "nav-scrolled" : "")}>
       <button className="mark" onClick={() => { setOpen(false); go({ name: "home" }); }} aria-label="Home">{route.name === "home" ? SITE.name : SITE.mark}</button>
@@ -377,25 +405,28 @@ function Studio({ go, onSaved }) {
     <main id="main" className="studio">
       <div className="studio-top">
         <button className="back" onClick={() => go({ name: "home", anchor: "clothes" })}><ChevronLeft size={14} /> Back</button>
-        <h1>Shirt studio</h1>
+        <a className="home-pill" href="#/gallery">Visit the museum <ArrowRight size={14} /></a>
+      </div>
+      <header className="play-hero studio-hero"><div><p className="home-eyebrow">THE SHIRT STUDIO / A ROOM TO PLAY</p><h1>Make it <em>your own.</em></h1><p>A blank tee. A few tools. Your point of view.</p></div>
         <div className="studio-hist">
           <button onClick={undo} disabled={hi === 0} aria-label="Undo"><Undo2 size={16} /></button>
           <button onClick={redo} disabled={hi >= hist.length - 1} aria-label="Redo"><Redo2 size={16} /></button>
           <button onClick={clear} aria-label="Clear shirt"><Trash2 size={16} /></button>
         </div>
-      </div>
+      </header>
 
       <div className="studio-body">
         {/* tools */}
         <aside className={"tools " + (mob ? "tools-mobile" : "")} aria-label="Tools">
+          <div className="toolkit-title"><span>Your toolkit</span><small>Start anywhere.</small></div>
           {mob && <div className="seg seg-tabs">{[["color", Palette, "Color"], ["draw", PenLine, "Draw"], ["sticker", StickerIcon, "Stickers"]].map(([k, I, l]) => <button key={k} className={panel === k ? "on" : ""} onClick={() => { setPanel(k); if (k === "draw") setTool("pen"); if (k === "sticker") setTool("sticker"); }}><I size={14} /> {l}</button>)}</div>}
-          {(!mob || panel === "color") && <div className="tool-group"><h2>Shirt</h2><div className="swatches">{SHIRT_COLORS.map(c => <button key={c} className={"sw " + (color === c ? "on" : "")} style={{ background: c }} onClick={() => changeColor(c)} aria-label={`Shirt color: ${COLOR_NAMES[c] || c}`} aria-pressed={color === c} />)}</div></div>}
-          {(!mob || panel === "draw") && <div className="tool-group"><h2>Draw</h2>
+          {(!mob || panel === "color") && <div className="tool-group"><h2><span>01</span> The canvas <small>{COLOR_NAMES[color]}</small></h2><div className="swatches">{SHIRT_COLORS.map(c => <button key={c} className={"sw " + (color === c ? "on" : "")} style={{ background: c }} onClick={() => changeColor(c)} aria-label={`Shirt color: ${COLOR_NAMES[c] || c}`} aria-pressed={color === c} />)}</div></div>}
+          {(!mob || panel === "draw") && <div className="tool-group"><h2><span>02</span> Make a mark</h2>
             <div className="seg"><button className={tool === "pen" ? "on" : ""} onClick={() => setTool("pen")} aria-pressed={tool === "pen"}><PenLine size={14} /> Pen</button><button className={tool === "eraser" ? "on" : ""} onClick={() => setTool("eraser")} aria-pressed={tool === "eraser"}><Eraser size={14} /> Eraser</button></div>
             <label className="range">Size <input type="range" min="2" max="14" value={pen} onChange={e => setPen(+e.target.value)} /></label>
             <div className="swatches small">{PEN_COLORS.map(c => <button key={c} className={"sw " + (penColor === c ? "on" : "")} style={{ background: c }} onClick={() => { setPenColor(c); setTool("pen"); }} aria-label={`Pen color: ${COLOR_NAMES[c] || c}`} aria-pressed={penColor === c} />)}</div>
           </div>}
-          {(!mob || panel === "sticker") && <div className="tool-group"><h2>Stickers</h2>
+          {(!mob || panel === "sticker") && <div className="tool-group"><h2><span>03</span> Add a little character</h2>
             <div className="sticker-tray">{Object.entries(STICKERS).map(([k, s]) => <button key={k} onClick={() => addSticker(k)} aria-label={`Add ${s.label} sticker`} title={s.label}><StickerGlyph kind={k} /></button>)}</div>
             {sel != null && <button className="textlink" onClick={() => deleteSticker(sel)}><Trash2 size={13} /> Delete selected</button>}
           </div>}
@@ -403,6 +434,8 @@ function Studio({ go, onSaved }) {
 
         {/* stage */}
         <div className="stage" ref={stage}>
+          <div className="studio-preview-bar"><span className="preview-dots" aria-hidden="true">● ● ●</span><span>UNTITLED TEE / LIVE PREVIEW</span><span>{COLOR_NAMES[color]}</span></div>
+          <div className="studio-canvas-stage">
           <div className="shirt-wrap" onPointerDown={() => setSel(null)}>
             <svg viewBox="0 0 400 460" className="shirt-svg" aria-hidden><ShirtPath color={color} /><rect x={PRINT.x} y={PRINT.y} width={PRINT.w} height={PRINT.h} fill="none" stroke={isDark ? "#fff" : "#000"} strokeOpacity=".2" strokeDasharray="4 4" /></svg>
             <div className="print" ref={printRef} style={printStyle}>
@@ -419,25 +452,27 @@ function Studio({ go, onSaved }) {
                 </div>))}
             </div>
           </div>
+          </div>
           <p className="stage-hint">{tool === "sticker" ? "Drag stickers. Corner handle resizes and rotates. Arrow keys nudge, + and - scale, r rotates." : "Draw inside the dotted print area."}</p>
         </div>
       </div>
 
       <div className="studio-foot">
-        <Button onClick={() => setPhase("tag")} icon={ArrowRight}>Leave my mark</Button>
-        {!hasContent && <span className="muted">Add something first. Even a scribble counts.</span>}
+        <div><p>Every idea deserves a frame.</p><span className="muted">{hasContent ? "Ready when you are. Give your tee a museum label." : "Pick a color, draw a line, or add a sticker."}</span></div>
+        <Button onClick={() => setPhase("tag")} icon={ArrowRight}>Frame my shirt</Button>
       </div>
 
       {phase === "tag" && (
-        <div className="modal-bg" role="dialog" aria-modal="true" aria-labelledby="tag-h">
+        <ModalDialog labelledBy="tag-h" onClose={() => setPhase("edit")}>
           <div className="modal">
-            <h2 id="tag-h">What should I put on the museum tag?</h2>
+            <p className="home-eyebrow">THE FINISHING TOUCH</p><h2 id="tag-h">Give it a label.</h2>
             <label>Name or alias<input value={alias} onChange={e => setAlias(e.target.value.slice(0, 24))} placeholder="Anonymous" autoFocus /></label>
             <p className="muted">Totally optional. Your shirt can stay anonymous. No email, ever.</p>
-            <label className="check"><input type="checkbox" checked={display} onChange={e => setDisplay(e.target.checked)} /> Display my shirt in the visitor gallery</label>
+            <label className="check"><input type="checkbox" checked={display} onChange={e => setDisplay(e.target.checked)} /> Display my shirt in the visitor museum</label>
+            <p className="save-note">Your design is saved in this browser.</p>
             <div className="modal-actions"><Button onClick={finish} icon={ArrowRight}>Hang it</Button><button className="textlink" onClick={() => setPhase("edit")}>Keep editing</button></div>
           </div>
-        </div>)}
+        </ModalDialog>)}
     </main>
   );
 }
@@ -449,7 +484,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
    --------------------------------------------------------------------- */
 function FrameSequence({ entry, go }) {
   const rm = useReducedMotion(); const [st, setSt] = useState(rm ? 5 : 0);
-  const [count, setCount] = useState(42);
+  const [count, setCount] = useState(0);
   useEffect(() => { storage.list().then(l => setCount(l.length)); }, []);
   useEffect(() => {
     if (rm) return;
@@ -467,8 +502,9 @@ function FrameSequence({ entry, go }) {
         <MuseumTag entry={entry} n={count} />
       </div>
       <div className="frame-done">
-        <h1>You left your mark.</h1>
-        <div className="frame-actions"><Button onClick={() => go({ name: "gallery" })} icon={ArrowRight}>View the gallery</Button><Button variant="ghost" onClick={() => go({ name: "home", anchor: "about" })}>Continue exploring</Button></div>
+        <p className="home-eyebrow">{entry.display ? 'A NEW STUDY FOR THE MUSEUM' : 'YOUR OWN LITTLE STUDY'}</p><h1>You left your <em>mark.</em></h1>
+        <p className="frame-saved-note">Saved in this browser{entry.display ? ' and added to your museum.' : '.'}</p>
+        <div className="frame-actions"><Button onClick={() => go({ name: "gallery" })} icon={ArrowRight}>Visit the museum</Button><Button variant="ghost" onClick={() => go({ name: "home", anchor: "about" })}>Continue exploring</Button></div>
       </div>
     </main>
   );
@@ -477,7 +513,8 @@ function MuseumTag({ entry, n }) {
   const yr = new Date(entry.createdAt).getFullYear();
   return (
     <div className="plaque" aria-label="Museum plaque">
-      {entry.alias ? <><span className="plaque-t">"Untitled Tee"</span><span>by {entry.alias}</span></> : <><span className="plaque-t">Designed by</span><span>Kyle's visitor #{String(n).padStart(3, "0")}</span></>}
+      <span className="plaque-t">Untitled Tee</span><span>by {entry.alias || 'Anonymous'}</span>
+      {n > 0 && <span className="plaque-study">STUDY {String(n).padStart(3, '0')}</span>}
       <span className="plaque-y">{yr}</span>
     </div>
   );
@@ -494,7 +531,7 @@ function makeVisitor(id, fromLeft = Math.random() < .5) {
     pauseAt: rnd(14, 86), paused: false, pauseLeft: rnd(2500, 5200), didPause: false, bubble: null, bubbleLeft: 0, talkChance: .45, gesture: Math.random() < .3 };
 }
 function useVisitors(count, rm) {
-  const [vs, setVs] = useState(() => Array.from({ length: count }, (_, i) => { const v = makeVisitor(i); if (rm) { v.x = 18 + i * 28; v.paused = true; } return v; }));
+  const [vs, setVs] = useState(() => Array.from({ length: count }, (_, i) => { const v = makeVisitor(i); v.x = 18 + i * 28; if (rm) v.paused = true; return v; }));
   useEffect(() => {
     if (rm) return;
     let last = performance.now(); let nid = 100;
@@ -536,7 +573,6 @@ function Gallery({ go }) {
   const track = useRef(null); const rm = useReducedMotion(); const mob = useIsMobile();
   useEffect(() => { storage.list().then(setItems); }, []);
   const PER = 4; const walls = items ? Array.from({ length: Math.max(1, Math.ceil(items.length / PER)) }, (_, i) => items.slice(i * PER, i * PER + PER)) : [];
-  const layout = [[1.0, 0], [.72, 40], [.86, -22], [.66, 26]];
   const visitors = useVisitors(mob ? 2 : 3, rm);
 
   const goTo = i => { const t = track.current; if (!t) return; const n = clamp(i, 0, walls.length - 1); t.scrollTo({ left: n * t.clientWidth, behavior: rm ? "auto" : "smooth" }); };
@@ -563,25 +599,24 @@ function Gallery({ go }) {
   return (
     <main id="main" className="gallery">
       <div className="gallery-head">
-        <button className="back" onClick={() => go({ name: "home", anchor: "clothes" })}><ChevronLeft size={14} /> Home</button>
-        <h1>Visitor gallery</h1>
-        <p>Shirts made in the studio hang here. <button className="textlink" onClick={() => go({ name: "studio" })}>Add yours <ArrowRight size={13} /></button></p>
-        <p className="gallery-note">Saved shirts live in this browser only. Until yours arrive, the samples on the wall are mine.</p>
+        <div className="museum-top"><button className="back" onClick={() => go({ name: "home", anchor: "clothes" })}><ChevronLeft size={14} /> Back to the portfolio</button><a className="home-pill" href="#/studio">Create a shirt <ArrowRight size={14} /></a></div>
+        <header className="play-hero museum-hero"><div><p className="home-eyebrow">THE VISITOR MUSEUM / AN OPEN EXHIBITION</p><h1>A little room<br />for <em>your ideas.</em></h1><p>Made in the studio. Framed with a little care.</p></div><p className="museum-intro-note">Everyone has a designer’s eye.<br />This is a place to try yours.</p></header>
+        <div className="museum-summary"><span>{items ? `${items.length} ${items.length === 1 ? 'study' : 'studies'} on view` : 'Opening the museum…'}</span><p className="gallery-note">Saved shirts live in this browser. Until yours arrive, the samples are mine.</p></div>
       </div>
       {items && items.length === 0 && <p className="empty">The wall is empty. Be the first to hang something.</p>}
 
       <div className="exhibition">
-        <div className="wall-track" ref={track} onScroll={onScroll} onPointerDown={dragPan} aria-roledescription="carousel" aria-label="Gallery walls">
+        <div className="wall-track" ref={track} onScroll={onScroll} onPointerDown={dragPan} role="region" tabIndex={0} aria-roledescription="carousel" aria-label="Museum walls" onKeyDown={event => { if (['ArrowLeft', 'ArrowRight'].includes(event.key)) { event.preventDefault(); goTo(idx + (event.key === 'ArrowRight' ? 1 : -1)); } }}>
           {walls.map((wall, wi) => (
             <section key={wi} className="wall-panel" aria-label={`Wall ${wi + 1} of ${walls.length}`}>
               <div className="wall" role="list">
-                {wall.map((e, i) => { const [sc, off] = layout[i % layout.length]; return (
-                  <div key={e.id} role="listitem" className="wall-item" style={{ "--sc": sc, "--off": off + "px" }}>
-                    <button className="frame-btn" onClick={() => setOpen(e)} aria-label={`Open shirt by ${e.alias || "anonymous"}`}>
+                {wall.map((e, i) => (
+                  <div key={e.id} role="listitem" className="wall-item">
+                    <button className="frame-btn" tabIndex={wi === idx ? 0 : -1} onClick={() => setOpen(e)} aria-label={`Open shirt by ${e.alias || "anonymous"}`}>
                       <div className="framed small"><div className="frame-edge" /><div className="frame-mat" /><div className="frame-glass" /><div className="framed-art"><ShirtArtwork entry={e} /></div></div>
-                      <span className="plaque tiny"><span>{e.alias || "Anonymous"}</span><span className="plaque-y">{new Date(e.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</span></span>
+                      <span className="museum-card-label"><span className="museum-study">STUDY {String(wi * PER + i + 1).padStart(3, '0')}</span><span>Untitled Tee</span><small>{e.alias || "Anonymous"}</small><span className="museum-date">{new Date(e.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</span></span>
                     </button>
-                  </div>); })}
+                  </div>))}
               </div>
             </section>))}
         </div>
@@ -595,13 +630,13 @@ function Gallery({ go }) {
 
       <div className="museum-floor" aria-hidden><div className="visitors">{visitors.map(v => <VisitorFigure key={v.id} v={v} rm={rm} />)}</div></div>
       {open && (
-        <div className="modal-bg" role="dialog" aria-modal="true" onClick={() => setOpen(null)}>
+        <ModalDialog label={`Untitled Tee by ${open.alias || 'Anonymous'}`} onClose={() => setOpen(null)}>
           <div className="modal modal-art" onClick={e => e.stopPropagation()}>
             <button className="modal-x" onClick={() => setOpen(null)} aria-label="Close"><X size={18} /></button>
             <div className="framed big"><div className="frame-edge" /><div className="frame-mat" /><div className="frame-glass" /><div className="framed-art"><ShirtArtwork entry={open} /></div></div>
             <MuseumTag entry={open} n={items.indexOf(open) + 1} />
           </div>
-        </div>)}
+        </ModalDialog>)}
     </main>
   );
 }
@@ -637,7 +672,7 @@ function Footer({ go, scrollTo, route }) {
     <footer className="foot">
       <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><button className="foot-stamp" onClick={() => go({ name: "changelog" })}>Updated {fmtDate(LAST_UPDATED)} · changelog</button></div>
       <div className="foot-cols">
-        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => go({ name: "creations" })}>Create</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
+        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => go({ name: "creations" })}>NEP2UNE</button><button onClick={() => go({ name: "studio" })}>Create</button><button onClick={() => go({ name: "gallery" })}>Museum</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
         <div><h3>Contact</h3>{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.email && <a href={"mailto:" + SITE.email}>Email</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}<button onClick={() => nav("contact")}>Contact section</button></div>
       </div>
     </footer>
@@ -688,7 +723,7 @@ export default function App() {
       cs ? cs.name + " | Kyle Potente" :
       route.name === "creations" ? "NEP2UNE Creations | Kyle Potente" :
       route.name === "studio" ? "Shirt Studio | Kyle Potente" :
-      route.name === "gallery" ? "Visitor Gallery | Kyle Potente" : "Changelog | Kyle Potente";
+      route.name === "gallery" ? "Visitor Museum | Kyle Potente" : "Changelog | Kyle Potente";
     const a = pendingAnchor.current; pendingAnchor.current = null;
     if (a) { const t = setTimeout(() => scrollTo(a), 80); return () => clearTimeout(t); }
     window.scrollTo(0, 0);
@@ -708,6 +743,7 @@ export default function App() {
       <Cursor />
       <Navigation route={route} go={go} scrollTo={scrollTo} />
       <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
+      {["home", "creations", "studio", "gallery"].includes(route.name) && <GlassDock site={SITE} scrollTo={scrollTo} go={go} route={route} />}
     </div>
   );
 }

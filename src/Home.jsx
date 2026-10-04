@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, FileText, FolderOpen, Code2, Mail, Shirt } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Mail, Shirt } from "lucide-react";
 import "./home.css";
 import ClothingRail from "./ClothingRail.jsx";
 
@@ -79,21 +79,6 @@ function SelectedWork({ projects, order, go }) {
   </section>;
 }
 
-function LinkedInMark() {
-  return <span className="linkedin-mark" aria-hidden="true">in</span>;
-}
-
-function GlassDock({ site, scrollTo, go }) {
-  const item = (label, Icon, className) => <><span className={`dock-tile ${className}`}><Icon size={23} strokeWidth={1.6} aria-hidden="true" /></span><span>{label}</span></>;
-  return <nav className="glass-dock" aria-label="Portfolio shortcuts" onPointerMove={event => { const box = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty("--glass-x", `${(event.clientX - box.left) / box.width * 100}%`); }} onPointerLeave={event => event.currentTarget.style.setProperty("--glass-x", "35%")} >
-    <button type="button" onClick={() => scrollTo("work")}>{item("Work", FolderOpen, "dock-blue")}</button>
-    <a href={site.resumeUrl} target="_blank" rel="noreferrer">{item("Resume", FileText, "dock-cream")}</a>
-    <a href={site.linkedin} target="_blank" rel="noreferrer">{item("LinkedIn", LinkedInMark, "dock-blue")}</a>
-    <a href={site.github} target="_blank" rel="noreferrer">{item("GitHub", Code2, "dock-gray")}</a>
-    <button type="button" onClick={() => go({ name: "creations" })}>{item("Create", Shirt, "dock-pink")}</button>
-  </nav>;
-}
-
 export default function Home({ go, scrollTo, site, projects, order }) {
   const reduced = useMotionPreference();
   return <main id="main" className="portfolio-home">
@@ -116,6 +101,5 @@ export default function Home({ go, scrollTo, site, projects, order }) {
     </section>
     <section id="about" className="home-about" aria-labelledby="about-h"><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2><div><p>I’m Kyle, a product designer with a computer science background. I design mobile experiences at PXI Labs, build Shopify storefronts, and run NEP2UNE, my independent clothing brand.</p><p className="home-skills">Figma · React · TypeScript · CSS · Shopify · Interaction design</p></div></section>
     <section id="contact" className="home-contact" aria-labelledby="contact-h"><h2 id="contact-h">Let’s make something <em>people remember.</em></h2><a className="home-pill" href={`mailto:${site.email}`}><Mail size={17} /> Say hello <ArrowUpRight size={16} /></a></section>
-    <GlassDock site={site} scrollTo={scrollTo} go={go} />
   </main>;
 }

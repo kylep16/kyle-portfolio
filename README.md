@@ -27,9 +27,21 @@ The connected GitHub repository deploys to Vercel on updates to `main`.
 | Current garments and future photo slots | `src/brandData.js` | `#/creations` |
 | Shirt creator, visitor gallery, site details, changelog | `src/App.jsx` | `#/studio`, `#/gallery`, `#/changelog` |
 
-Create in the main navigation and glass dock opens the NEP2UNE archive. The shirt
-creator remains accessible from the archive and homepage. Gallery data uses
-localStorage; it is local to the visitor's browser.
+NEP2UNE in the main navigation and glass dock opens the garment archive. Create
+opens the shirt studio. The shared dock stays available on the homepage, archive,
+studio, and museum. The studio links directly to the museum; saved designs use
+localStorage and remain local to the visitor's browser.
+
+`src/GlassDock.jsx` owns shortcut destinations. `src/playground.css` styles the
+studio, save dialog, framing sequence, and museum in the shared editorial palette.
+The museum uses consistent exhibit frames and browser-local labels, with wall
+buttons, keyboard arrows, and touch scrolling. Dialogs support Escape and trap
+keyboard focus. Reduced-motion preferences apply from the first render.
+
+`src/Nep2uneMark.jsx` uses the official animated storefront logo from
+`https://nep2une.shop/cdn/shop/files/ezgif.com-gif-maker_1.gif?v=1659303797&width=200`.
+Its unchanged GIF and a still first-frame PNG are in `public/assets/nep/`;
+the still is selected for visitors who request reduced motion.
 
 ## Photography template
 
