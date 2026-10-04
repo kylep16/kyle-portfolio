@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import "./fonts.css";
+import Home from "./Home.jsx";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import {
-  ArrowDown, ArrowRight, ArrowUpRight, Download, Menu, X, Undo2, Redo2,
-  Trash2, Eraser, PenLine, Sticker as StickerIcon, Palette, Check, ChevronLeft,
+  ArrowRight, ArrowUpRight, Menu, X, Undo2, Redo2,
+  Trash2, Eraser, PenLine, Sticker as StickerIcon, Palette, ChevronLeft,
 } from "lucide-react";
 
 /* =====================================================================
@@ -271,6 +273,7 @@ const CASE_STUDIES = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-03", tags: ["Site", "PXI", "NEP2UNE"], note: "Homepage overhaul: left-aligned introduction, horizontal hanger carousel, glass dock, stacked project-card reveal, and a custom block-font clothing showcase. Shortened the recruiter read while keeping the detailed case studies and shirt creator available." },
   { date: "2026-09-09", tags: ["PXI", "NEP2UNE", "Sweat2Swim"], note: "Real work on screen: 21 PXI screens from the 52-screen baseline, NEP2UNE tech packs, campaign photography and studio turn videos, and the live Sweat2Swim storefront." },
   { date: "2026-09-08", tags: ["PXI", "Sweat2Swim", "NEP2UNE"], note: "Rewrote all three case studies around shipped work: PXI's ten product systems, the Sweat2Swim storefront, NEP2UNE's founder story." },
   { date: "2026-09-03", tags: ["Site"], note: "Hero character rebuilt as a paper-doll mannequin wearing real NEP2UNE garments. Visitor gallery became a finite exhibition." },
@@ -296,7 +299,6 @@ const GARMENTS = [
   // { id: "tee-white", name: "Gingham star tee, white", meta: ["NEP2UNE","HI I'M ✦","COTTON"], category: "top", z: 20, fit: { cx: 150, cy: 224, w: 200 } },
 ];
 // layering order: body → top → outerwear → bottom → shoes → hat → accessory (z per garment)
-const CATEGORY_REGION = { top: "torso", outerwear: "torso", bottom: "legs", shoes: "legs", hat: "head", accessory: "torso" };
 /* Exact NEP2UNE star cursor: paste the cleaned transparent PNG/SVG as a data URI.
    Until it's provided, the cursor falls back to a small dot. */
 const STAR_CURSOR_SRC = null;
@@ -477,11 +479,11 @@ function Placeholder({ label, ratio = "4/3", className = "", tone = 0 }) {
 function Navigation({ route, go, scrollTo }) {
   const [open, setOpen] = useState(false); const [scrolled, setScrolled] = useState(false);
   useEffect(() => { const f = () => setScrolled(window.scrollY > 24); window.addEventListener("scroll", f, { passive: true }); return () => window.removeEventListener("scroll", f); }, []);
-  const links = [["Work", "work"], ["Play", "play"], ["About", "about"]];
+  const links = [["Work", "work"], ["Clothes", "clothes"], ["About", "about"]];
   const nav = id => { setOpen(false); if (route.name !== "home") { go({ name: "home", anchor: id }); } else scrollTo(id); };
   return (
     <header className={"nav " + (scrolled ? "nav-scrolled" : "")}>
-      <button className="mark" onClick={() => { setOpen(false); go({ name: "home" }); }} aria-label="Home">{SITE.mark}</button>
+      <button className="mark" onClick={() => { setOpen(false); go({ name: "home" }); }} aria-label="Home">{route.name === "home" ? SITE.name : SITE.mark}</button>
       <nav className="nav-center" aria-label="Primary">{links.map(([l, id]) => <button key={id} onClick={() => nav(id)}>{l}</button>)}</nav>
       <div className="nav-right">
         {SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}
@@ -500,102 +502,7 @@ function Navigation({ route, go, scrollTo }) {
 }
 
 /* ---------------------------------------------------------------------
-   components/Character: editorial figure + wardrobe drag-and-drop
-   --------------------------------------------------------------------- */
-function Figure({ outfit, justEquipped, rm, target }) {
-  const worn = Object.values(outfit).filter(Boolean).map(id => GARMENTS.find(g => g.id === id)).sort((a, b) => a.z - b.z);
-  return (
-    <svg viewBox="0 0 300 600" className="figure" aria-label="Pictogram figure wearing your chosen NEP2UNE pieces" role="img">
-      {/* Rounded figure sized to the actual garment silhouettes. */}
-      <g fill="var(--paper)" stroke="var(--ink)" strokeWidth="3" strokeLinejoin="round" strokeLinecap="round">
-        <path d="M137 108 L137 145 L163 145 L163 108" />
-        <circle cx="150" cy="76" r="38" />
-        <path d="M111 154 Q88 158 85 189 L74 319 Q73 337 85 339 Q99 341 102 323 L118 205 M189 154 Q212 158 215 189 L226 319 Q227 337 215 339 Q201 341 198 323 L182 205" />
-        <g className={target === "legs" ? "region-hot" : ""}>
-          <path d="M111 299 L113 555 L140 555 L150 340 L160 555 L187 555 L189 299 Z" />
-          <path d="M113 550 Q104 553 99 564 Q97 571 107 572 L140 572 L140 550 Z M160 550 L160 572 L193 572 Q203 571 201 564 Q196 553 187 550 Z" />
-        </g>
-        <path className={target === "torso" ? "region-hot" : ""} d="M126 141 Q150 135 174 141 Q195 145 195 173 L184 251 L188 313 L112 313 L116 251 L105 173 Q105 145 126 141 Z" />
-      </g>
-      {/* region hints while dragging */}
-      {target === "torso" && <path d="M96 128 C106 120 194 120 204 128 C218 138 218 160 214 180 L208 252 L212 322 L88 322 L92 252 L86 180 C82 160 82 138 96 128 Z" className="region-ring" />}
-      {target === "legs" && <rect x="94" y="292" width="112" height="322" rx="24" className="region-ring" />}
-      {/* real garments, paper-doll style: scale + translate only */}
-      {worn.map(g => { const a = GARMENT_ASSETS[g.id]; const h = g.fit.w / a.aspect; return (
-        <image key={g.id} href={a.src} x={g.fit.cx - g.fit.w / 2} y={g.fit.cy - h / 2} width={g.fit.w} height={h}
-               className={justEquipped === g.id && !rm ? "snap-in" : ""} style={{ transformOrigin: `${g.fit.cx}px ${g.fit.cy}px` }} preserveAspectRatio="xMidYMid meet" />); })}
-    </svg>
-  );
-}
-
-function GarmentSticker({ g, on, style, onPointerDown, onClick, onKeyDown, ghost }) {
-  return (
-    <button className={"garment " + (on ? "is-on " : "") + (ghost ? "is-ghost" : "")} style={style}
-      onPointerDown={onPointerDown} onClick={onClick} onKeyDown={onKeyDown} aria-pressed={on} aria-label={`${on ? "Take off" : "Wear"} ${g.name}`} data-cursor>
-      <img src={GARMENT_ASSETS[g.id].src} alt="" draggable="false" loading="lazy" decoding="async" />
-      <span className="g-name" aria-hidden>{g.name}</span>
-      <span className="garment-check" aria-hidden>{on ? "✓" : ""}</span>
-    </button>
-  );
-}
-
-function Character() {
-  const [outfit, setOutfit] = useState({});
-  const [just, setJust] = useState(null);
-  const [drag, setDrag] = useState(null); const [target, setTarget] = useState(null);
-  const zone = useRef(null); const rm = useReducedMotion(); const mob = useIsMobile();
-  const outfitRef = useRef({});
-
-  const equip = useCallback(id => {
-    const g = GARMENTS.find(x => x.id === id); const o = outfitRef.current;
-    const next = { ...o, [g.category]: o[g.category] === id ? undefined : id };
-    outfitRef.current = next; setOutfit(next);
-    if (next[g.category]) setJust(id);
-    else setJust(null);
-  }, []);
-
-  const startDrag = (e, g) => {
-    if (mob) return; e.preventDefault();
-    const start = { x: e.clientX, y: e.clientY, moved: false };
-    setDrag({ id: g.id, x: e.clientX, y: e.clientY }); document.body.dataset.drag = "1";
-    const region = CATEGORY_REGION[g.category];
-    const inZone = (x, y) => { const r = zone.current.getBoundingClientRect(); const pad = 40; return x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad; };
-    const mv = ev => { if (Math.hypot(ev.clientX - start.x, ev.clientY - start.y) > 3) start.moved = true; setDrag({ id: g.id, x: ev.clientX, y: ev.clientY }); setTarget(inZone(ev.clientX, ev.clientY) ? region : null); };
-    const up = ev => {
-      window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up);
-      setDrag(null); setTarget(null); delete document.body.dataset.drag;
-      if (!start.moved || inZone(ev.clientX, ev.clientY)) equip(g.id);
-    };
-    window.addEventListener("pointermove", mv); window.addEventListener("pointerup", up);
-  };
-
-  const isOn = id => Object.values(outfit).includes(id);
-  const dragG = drag && GARMENTS.find(g => g.id === drag.id);
-
-  return (
-    <div className={"character " + (mob ? "is-mobile" : "")}>
-      <div ref={zone} className="figure-zone" data-cursor>
-        <Figure outfit={outfit} justEquipped={just} rm={rm} target={target} />
-
-      </div>
-      <div className="wardrobe-caption">
-        <p className="wardrobe-hint">Style a look with pieces I designed.</p>
-        <p className="wardrobe-instruction">{mob ? "Tap a piece to wear or remove it." : "Click a piece to wear it, or drag it onto the figure."}</p>
-      </div>
-      <div className="garment-tray" role="group" aria-label="NEP2UNE garments">
-        {GARMENTS.map(g => (
-          <GarmentSticker key={g.id} g={g} on={isOn(g.id)} ghost={drag?.id === g.id}
-            onPointerDown={e => startDrag(e, g)} onClick={e => { if (mob || e.detail === 0) equip(g.id); }} />
-        ))}
-      </div>
-      <button className="reset-outfit" disabled={!Object.values(outfit).some(Boolean)} onClick={() => { outfitRef.current = {}; setOutfit({}); setJust(null); }}>Reset outfit</button>
-      {dragG && !rm && <img src={GARMENT_ASSETS[dragG.id].src} alt="" className="garment-drag" style={{ transform: `translate(${drag.x}px,${drag.y}px) translate(-50%,-50%) scale(1.04)` }} aria-hidden />}
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------------
-   components/ProjectPreview: editorial project block (home)
+   components/ProjectArt: case-study cover artwork
    --------------------------------------------------------------------- */
 function ProjectArt({ slug, hovered }) {
   // Use the actual product screens for PXI's project card and case-study hero.
@@ -625,105 +532,6 @@ function ProjectArt({ slug, hovered }) {
       <span className="art-label">Real NEP2UNE garments, designed and produced by Kyle</span>
     </div>);
 }
-function ProjectPreview({ cs, go, index }) {
-  const [h, setH] = useState(false); const ref = useRef(null); const rm = useReducedMotion(); const mob = useIsMobile();
-  const par = e => { if (rm || mob) return; const r = ref.current.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5; const y = (e.clientY - r.top) / r.height - .5; ref.current.style.setProperty("--px", x * 10 + "px"); ref.current.style.setProperty("--py", y * 10 + "px"); };
-  return (
-    <Reveal as="article" className={"project " + (index === 0 ? "project-flagship" : "")}>
-      <a href={"#" + cs.slug} onClick={e => { e.preventDefault(); go({ name: "case", slug: cs.slug }); }}
-         ref={ref} className="project-link" onPointerMove={par} onPointerEnter={() => setH(true)} onPointerLeave={() => { setH(false); ref.current.style.setProperty("--px", "0px"); ref.current.style.setProperty("--py", "0px"); }}
-         aria-label={`${cs.name} case study`}>
-        <div className="project-media"><ProjectArt slug={cs.slug} hovered={h} /><span className="project-cta">View case study <ArrowRight size={14} aria-hidden /></span></div>
-        <div className="project-meta">
-          <div className="project-title-row"><h3>{cs.name}</h3><span className="project-year">{cs.year}</span></div>
-          <p className="project-disc">{cs.disciplines}</p>
-          <p className="project-desc">{cs.preview}</p>
-          <p className="project-role"><span>Role</span> {cs.role} {cs.impact && <><span className="dotsep">Shipped</span> {cs.impact}</>}</p>
-        </div>
-      </a>
-    </Reveal>
-  );
-}
-
-/* ---------------------------------------------------------------------
-   views/Home
-   --------------------------------------------------------------------- */
-function Home({ go, scrollTo }) {
-  return (
-    <main id="main">
-      {/* HERO */}
-      <section className="hero" aria-labelledby="hero-h">
-        <div className="hero-copy">
-          <p className="hero-now"><strong>Kyle Potente</strong> · Head of Mobile UI Design at PXI Labs</p>
-          <h1 id="hero-h">I design experiences <em>and build them.</em></h1>
-          <p className="hero-body">Product designer with a frontend background: shipping mobile UI at PXI, running my own apparel brand NEP2UNE ($120K+ lifetime sales, 15 countries), and optimizing Sweat2Swim's Shopify storefront.</p>
-          <div className="hero-actions">
-            <Button onClick={() => scrollTo("work")} icon={ArrowDown}>View my work</Button>
-            {SITE.resumeUrl && <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>}
-          </div>
-        </div>
-        <div className="hero-figure"><Character /></div>
-      </section>
-
-      {/* WORK */}
-      <section id="work" className="work" aria-labelledby="work-h">
-        <div className="section-head"><h2 id="work-h">Selected work</h2><p>Three products. My role in each, and what changed.</p></div>
-        {CASE_ORDER.map((s, i) => <ProjectPreview key={s} cs={CASE_STUDIES[s]} go={go} index={i} />)}
-      </section>
-
-      {/* PLAY */}
-      <section id="play" className="play" aria-labelledby="play-h">
-        <Reveal>
-          <h2 id="play-h">You've seen what I make.<br /><em>Now make something here.</em></h2>
-          <p>Leave your mark on my portfolio. Design a shirt, hang it in the visitor gallery.</p>
-          <div className="play-actions"><Button onClick={() => go({ name: "studio" })} icon={ArrowRight}>Make a shirt</Button><Button variant="ghost" onClick={() => go({ name: "gallery" })}>See the gallery</Button></div>
-        </Reveal>
-        <Reveal delay={120} className="play-wall"><MiniWall /></Reveal>
-      </section>
-
-      {/* ABOUT */}
-      <section id="about" className="about" aria-labelledby="about-h">
-        <Reveal><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2></Reveal>
-        <Reveal delay={80} className="about-body">
-          <p>I design product interfaces and build them in React. Most of my work happens in small teams where the distance between an idea and a shipped screen has to be short: PXI's mobile app, my own brand NEP2UNE, and Sweat2Swim's storefront. I'm a computer science student at SDSU, graduating December 2026.</p>
-          <div className="skills">
-            {[["Design", ["Figma", "UI design", "UX", "Prototyping", "Interaction design", "Design systems"]],
-              ["Development", ["React", "TypeScript", "TSX", "CSS", "Frontend development", "Shopify"]],
-              ["Product", ["Product thinking", "Iteration", "A/B testing", "QA", "Startup environments"]]].map(([k, items]) => (
-              <div key={k} className="skill-col"><h3>{k}</h3><ul>{items.map(i => <li key={i}>{i}</li>)}</ul></div>))}
-          </div>
-          <div className="built">
-            <h3>This site is part of the evidence</h3>
-            <p>Everything interactive here is code I can walk through: hash routing with focus management and per-page titles, a canvas drawing tool with a bounded print area and a 40-step undo/redo history, pointer-based sticker manipulation with keyboard alternatives (arrow keys nudge, plus and minus scale, r rotates), lazy-loaded garment cutouts processed from my own product photography, prefers-reduced-motion fallbacks throughout, and a storage adapter that keeps gallery shirts in this browser's localStorage with a marked swap point for Supabase. Designed by me, built in React with AI-assisted pair programming; every decision in it is mine to explain. The source is on my GitHub.</p>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" className="contact" aria-labelledby="contact-h">
-        <Reveal><h2 id="contact-h">Let's make something <em>people remember.</em></h2>
-          <div className="contact-actions">
-            {SITE.resumeUrl && <Button href={SITE.resumeUrl} icon={ArrowUpRight}>View résumé</Button>}
-            {SITE.resumeUrl && <Button href={SITE.resumeUrl} variant="ghost" icon={Download} download>Download résumé</Button>}
-            {SITE.linkedin && <Button href={SITE.linkedin} variant="ghost" icon={ArrowUpRight}>LinkedIn</Button>}
-            {SITE.email && <Button href={"mailto:" + SITE.email} variant="ghost">Email me</Button>}
-            {SITE.github && <Button href={SITE.github} variant="ghost" icon={ArrowUpRight}>GitHub</Button>}
-          </div>
-          {!(SITE.email || SITE.linkedin || SITE.resumeUrl) && <p className="contact-note">Direct links are being connected. Meanwhile, find me on LinkedIn: Kyle Potente.</p>}</Reveal>
-      </section>
-    </main>
-  );
-}
-
-function MiniWall() {
-  const [items, setItems] = useState([]);
-  useEffect(() => { storage.list().then(l => setItems(l.slice(0, 4))); }, []);
-  return <div className="mini-wall" aria-hidden>{items.map((e, i) => <div key={e.id} className="mini-frame" style={{ transform: `translateY(${[0, 18, -10, 8][i]}px)` }}><ShirtArtwork entry={e} /></div>)}</div>;
-}
-
-/* ---------------------------------------------------------------------
-   views/CaseStudy: recruiter-first template
-   --------------------------------------------------------------------- */
 function CaseStudy({ cs, go }) {
   const [quick, setQuick] = useState(true);
   const idx = CASE_ORDER.indexOf(cs.slug); const next = CASE_STUDIES[CASE_ORDER[(idx + 1) % CASE_ORDER.length]];
@@ -918,7 +726,7 @@ function Studio({ go, onSaved }) {
   return (
     <main id="main" className="studio">
       <div className="studio-top">
-        <button className="back" onClick={() => go({ name: "home", anchor: "play" })}><ChevronLeft size={14} /> Back</button>
+        <button className="back" onClick={() => go({ name: "home", anchor: "clothes" })}><ChevronLeft size={14} /> Back</button>
         <h1>Shirt studio</h1>
         <div className="studio-hist">
           <button onClick={undo} disabled={hi === 0} aria-label="Undo"><Undo2 size={16} /></button>
@@ -1105,7 +913,7 @@ function Gallery({ go }) {
   return (
     <main id="main" className="gallery">
       <div className="gallery-head">
-        <button className="back" onClick={() => go({ name: "home", anchor: "play" })}><ChevronLeft size={14} /> Home</button>
+        <button className="back" onClick={() => go({ name: "home", anchor: "clothes" })}><ChevronLeft size={14} /> Home</button>
         <h1>Visitor gallery</h1>
         <p>Shirts made in the studio hang here. <button className="textlink" onClick={() => go({ name: "studio" })}>Add yours <ArrowRight size={13} /></button></p>
         <p className="gallery-note">Saved shirts live in this browser only. Until yours arrive, the samples on the wall are mine.</p>
@@ -1179,7 +987,7 @@ function Footer({ go, scrollTo, route }) {
     <footer className="foot">
       <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><button className="foot-stamp" onClick={() => go({ name: "changelog" })}>Updated {fmtDate(LAST_UPDATED)} · changelog</button></div>
       <div className="foot-cols">
-        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => nav("play")}>Play</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
+        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => nav("clothes")}>Clothes</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
         <div><h3>Contact</h3>{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.email && <a href={"mailto:" + SITE.email}>Email</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}<button onClick={() => nav("contact")}>Contact section</button></div>
       </div>
     </footer>
@@ -1240,7 +1048,7 @@ export default function App() {
     : route.name === "studio" ? <Studio go={go} />
     : route.name === "gallery" ? <Gallery go={go} />
     : route.name === "changelog" ? <ChangelogPage go={go} />
-    : <Home go={go} scrollTo={scrollTo} />;
+    : <Home go={go} scrollTo={scrollTo} site={SITE} garments={GARMENTS} garmentAssets={GARMENT_ASSETS} projects={CASE_STUDIES} order={CASE_ORDER} />;
   return (
     <div className="site" data-route={route.name}>
       <style>{CSS}</style>
@@ -1257,7 +1065,6 @@ export default function App() {
    --------------------------------------------------------------------- */
 const CSS = `
 .magnetic{display:inline-block}
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&display=swap');
 :root{--paper:#F5F4EF;--paper-2:#ECEAE3;--ink:#000;--char:#2B2B2B;--mute:#77756D;--line:#DAD8CF;--accent:#2534E8;--gold:#B79A3A;--gold-2:#E4CC7A;
  --serif:'Instrument Serif',Georgia,serif;--sans:'Schibsted Grotesk',system-ui,sans-serif;--ease:cubic-bezier(.2,.7,.2,1);--pad:clamp(20px,5vw,72px)}
 *{box-sizing:border-box}
@@ -1303,43 +1110,6 @@ body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
 .btn-ghost{background:transparent;color:var(--ink)}.btn-ghost:hover{background:rgba(0,0,0,.05)}
 .textlink{display:inline-flex;align-items:center;gap:6px;font-size:14px;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 .back{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--mute)}.back:hover{color:var(--ink)}
-
-/* hero */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);padding:clamp(20px,4vh,44px) var(--pad) clamp(32px,5vh,56px);align-items:center;position:relative}
-.hero-now{font-size:14px;color:var(--mute);margin-bottom:20px}.hero-now strong{color:var(--ink);font-weight:600}
-.hero h1{font-size:clamp(40px,6vw,84px);max-width:13ch}
-.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.4vw,32px);margin-top:18px;min-height:1.4em;line-height:1.4;color:var(--char)}
-.hero-sub-in{display:inline-block;animation:subin .7s var(--ease)}
-@keyframes subin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.hero-body{max-width:46ch;margin-top:16px;color:var(--char);font-size:17px;line-height:1.55}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
-.hero-figure{position:relative;justify-self:center;width:100%;max-width:560px}
-.character{position:relative;display:flex;flex-direction:column;align-items:center}
-.figure-zone{position:relative;width:56%;padding:12px}
-.figure{width:100%;height:auto;max-height:38vh;display:block}
-.figure image{transform-box:view-box}
-.region-hot{fill:var(--paper-2)}
-.region-ring{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 5;opacity:.6;animation:ringin .3s var(--ease)}
-@keyframes ringin{from{opacity:0;transform:scale(1.05)}to{opacity:.6}}
-.garment-tray{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;margin-top:18px}
-.garment{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0;padding:12px 6px 10px;border:1px solid var(--line);border-radius:8px;transition:background .2s,border-color .2s;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-@media (pointer:fine){.garment{touch-action:none}}
-.garment img{width:100%;height:88px;object-fit:contain;display:block;pointer-events:none}
-.garment:hover{background:var(--paper-2);border-color:var(--mute)}
-.garment.is-on{background:var(--paper-2);border-color:var(--ink)}
-.garment.is-ghost img{opacity:.3}
-.g-name{font-size:11px;line-height:1.35;text-align:center;min-height:30px}
-.garment-check{position:absolute;top:5px;right:7px;font-size:14px;line-height:1}
-.garment-drag{position:fixed;left:0;top:0;width:150px;z-index:80;pointer-events:none;filter:drop-shadow(0 18px 24px rgba(0,0,0,.25))}
-.snap-in{animation:snap .6s cubic-bezier(.34,1.56,.64,1)}
-@keyframes snap{0%{opacity:0;transform:scale(1.08) translateY(-10px)}100%{opacity:1;transform:none}}
-.wardrobe-caption{text-align:center;margin-top:8px}
-.wardrobe-hint{font-size:15px;color:var(--ink);line-height:1.4}
-.wardrobe-instruction{margin-top:5px;font-size:12px;color:var(--mute);line-height:1.4}
-.reset-outfit{margin-top:10px;min-height:44px;padding:8px 16px;font-size:12px;text-decoration:underline;text-underline-offset:3px}
-.reset-outfit:disabled{opacity:.4;cursor:default}
-@media (max-width:900px){.hero{grid-template-columns:1fr;min-height:0}.hero-figure{max-width:440px}.figure-zone{width:52%}.figure{max-height:36vh}}
-@media (max-width:380px){.garment-tray{gap:6px}.garment{padding:10px 4px}.garment img{height:68px}.g-name{font-size:10px}}
 
 /* work */
 .section-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 var(--pad) 28px;border-bottom:1px solid var(--line);margin:0 0 56px}
