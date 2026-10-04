@@ -26,31 +26,29 @@ function Clip({ x, y, metal }) {
 export default function HungGarment({ product }) {
   const uid = useId();
   const metal = `url(#${uid}-metal)`;
-  const wood = `${uid}-wood`;
+  const shoulder = `${uid}-shoulder`;
   const fit = FITS[product.id];
   const pants = product.hanger === 'clip';
   const x = 160 - fit.width * fit.center;
   const y = pants ? 84 : 78;
   const clipY = fit.clipY || 92;
   const clips = fit.clips?.map(position => x + position * fit.width);
-  return <svg className="rail-outfit" viewBox="0 0 320 460" role="img" aria-labelledby={`${uid}-title`}>
-    <title id={`${uid}-title`}>{product.catalogName} on a {pants ? 'clip' : 'wooden'} hanger</title>
+  return <svg className="rail-outfit" viewBox="0 0 320 460" role="img" aria-labelledby={`${uid}-title`} data-material="steel">
+    <title id={`${uid}-title`}>{product.catalogName} on a steel {pants ? 'clip' : 'shoulder'} hanger</title>
     <defs>
       <linearGradient id={`${uid}-metal`} x1="0" y1="0" x2="1" y2="0"><stop stopColor="#626c69" /><stop offset=".3" stopColor="#f5f7f4" /><stop offset=".55" stopColor="#939c98" /><stop offset=".8" stopColor="#f1f3ee" /><stop offset="1" stopColor="#6b7470" /></linearGradient>
-      <linearGradient id={`${uid}-timber`} x2=".2" y2="1"><stop stopColor="#dfbc83" /><stop offset=".55" stopColor="#cfa56c" /><stop offset="1" stopColor="#ae804f" /></linearGradient>
-      <g id={wood}>
-        <path d="M160 48C151 48 149 58 143 62L74 103Q70 108 80 113L160 77L240 113Q250 108 246 103L177 62C171 58 169 48 160 48Z" fill={`url(#${uid}-timber)`} stroke="#ab8157" strokeWidth=".8" />
-        <path d="M79 106 151 66Q160 59 169 66L241 106M87 106 154 72M166 72 233 106" fill="none" stroke="#edcea0" strokeWidth="1" opacity=".65" />
-        <path d="M81 111H239" stroke="#bea783" strokeWidth="3" />
+      <g id={shoulder} fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M160 48Q156 50 152 55L75 104Q69 111 81 111H239Q251 111 245 104L168 55Q164 50 160 48Z" stroke={metal} strokeWidth="5" />
+        <path d="M160 48Q156 50 152 55L75 104Q69 111 81 111H239Q251 111 245 104L168 55Q164 50 160 48Z" stroke="#eef2ef" strokeWidth="1.2" opacity=".8" />
       </g>
       {!pants && <clipPath id={`${uid}-neck`}><path d={`M${160 - fit.neck} 46H${160 + fit.neck}V80Q160 99 ${160 - fit.neck} 80Z`} /></clipPath>}
     </defs>
     <g data-layer="behind">
-      {pants ? <path d={`M${clips[0] - 19} ${clipY - 8}H${clips[1] + 19}M160 48V${clipY - 8}`} fill="none" stroke={metal} strokeWidth="5" strokeLinecap="round" /> : <use href={`#${wood}`} />}
+      {pants ? <path d={`M${clips[0] - 19} ${clipY - 8}H${clips[1] + 19}M160 48V${clipY - 8}`} fill="none" stroke={metal} strokeWidth="5" strokeLinecap="round" /> : <use href={`#${shoulder}`} />}
     </g>
     <image className="rail-garment-image" href={product.image} x={x} y={y} width={fit.width} height={fit.height} preserveAspectRatio="none" />
     <g className="hanger-front" data-layer="front">
-      {!pants && <use href={`#${wood}`} clipPath={`url(#${uid}-neck)`} />}
+      {!pants && <use href={`#${shoulder}`} clipPath={`url(#${uid}-neck)`} />}
       <path d="M160 49V37C160 30 175 29 175 19C175 5 155 3 149 16" fill="none" stroke="#727c77" strokeWidth="3.2" strokeLinecap="round" />
       <path d="M160 48V37C160 30 175 29 175 19C175 5 155 3 149 16" fill="none" stroke="#e5e9e2" strokeWidth="1.2" strokeLinecap="round" />
       {pants && clips.map((position, index) => <Clip key={index} x={position} y={clipY} metal={metal} />)}

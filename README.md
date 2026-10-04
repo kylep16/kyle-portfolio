@@ -70,7 +70,7 @@ its product page. Add a product there and prepare a transparent, trimmed image
 in `public/assets/clothes/rail/`, then add its measured fit in `src/HungGarment.jsx`.
 That component layers the real photograph between the hanger shoulders and
 foreground hardware. Pants use two front clips positioned over the waistband;
-tops show a wooden hanger at the neckline. Rebuild the existing cutouts with
+tops show a polished steel shoulder hanger at the neckline. Rebuild the existing cutouts with
 `python scripts/build-rail-assets.py` (requires Pillow).
 
 `src/ClothingRail.jsx` runs a spring for horizontal travel and a damped pendulum

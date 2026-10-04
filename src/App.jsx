@@ -42,6 +42,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Switched shirt and jacket hangers to polished steel, preserving each garment’s fitted neckline, foreground layering, and pendulum swing." },
   { date: "2026-10-04", tags: ["Site", "PXI", "NEP2UNE", "Sweat2Swim"], note: "Fitted wooden shoulder hangers and front-facing waistband clips to each carousel garment. Connected the hero copy to product, UI/UX, and fashion design, set the clothing showcase heading in Helvetica, added a sticky case-study side index, and improved mobile dock contrast and touch targets." },
   { date: "2026-10-03", tags: ["Site", "NEP2UNE"], note: "UX refinement: bold Helvetica on the NEP2UNE hero, liquid-glass navigation and dock, and eight accurately named catalog garments on the homepage hanger rail. Added spring-driven travel, pendulum swing, pointer nudges, product links, and reduced-motion support." },
   { date: "2026-10-03", tags: ["Site", "PXI", "NEP2UNE", "Sweat2Swim"], note: "Added a NEP2UNE creations archive with eight current garments, lookbook chapters, process photography, and a downloadable photo template. Switched body text to Helvetica and rebuilt all three case studies with short editorial sections and uniformly sized image panels. Refocused PXI on the camera redesign and reserved media slots for the new disc walkthrough." },
