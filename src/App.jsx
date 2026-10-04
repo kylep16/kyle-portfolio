@@ -3,6 +3,7 @@ import Home from "./Home.jsx";
 import CaseStudy from "./CaseStudy.jsx";
 import Creations from "./Creations.jsx";
 import GlassDock from "./GlassDock.jsx";
+import CursorTrail from "./CursorTrail.jsx";
 import "./playground.css";
 import { CASE_STUDIES, CASE_ORDER } from "./caseStudies.js";
 import React, { useState, useEffect, useRef, useCallback } from "react";
@@ -44,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Fitted steel shoulder wires inside the shirt and jacket collars and downsized the pants clips. Restored the native cursor with a fading electric-blue, white, and lime-green motion trail, disabled for touch and reduced-motion preferences." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Shortened the steel hanger hooks and lifted shirts, jackets, and pants closer to the rail. Re-aligned the shoulder wires, neckline layers, and waistband clips with the raised garments." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Added the official NEP2UNE logo to a dedicated clothing-archive shortcut and made Create open the shirt builder. Restyled the studio, framing moment, and visitor museum with the portfolio’s paper palette, Helvetica controls, rounded panels, and consistent exhibit frames. Kept drawing, stickers, undo/redo, and browser-local saving." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Switched shirt and jacket hangers to polished steel, preserving each garment’s fitted neckline, foreground layering, and pendulum swing." },
@@ -60,10 +62,6 @@ const LAST_UPDATED = CHANGELOG[0].date;
 const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
 
-
-/* Exact NEP2UNE star cursor: paste the cleaned transparent PNG/SVG as a data URI.
-   Until it's provided, the cursor falls back to a small dot. */
-const STAR_CURSOR_SRC = null;
 
 /* ---------------------------------------------------------------------
    data/studio.js: shirt colors + stickers
@@ -189,30 +187,6 @@ function Magnetic({ children, strength = 0.18, className = "" }) {
   const leave = () => { ref.current.style.transform = ""; };
   return <div ref={ref} onPointerMove={move} onPointerLeave={leave} className={"magnetic " + className} style={{ transition: "transform .35s cubic-bezier(.2,.7,.2,1)" }}>{children}</div>;
 }
-function Cursor() {
-  const el = useRef(null); const mob = useIsMobile(); const rm = useReducedMotion();
-  const [st, setSt] = useState({ hover: false, down: false, native: false });
-  useEffect(() => {
-    if (mob) return;
-    const mv = e => {
-      if (el.current) el.current.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
-      const t = e.target;
-      const native = !!t.closest?.("input,textarea,select,[contenteditable]");
-      const hover = !native && !!t.closest?.("a,button,[data-cursor],[role=button]");
-      setSt(s => (s.hover === hover && s.native === native) ? s : { ...s, hover, native });
-    };
-    const dn = () => setSt(s => ({ ...s, down: true })); const up = () => setSt(s => ({ ...s, down: false }));
-    window.addEventListener("pointermove", mv); window.addEventListener("pointerdown", dn); window.addEventListener("pointerup", up);
-    return () => { window.removeEventListener("pointermove", mv); window.removeEventListener("pointerdown", dn); window.removeEventListener("pointerup", up); };
-  }, [mob]);
-  if (mob) return null;
-  return (
-    <div ref={el} className={"cursor " + (st.native ? "is-native " : "") + (st.hover ? "is-hover " : "") + (st.down ? "is-down" : "")} aria-hidden style={{ transition: rm ? "none" : undefined }}>
-      {STAR_CURSOR_SRC ? <img src={STAR_CURSOR_SRC} alt="" className="cursor-star" draggable="false" /> : <span className="cursor-dot" />}
-    </div>
-  );
-}
-
 /* ---------------------------------------------------------------------
    components/ui: Button, Section heading, placeholder
    --------------------------------------------------------------------- */
@@ -741,7 +715,7 @@ export default function App() {
     <div className="site" data-route={route.name}>
       <style>{CSS}</style>
       <a href="#main" className="skip">Skip to content</a>
-      <Cursor />
+      <CursorTrail />
       <Navigation route={route} go={go} scrollTo={scrollTo} />
       <div className="page">{view}{route.name !== "studio" && <Footer go={go} scrollTo={scrollTo} route={route} />}</div>
       {["home", "creations", "studio", "gallery"].includes(route.name) && <GlassDock site={SITE} scrollTo={scrollTo} go={go} route={route} />}
@@ -759,8 +733,7 @@ const CSS = `
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--paper)}
 .site{font-family:var(--sans);color:var(--ink);background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.5}
-.site,.site a,.site button{cursor:none}
-@media (pointer:coarse),(max-width:767px){.site,.site a,.site button{cursor:auto}}
+.site a,.site button,.site [role=button]{cursor:pointer}
 h1,h2,h3{margin:0;font-weight:400}
 h1,.site h2{font-family:var(--serif);letter-spacing:-.01em;line-height:1.02}
 em{font-style:italic}
@@ -771,14 +744,9 @@ a{color:inherit;text-decoration:none}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:100}.skip:focus{left:8px}
 .muted{color:var(--mute)}
 .page{transition:opacity .26s var(--ease),transform .26s var(--ease)}.page-out{opacity:0;transform:translateY(6px)}
-.cursor{position:fixed;left:0;top:0;pointer-events:none;z-index:9999}
-.cursor>*{display:block;transition:transform .18s var(--ease),opacity .15s}
-.cursor-star{width:22px;height:22px;margin:-11px;object-fit:contain}
-.cursor-dot{width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--ink)}
-.cursor.is-hover>*{transform:scale(1.12)}.cursor.is-down>*{transform:scale(.88)}.cursor.is-hover.is-down>*{transform:scale(.96)}
-.cursor.is-native>*{opacity:0}
-body[data-drag] .cursor>*{transform:scale(.92) rotate(-12deg)}
-.site input,.site textarea,.site select{cursor:auto}
+.cursor-trail{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+.cursor-trail[hidden]{display:none}
+.site input,.site textarea{cursor:text}
 
 /* nav */
 .nav{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px var(--pad);font-size:14px;transition:background .3s,backdrop-filter .3s}
