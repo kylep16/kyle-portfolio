@@ -5,8 +5,9 @@
 .home-eyebrow{font:12px/1.5 monospace;letter-spacing:.12em;color:var(--char)}
 .home-hero{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:32px;min-height:calc(100dvh - var(--dock-clearance) - var(--header-height));max-width:var(--home-width);margin:auto;padding:24px var(--home-gutter)}
 .home-hero-copy{position:relative;z-index:2}
-.site .home-hero h1{font-family:var(--sans);font-size:clamp(42px,min(5.45vw,8.5dvh),80px);letter-spacing:-.065em;line-height:1.03;font-weight:400;margin-top:23px}
-.home-hero h1 em{display:inline-block;font-family:var(--serif);letter-spacing:-.025em;font-size:1.08em;line-height:1.1;white-space:nowrap}
+.site .home-hero h1,.site .clothes-heading{font-family:var(--sans);font-weight:400;letter-spacing:-.065em;line-height:1.03}
+.site .home-hero h1{font-size:clamp(42px,min(5.45vw,8.5dvh),80px);margin-top:23px}
+.home-hero h1 em,.clothes-heading em{display:inline-block;font-family:var(--serif);letter-spacing:-.025em;font-size:1.08em;line-height:1.1;white-space:nowrap}
 .home-hero-description{font-size:16px;line-height:1.65;margin-top:25px;color:var(--char)}
 .home-hero-role{font:11px/1.85 monospace;margin-top:19px;color:var(--mute)}
 .home-work-link{display:inline-flex;align-items:center;gap:24px;margin-top:30px;padding:10px 0;border-bottom:1px solid #9c9f97;font-size:13px}
@@ -51,7 +52,7 @@
 .work-card-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #eceee8;margin-top:18px;padding-top:12px;font:10px/1.6 monospace;color:var(--mute)}
 .work-card-foot svg{color:var(--ink);transition:transform .3s}.work-card-link:hover .work-card-foot svg{transform:translate(3px,-3px)}
 .clothing-showcase{padding-top:70px}
-.site .clothes-heading{font-family:Helvetica,'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:clamp(38px,5.3vw,68px);letter-spacing:-.055em;line-height:1.04;margin-top:16px}
+.site .clothes-heading{font-size:clamp(38px,5.3vw,68px);margin-top:16px}
 .clothing-windows{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .clothing-window{border:1px solid #dfe2d9;border-radius:12px;overflow:hidden;background:#f0f2ec;box-shadow:0 7px 20px #303a290d}
 .clothing-window-photo{aspect-ratio:4/5;overflow:hidden}.clothing-window img{width:100%;height:100%;object-fit:contain;display:block}.clothing-window .window-bar{font:500 10px/1.2 var(--sans);letter-spacing:0;gap:8px;padding:0 10px}.clothing-window .window-bar>span:nth-child(2){min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

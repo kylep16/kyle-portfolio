@@ -98,7 +98,7 @@ export default function Home({ go, scrollTo, site, projects, order }) {
     </section>
     <SelectedWork projects={projects} order={order} go={go} />
     <section id="clothes" className="clothing-showcase" aria-labelledby="clothes-h">
-      <div className="home-section-head"><div><p className="home-eyebrow">02 / OFF THE SCREEN</p><h2 id="clothes-h" className="clothes-heading">Clothes<br />I’ve made.</h2></div><p>NEP2UNE. From a sketch to something you can wear.</p></div>
+      <div className="home-section-head"><div><p className="home-eyebrow">02 / OFF THE SCREEN</p><h2 id="clothes-h" className="clothes-heading">Clothes<br /><em>I’ve made.</em></h2></div><p>NEP2UNE. From a sketch to something you can wear.</p></div>
       <div className="clothing-windows">{CLOTHING_SHOWCASE.map(piece => <div key={piece.id} className="clothing-window"><div className="window-bar"><span aria-hidden="true">● ● ●</span><span>{piece.title}</span><span /></div>
         <div className="clothing-window-photo"><img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" width={800} height={1000} /></div>
       </div>)}</div>

@@ -101,8 +101,8 @@ to stay readable over campaign photography.
 
 Body copy uses `Helvetica, 'Helvetica Neue', Arial, sans-serif`, with an OS font
 fallback where Helvetica is unavailable. Instrument Serif is served locally;
-its license is in `public/assets/fonts`. The clothing showcase heading also uses
-bold Helvetica. The original Kyle Block font and its build script are retained
+its license is in `public/assets/fonts`. The clothing showcase heading shares
+the hero’s regular typography and cursive Instrument Serif emphasis. The original Kyle Block font and its build script are retained
 as archived assets.
 
 Add updates to `CHANGELOG` in `src/App.jsx`; the footer uses the newest date.
