@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Mail, Shirt } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
 import "./home.css";
 import ClothingRail from "./ClothingRail.jsx";
 
@@ -8,6 +8,11 @@ const CLOTHING_SHOWCASE = [
   { id: "collection", title: "VESSEL / the lookbook", src: "/assets/nep/current/exp-04-bl-vessel-2.webp", alt: "NEP2UNE VESSEL styled in a full outfit" },
   { id: "details", title: "SWEATS 02 / detachable stars", src: "/assets/nep/current/sweats-02-gray-1.webp", alt: "The detachable stars on NEP2UNE SWEATS 02" },
   { id: "process", title: "CANVAS / lace & construction", src: "/assets/nep/current/exp-02-canvas-jacket-navy-2.webp", alt: "Lace construction on the NEP2UNE canvas jacket" },
+  { id: "sweats-campaign", title: "SWEATS 02 / the full look", src: "/assets/nep/showcase/sweats-02-gray-campaign.webp", alt: "Model wearing gray NEP2UNE SWEATS 02 with a white tee" },
+  { id: "white-vessel", title: "VESSEL / white", src: "/assets/nep/showcase/vessel-white-campaign.webp", alt: "White NEP2UNE VESSEL tee styled with a detachable star" },
+  { id: "belt-pants", title: "BELT PANTS / cream canvas", src: "/assets/nep/showcase/belt-pants-campaign.webp", alt: "Full outfit featuring cream NEP2UNE BELT PANTS with red hardware" },
+  { id: "navy-canvas", title: "CANVAS JACKET / navy", src: "/assets/nep/showcase/canvas-navy-campaign.webp", alt: "Navy NEP2UNE canvas jacket worn open over a white tee" },
+  { id: "black-canvas", title: "CANVAS JACKET / black", src: "/assets/nep/showcase/canvas-black-campaign.webp", alt: "Black NEP2UNE canvas jacket with its screen-printed front" },
 ];
 
 const PROJECT_COPY = {
@@ -94,8 +99,8 @@ export default function Home({ go, scrollTo, site, projects, order }) {
     <SelectedWork projects={projects} order={order} go={go} />
     <section id="clothes" className="clothing-showcase" aria-labelledby="clothes-h">
       <div className="home-section-head"><div><p className="home-eyebrow">02 / OFF THE SCREEN</p><h2 id="clothes-h" className="clothes-heading">Clothes<br />I’ve made.</h2></div><p>NEP2UNE. From a sketch to something you can wear.</p></div>
-      <div className="clothing-windows">{CLOTHING_SHOWCASE.map((piece, index) => <div key={piece.id} className={`clothing-window clothing-window-${index}`}><div className="window-bar"><span>● ● ●</span><span>{piece.title}</span><span /></div>
-        {piece.src ? <img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" /> : <div className="clothing-placeholder"><Shirt size={index === 0 ? 56 : 38} strokeWidth={.7} aria-hidden="true" /><span>{piece.title}</span><small>Coming into focus soon.</small></div>}
+      <div className="clothing-windows">{CLOTHING_SHOWCASE.map(piece => <div key={piece.id} className="clothing-window"><div className="window-bar"><span aria-hidden="true">● ● ●</span><span>{piece.title}</span><span /></div>
+        <div className="clothing-window-photo"><img src={piece.src} alt={piece.alt} loading="lazy" decoding="async" width={800} height={1000} /></div>
       </div>)}</div>
       <div id="play" className="create-strip"><p>The garments. The shoots.<br /><em>The story behind it all.</em></p><div><a className="home-pill" href="#/creations">Explore NEP2UNE <ArrowUpRight size={16} /></a><button type="button" onClick={() => go({ name: "studio" })}>Create a shirt <ArrowUpRight size={15} /></button></div></div>
     </section>

@@ -66,7 +66,10 @@ product stage, with front photography and a detail revealed on hover or focus.
 The October 2026 catalog snapshot and current photography come from the owner's
 public https://nep2une.shop storefront and its product JSON. Product descriptions
 use confirmed materials and construction details. Website publication dates are
-not claimed as release dates. Eight garments are included in `src/brandData.js`.
+not claimed as release dates. Eight garments are included in `src/brandData.js`. The homepage Clothes I’ve Made
+preview contains eight campaign and construction photos in a four-column portrait
+grid (two columns on smaller screens). Five additional optimized storefront photos
+and their original source URLs are in `public/assets/nep/showcase/`.
 
 PXI's older public camera assets are explicitly labeled as the shipped baseline.
 The newer camera direction is a prototype. The new disc section is a media

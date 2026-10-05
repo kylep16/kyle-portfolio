@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Expanded Clothes I’ve Made from three to eight storefront photos, adding SWEATS 02, white VESSEL, BELT PANTS, and both canvas-jacket campaign shots. Kept the photography in a consistent portrait grid with a compact mobile layout." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Recentered the hero in the space above the dock, reserved a separate reading area so navigation cannot cover text, and replaced the outlined corner badge with Kyle Potente’s name. Simplified the clothing-rail footer to a direct nep2une.shop link, removed Portfolio from the top links, and returned Work to the dock." },
   { date: "2026-10-04", tags: ["Site"], note: "Moved Resume, LinkedIn, Portfolio, and GitHub to the top-right header. Added About Me to a compact bottom dock alongside NEP2UNE and Create, linking to the homepage bio from every page." },
   { date: "2026-10-04", tags: ["Site"], note: "Replaced the glass top navigation with a minimal outlined name badge and LinkedIn, Email, and Resume links. Kept the bottom dock as the main navigation on every page and adjusted the hero and reading offsets for the simpler header." },

@@ -1,0 +1,46 @@
+{
+  "source": "https://nep2une.shop",
+  "retrieved": "2026-10-04",
+  "images": [
+    {
+      "file": "sweats-02-gray-campaign.webp",
+      "product": "nds-sweats-02-gray",
+      "source": "https://cdn.shopify.com/s/files/1/0576/7469/4717/files/F1EFFEAF-300E-4C16-A087-7EE0439427DE.png?v=1790378662",
+      "width": 800,
+      "height": 1000,
+      "bytes": 16308
+    },
+    {
+      "file": "vessel-white-campaign.webp",
+      "product": "nds-exp-04-wh-vessel",
+      "source": "https://cdn.shopify.com/s/files/1/0576/7469/4717/files/Artboard_1_3.png?v=1782666126",
+      "width": 800,
+      "height": 1000,
+      "bytes": 28946
+    },
+    {
+      "file": "belt-pants-campaign.webp",
+      "product": "nds-exp-03-belt-pants",
+      "source": "https://cdn.shopify.com/s/files/1/0576/7469/4717/files/59B12FD6-FA6E-4BA9-AA16-1243BBC57FAB.png?v=1770435418",
+      "width": 799,
+      "height": 1000,
+      "bytes": 23942
+    },
+    {
+      "file": "canvas-navy-campaign.webp",
+      "product": "nds-exp-02-canvas-jacket-navy",
+      "source": "https://cdn.shopify.com/s/files/1/0576/7469/4717/files/5FCC2A5E-B86B-4BAD-BF8C-5A7C3E3A1D47.png?v=1770435340",
+      "width": 799,
+      "height": 1000,
+      "bytes": 60002
+    },
+    {
+      "file": "canvas-black-campaign.webp",
+      "product": "nds-exp-02-canvas-lace-jacket-black",
+      "source": "https://cdn.shopify.com/s/files/1/0576/7469/4717/files/6BB5EB18-01EE-4949-87ED-5062D9FBAF56.png?v=1770435353",
+      "width": 799,
+      "height": 1000,
+      "bytes": 43132
+    }
+  ]
+}
