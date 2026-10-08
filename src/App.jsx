@@ -45,6 +45,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-07", tags: ["PXI"], note: "Expanded PXI into a complete case study covering the product journey, event creation, shared camera, Passport, Scrapbook, Monthly Wrap, progression, and cross-platform QA. Added readable screens with keyboard-accessible enlargement and separated shipped work from current explorations." },
   { date: "2026-10-04", tags: ["Site"], note: "Unified the Clothes I’ve Made heading with the hero typography, using the same regular weight and cursive serif emphasis on I’ve made." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Expanded Clothes I’ve Made from three to eight storefront photos, adding SWEATS 02, white VESSEL, BELT PANTS, and both canvas-jacket campaign shots. Kept the photography in a consistent portrait grid with a compact mobile layout." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Recentered the hero in the space above the dock, reserved a separate reading area so navigation cannot cover text, and replaced the outlined corner badge with Kyle Potente’s name. Simplified the clothing-rail footer to a direct nep2une.shop link, removed Portfolio from the top links, and returned Work to the dock." },
@@ -714,7 +715,7 @@ export default function App() {
     const m = document.getElementById("main");
     if (m) { m.setAttribute("tabindex", "-1"); m.focus({ preventScroll: true }); }
   }, [route]);
-  const view = route.name === "case" ? <CaseStudy cs={CASE_STUDIES[route.slug]} go={go} />
+  const view = route.name === "case" ? <CaseStudy key={route.slug} cs={CASE_STUDIES[route.slug]} go={go} />
     : route.name === "creations" ? <Creations go={go} />
     : route.name === "studio" ? <Studio go={go} />
     : route.name === "gallery" ? <Gallery go={go} />
