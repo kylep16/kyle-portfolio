@@ -16,7 +16,7 @@ const CLOTHING_SHOWCASE = [
 ];
 
 const PROJECT_COPY = {
-  pxi: { title: "Making nights into memories.", summary: "Camera personality, interaction prototypes, and a shared event experience.", status: "Mobile product", detail: "Mobile UI & frontend implementation" },
+  pxi: { title: "Making nights into memories.", summary: "Connecting events, a shared camera, and memories across 52 shipped screens and states.", status: "Shipped product", detail: "Mobile product design & cross-platform QA" },
   nep2une: { title: "A brand built from scratch.", summary: "Design, storefront, and releases for my independent clothing brand.", status: "Founder", detail: "$120K+ lifetime sales" },
   sweat2swim: { title: "From first look to checkout.", summary: "Shopify release pages and a storefront designed around the collection.", status: "E-commerce", detail: "Shopify storefront design" },
 };
