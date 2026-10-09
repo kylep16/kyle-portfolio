@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
 import "./home.css";
 import ClothingRail from "./ClothingRail.jsx";
 import { NEP2UNE_STATS } from "./caseStudies.js";
+import { BRAND_PRODUCTS } from "./brandData.js";
 
 // A short preview of the full NEP2UNE archive.
 const CLOTHING_SHOWCASE = [
@@ -37,7 +38,9 @@ function ProjectVisual({ slug }) {
   if (slug === "pxi") return <div className="work-visual work-visual-pxi">
     {["camera", "passport-cover", "studio-tickets"].map((screen, index) => <img key={screen} src={`/assets/pxi/${screen}.webp`} alt={["Shared event camera", "Personal Passport", "Event Studio"][index]} loading="lazy" decoding="async" width={508} height={1100} style={{ "--screen-angle": `${(index - 1) * 6}deg`, "--screen-y": `${index === 1 ? -12 : 10}px` }} />)}
   </div>;
-  if (slug === "nep2une") return <div className="work-visual work-visual-nep"><img src="/assets/nep/ph-lookbook-duo.webp" alt="NEP2UNE campaign photography featuring my clothing designs" loading="lazy" decoding="async" /></div>;
+  if (slug === "nep2une") return <div className="work-visual work-visual-nep" style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gridTemplateRows: "repeat(2, minmax(0, 1fr))", gap: "clamp(8px, 1.2vw, 16px)", padding: "clamp(12px, 2vw, 24px)", background: "#f0f1ec" }}>
+    {BRAND_PRODUCTS.map(product => <img key={product.id} src={product.image} alt={`${product.name}, ${product.color}`} loading="lazy" decoding="async" style={{ position: "static", width: "100%", height: "100%", minWidth: 0, minHeight: 0, objectFit: "contain" }} />)}
+  </div>;
   return <div className="work-visual work-visual-s2s"><div className="work-browser"><div className="window-bar"><span>● ● ●</span><span>sweat2swim.com</span><span /></div><img src="/assets/s2s/hero.webp" alt="Sweat2Swim release homepage I designed in Shopify" loading="lazy" decoding="async" /></div></div>;
 }
 
