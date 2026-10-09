@@ -111,7 +111,7 @@ export const CASE_STUDIES = {
   },
   nep2une: {
     slug: 'nep2une', name: 'NEP2UNE', year: '2021 to present', disciplines: 'Brand, apparel & ecommerce',
-    title: 'stars from nothing', tagline: 'An independent clothing brand I built from the ground up, starting with $500 and designing clothes I wanted to see in the world.',
+    title: 'Stars from Nothing', tagline: 'An independent clothing brand I built from the ground up, starting with $500 and designing clothes I wanted to see in the world.',
     role: 'Founder and creative director', impact: `${NEP2UNE_STATS.lifetimeSales} lifetime gross sales, ${NEP2UNE_STATS.countries} countries`,
     tags: ['Product design', 'Brand direction', 'Shopify'],
     stats: [['$500', 'Starting investment'], [NEP2UNE_STATS.lifetimeSales, 'Lifetime gross sales'], [String(NEP2UNE_STATS.countries), 'Countries reached']],
