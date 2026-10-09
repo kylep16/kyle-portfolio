@@ -19,7 +19,7 @@ const CLOTHING_SHOWCASE = [
 
 const PROJECT_COPY = {
   pxi: { title: "Making nights into memories.", summary: "Connecting events, a shared camera, and memories across 52 shipped screens and states.", status: "Shipped product", detail: "Mobile product design & cross-platform QA" },
-  nep2une: { title: "stars from nothing", summary: "Clothes I wanted to see in the world. A brand built from $500, from the first design to the final delivery.", status: "Founder", detail: `${NEP2UNE_STATS.lifetimeSales} lifetime gross sales · ${NEP2UNE_STATS.countries} countries` },
+  nep2une: { title: "Stars from Nothing", summary: "Clothes I wanted to see in the world. A brand built from $500, from the first design to the final delivery.", status: "Founder", detail: `${NEP2UNE_STATS.lifetimeSales} lifetime gross sales · ${NEP2UNE_STATS.countries} countries` },
   sweat2swim: { title: "From first look to checkout.", summary: "Shopify release pages and a storefront designed around the collection.", status: "E-commerce", detail: "Shopify storefront design" },
 };
 
