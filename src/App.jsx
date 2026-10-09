@@ -759,7 +759,7 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
 .skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 12px;z-index:100}.skip:focus{left:8px}
 .muted{color:var(--mute)}
-.portfolio-scroll{height:calc(100dvh - var(--dock-clearance));overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-padding:0 0 16px;outline:none}
+.portfolio-scroll{height:100dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;padding-bottom:var(--dock-clearance);scroll-padding:0 0 var(--dock-clearance);outline:none}
 .page{transition:opacity .26s var(--ease),transform .26s var(--ease)}.page-out{opacity:0;transform:translateY(6px)}
 .cursor-trail{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
 .cursor-trail[hidden]{display:none}
