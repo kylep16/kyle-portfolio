@@ -1,5 +1,6 @@
 import "./fonts.css";
 import Home from "./Home.jsx";
+import About from "./About.jsx";
 import CaseStudy from "./CaseStudy.jsx";
 import Creations from "./Creations.jsx";
 import GlassDock from "./GlassDock.jsx";
@@ -45,6 +46,7 @@ const SITE = {
    date: ISO. tags: which projects the week touched. note: one line, plain.
    --------------------------------------------------------------------- */
 const CHANGELOG = [
+  { date: "2026-10-08", tags: ["Site", "NEP2UNE"], note: "Added a dedicated About Me page connecting fashion, computer science, and product design, with desktop-style current-interest icons and a reserved portrait space. Rebuilt NEP2UNE around stars from nothing, founder ownership, creative-team leadership, and $130K+ in lifetime gross sales across 17 countries." },
   { date: "2026-10-07", tags: ["PXI"], note: "Expanded PXI into a complete case study covering the product journey, event creation, shared camera, Passport, Scrapbook, Monthly Wrap, progression, and cross-platform QA. Added readable screens with keyboard-accessible enlargement and separated shipped work from current explorations." },
   { date: "2026-10-04", tags: ["Site"], note: "Unified the Clothes I’ve Made heading with the hero typography, using the same regular weight and cursive serif emphasis on I’ve made." },
   { date: "2026-10-04", tags: ["Site", "NEP2UNE"], note: "Expanded Clothes I’ve Made from three to eight storefront photos, adding SWEATS 02, white VESSEL, BELT PANTS, and both canvas-jacket campaign shots. Kept the photography in a consistent portrait grid with a compact mobile layout." },
@@ -650,7 +652,7 @@ function Footer({ go, scrollTo, route }) {
     <footer className="foot">
       <div className="foot-left"><span className="mark-lg">{SITE.mark}</span><p className="foot-tag">{SITE.tagline}</p><p className="muted">© {SITE.year} {SITE.name}</p><button className="foot-stamp" onClick={() => go({ name: "changelog" })}>Updated {fmtDate(LAST_UPDATED)} · changelog</button></div>
       <div className="foot-cols">
-        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><button onClick={() => nav("about")}>About</button><button onClick={() => go({ name: "creations" })}>NEP2UNE</button><button onClick={() => go({ name: "studio" })}>Create</button><button onClick={() => go({ name: "gallery" })}>Museum</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
+        <div><h3>Menu</h3><button onClick={() => nav("work")}>Work</button><a href="#/about">About</a><button onClick={() => go({ name: "creations" })}>NEP2UNE</button><button onClick={() => go({ name: "studio" })}>Create</button><button onClick={() => go({ name: "gallery" })}>Museum</button><button onClick={() => go({ name: "changelog" })}>Changelog</button>{SITE.resumeUrl && <a href={SITE.resumeUrl}>Résumé</a>}</div>
         <div><h3>Contact</h3>{SITE.linkedin && <a href={SITE.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}{SITE.email && <a href={"mailto:" + SITE.email}>Email</a>}{SITE.github && <a href={SITE.github} target="_blank" rel="noreferrer">GitHub</a>}<button onClick={() => nav("contact")}>Contact section</button></div>
       </div>
     </footer>
@@ -660,7 +662,7 @@ function Footer({ go, scrollTo, route }) {
 /* ---------------------------------------------------------------------
    App: hash routing, titles, focus management
    --------------------------------------------------------------------- */
-const VALID_PAGES = ["studio", "gallery", "changelog", "creations"];
+const VALID_PAGES = ["studio", "gallery", "changelog", "creations", "about"];
 function parseHash() {
   const h = (window.location.hash || "").replace(/^#\/?/, "");
   const p = h.split("/");
@@ -706,6 +708,7 @@ export default function App() {
     document.title =
       route.name === "home" ? "Kyle Potente | Product Designer Who Builds" :
       cs ? cs.name + " | Kyle Potente" :
+      route.name === "about" ? "About Me | Kyle Potente" :
       route.name === "creations" ? "NEP2UNE Creations | Kyle Potente" :
       route.name === "studio" ? "Shirt Studio | Kyle Potente" :
       route.name === "gallery" ? "Visitor Museum | Kyle Potente" : "Changelog | Kyle Potente";
@@ -716,6 +719,7 @@ export default function App() {
     if (m) { m.setAttribute("tabindex", "-1"); m.focus({ preventScroll: true }); }
   }, [route]);
   const view = route.name === "case" ? <CaseStudy key={route.slug} cs={CASE_STUDIES[route.slug]} go={go} />
+    : route.name === "about" ? <About />
     : route.name === "creations" ? <Creations go={go} />
     : route.name === "studio" ? <Studio go={go} />
     : route.name === "gallery" ? <Gallery go={go} />

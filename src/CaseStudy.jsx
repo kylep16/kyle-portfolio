@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, ImagePlus, Maximize2, X } from 'lu
 import { CASE_ORDER, CASE_STUDIES } from './caseStudies';
 import './editorial.css';
 import './pxi-case-study.css';
+import './nep2une-case-study.css';
 
 export function MediaSlot({ id, title, note }) {
   return <figure className="editorial-figure template-figure" data-slot={id}><div className="editorial-media media-slot" aria-label={`${title}: image to be added`}><ImagePlus size={26} strokeWidth={1} aria-hidden="true" /><span>{title}</span><small>{note}</small></div><figcaption>A space for the next part of the story.</figcaption></figure>;
@@ -65,9 +66,10 @@ export default function CaseStudy({ cs, go }) {
     </aside>
     <article className="case-content">
     <header className="editorial-hero"><p className="editorial-eyebrow"><span className={`brand-dot brand-dot-${cs.slug}`} />{cs.name} / {cs.disciplines}</p><h1>{cs.title}</h1><p className="editorial-deck">{cs.tagline}</p><div className="editorial-tags">{cs.tags.map(tag => <span key={tag}>{tag}</span>)}</div></header>
+    {cs.stats && <dl className="nep-stats" aria-label="NEP2UNE at a glance">{cs.stats.map(([value, label]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
     {cs.heroFigures && <figure className="pxi-opening"><div className="pxi-opening-stage"><div className="pxi-opening-label"><span>THE PXI EXPERIENCE</span><span>DESIGNED TO CONNECT</span></div><div className="pxi-opening-screens">{cs.heroFigures.map((figure, index) => <div key={figure.src}><span className="pxi-screen-label"><span>0{index + 1}</span>{figure.label}</span><img src={figure.src} alt={figure.alt} width={508} height={1100} decoding="async" fetchPriority={index === 1 ? 'high' : 'auto'} /></div>)}</div></div><figcaption>{cs.heroNote}</figcaption></figure>}
     <section id="overview" className="editorial-section overview-section"><div className="chapter-heading"><p className="editorial-eyebrow">THE SHORT VERSION</p><h2>A minute to get the idea.</h2><p>{cs.summary}</p></div><dl className="editorial-meta">{Object.entries(cs.meta).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><div className="editorial-overview">{cs.overview.map(([title, text]) => <div key={title}><h3>{title}</h3><p>{text}</p></div>)}</div></section>
-    {cs.sections.map(section => <section key={section.id} id={section.id} className="editorial-section"><div className="chapter-heading"><p className="editorial-eyebrow">{section.eyebrow}</p><h2>{section.title}</h2><p>{section.lead}</p></div>
+    {cs.sections.map(section => <section key={section.id} id={section.id} className="editorial-section"><div className="chapter-heading"><p className="editorial-eyebrow">{section.eyebrow}</p><h2>{section.title}</h2><p>{section.lead}</p>{section.paragraphs?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
       {section.decisions && <div className="editorial-decisions">{section.decisions.map(([title, text], index) => <div key={title}><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{text}</p></div>)}</div>}
       {section.journey && <ol className="pxi-journey" aria-label="PXI product journey">{section.journey.map(([title, text], index) => <li key={title}><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></li>)}</ol>}
       {(section.figures || section.slots) && <div className={`editorial-gallery${pxi ? ` pxi-screen-gallery pxi-screen-count-${section.figures?.length || 0}` : ''}`}>{section.figures?.map(figure => <Figure key={figure.src} {...figure} onExpand={pxi ? setScreen : undefined} />)}{section.slots?.map(slot => <MediaSlot key={slot.id} {...slot} />)}</div>}

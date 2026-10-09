@@ -20,7 +20,7 @@ export default function GlassDock({ scrollTo, go, route }) {
   const visit = (event, name) => { event.preventDefault(); go({ name }); };
   return <nav ref={dock} className="glass-dock" aria-label="Main navigation" onPointerMove={event => { const box = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty('--glass-x', `${(event.clientX - box.left) / box.width * 100}%`); }} onPointerLeave={event => event.currentTarget.style.setProperty('--glass-x', '35%')}>
     <button type="button" onClick={() => route.name === 'home' ? scrollTo('work') : go({ name: 'home', anchor: 'work' })}>{item('Work', FolderOpen, 'dock-blue')}</button>
-    <button type="button" onClick={() => route.name === 'home' ? scrollTo('about') : go({ name: 'home', anchor: 'about' })}>{item('About Me', UserRound, 'dock-blue')}</button>
+    <a href="#/about" onClick={event => visit(event, 'about')} aria-current={route.name === 'about' ? 'page' : undefined}>{item('About Me', UserRound, 'dock-blue')}</a>
     <a className="dock-nep" href="#/creations" onClick={event => visit(event, 'creations')} aria-current={route.name === 'creations' ? 'page' : undefined}>{item('NEP2UNE', Nep2uneMark, 'dock-sage')}</a>
     <a href="#/studio" onClick={event => visit(event, 'studio')} aria-current={route.name === 'studio' ? 'page' : undefined}>{item('Create', Shirt, 'dock-pink')}</a>
   </nav>;

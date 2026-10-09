@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
 import "./home.css";
 import ClothingRail from "./ClothingRail.jsx";
+import { NEP2UNE_STATS } from "./caseStudies.js";
 
 // A short preview of the full NEP2UNE archive.
 const CLOTHING_SHOWCASE = [
@@ -17,7 +18,7 @@ const CLOTHING_SHOWCASE = [
 
 const PROJECT_COPY = {
   pxi: { title: "Making nights into memories.", summary: "Connecting events, a shared camera, and memories across 52 shipped screens and states.", status: "Shipped product", detail: "Mobile product design & cross-platform QA" },
-  nep2une: { title: "A brand built from scratch.", summary: "Design, storefront, and releases for my independent clothing brand.", status: "Founder", detail: "$120K+ lifetime sales" },
+  nep2une: { title: "stars from nothing", summary: "Clothes I wanted to see in the world. A brand built from $500, from the first design to the final delivery.", status: "Founder", detail: `${NEP2UNE_STATS.lifetimeSales} lifetime gross sales · ${NEP2UNE_STATS.countries} countries` },
   sweat2swim: { title: "From first look to checkout.", summary: "Shopify release pages and a storefront designed around the collection.", status: "E-commerce", detail: "Shopify storefront design" },
 };
 
@@ -104,7 +105,7 @@ export default function Home({ go, scrollTo, site, projects, order }) {
       </div>)}</div>
       <div id="play" className="create-strip"><p>The garments. The shoots.<br /><em>The story behind it all.</em></p><div><a className="home-pill" href="#/creations">Explore NEP2UNE <ArrowUpRight size={16} /></a><button type="button" onClick={() => go({ name: "studio" })}>Create a shirt <ArrowUpRight size={15} /></button></div></div>
     </section>
-    <section id="about" className="home-about" aria-labelledby="about-h"><div><p className="home-eyebrow">03 / ABOUT ME</p><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2></div><div><p>I’m Kyle, a product designer with a computer science background. I design mobile experiences at PXI Labs, build Shopify storefronts, and run NEP2UNE, my independent clothing brand.</p><p className="home-skills">Figma · React · TypeScript · CSS · Shopify · Interaction design</p></div></section>
+    <section id="about" className="home-about" aria-labelledby="about-h"><div><p className="home-eyebrow">03 / ABOUT ME</p><h2 id="about-h">Designer brain.<br /><em>Developer hands.</em></h2></div><div><p>I’m Kyle, a product and UI/UX designer from San Diego. I started by making clothes I wanted to see in the world. Combining that creative work with my computer science degree led me to web development, product design, and UI/UX.</p><p className="home-skills">Figma · React · TypeScript · CSS · Shopify · Interaction design</p><a className="home-about-link" href="#/about">More about me <ArrowUpRight size={16} aria-hidden="true" /></a></div></section>
     <section id="contact" className="home-contact" aria-labelledby="contact-h"><h2 id="contact-h">Let’s make something <em>people remember.</em></h2><a className="home-pill" href={`mailto:${site.email}`}><Mail size={17} /> Say hello <ArrowUpRight size={16} /></a></section>
   </main>;
 }

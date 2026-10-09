@@ -1,0 +1,47 @@
+/* NEP2UNE's founder story, using the shared editorial structure. */
+.study-nep2une { --accent: #657950; --mute: #65705e; padding-bottom: 85px; }
+.study-nep2une .editorial-back { min-height: 44px; font-size: 14px; }
+.study-nep2une .case-index-label { font-size: 11px; }
+.study-nep2une .chapter-nav-side > a { min-height: 44px; font-size: 13px; padding: 11px 12px; }
+.study-nep2une .editorial-eyebrow { font-size: 12px; line-height: 1.6; }
+.site .study-nep2une .editorial-hero h1 { font-size: clamp(56px, 7vw, 96px); font-style: italic; max-width: 13ch; margin-top: 24px; }
+.study-nep2une .editorial-deck { font-size: 18px; max-width: 52ch; line-height: 1.7; }
+.study-nep2une .editorial-tags > span { font-size: 12px; padding: 6px 12px; }
+.nep-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; border-top: 1px solid #cbd2c3; border-bottom: 1px solid #cbd2c3; }
+.nep-stats > div { display: flex; flex-direction: column-reverse; gap: 9px; padding: 28px 20px 29px 0; }
+.nep-stats > div + div { border-left: 1px solid #dce0d6; padding-left: 28px; }
+.nep-stats dt { font-size: 13px; color: var(--char); }
+.site .nep-stats dd { font: 400 clamp(40px, 4.5vw, 62px)/1 var(--serif); letter-spacing: -.035em; margin: 0; }
+.study-nep2une .editorial-section { padding: 60px 0; }
+.study-nep2une .chapter-heading { max-width: 750px; }
+.site .study-nep2une .chapter-heading h2 { font-size: clamp(34px, 3.7vw, 50px); max-width: 25ch; line-height: 1.1; }
+.study-nep2une .chapter-heading > p:not(.editorial-eyebrow) { font-size: 17px; line-height: 1.8; max-width: 66ch; }
+.study-nep2une .editorial-meta { gap: 24px; }
+.study-nep2une .editorial-meta dt { font-size: 12px; }
+.study-nep2une .editorial-meta dd { font-size: 14px; margin: 0; }
+.study-nep2une .editorial-overview { padding: 24px 0 0; border: 0; border-top: 1px solid #dce0d6; background: transparent; border-radius: 0; gap: 28px; }
+.study-nep2une .editorial-overview h3 { font-size: 16px; font-weight: 500; }
+.study-nep2une .editorial-overview p { font-size: 15px; line-height: 1.75; }
+.study-nep2une .editorial-gallery { gap: 30px; margin-top: 32px; }
+.study-nep2une .editorial-figure { max-width: none; }
+.study-nep2une .editorial-media { aspect-ratio: 4/5; max-height: none; border-radius: 8px; background: #eff0ea; padding: 12px; }
+.study-nep2une .editorial-media.fit-cover { padding: 0; }
+.study-nep2une #process .editorial-media { aspect-ratio: 4/3; background: #fff; }
+.study-nep2une .editorial-figure figcaption { font-size: 13px; line-height: 1.65; margin-top: 13px; }
+.study-nep2une .editorial-link { min-height: 44px; font-size: 14px; }
+.study-nep2une #outcome { background: linear-gradient(90deg, #e9ede260, transparent); }
+
+@media (max-width: 700px) {
+  .site .study-nep2une .editorial-hero h1 { font-size: clamp(49px, 12vw, 72px); }
+  .study-nep2une .editorial-deck { font-size: 17px; }
+  .nep-stats { grid-template-columns: 1fr 1.35fr .8fr; }
+  .nep-stats > div { padding: 23px 8px 23px 0; gap: 10px; }
+  .nep-stats > div + div { padding-left: 13px; }
+  .site .nep-stats dd { font-size: clamp(32px, 7.7vw, 48px); }
+  .nep-stats dt { font-size: 11px; line-height: 1.5; max-width: 10ch; }
+  .study-nep2une .editorial-section { padding: 42px 0; }
+  .study-nep2une .chapter-heading > p:not(.editorial-eyebrow) { font-size: 16px; line-height: 1.75; }
+  .study-nep2une .editorial-gallery { gap: 28px; }
+  .study-nep2une .editorial-meta { gap: 22px 18px; }
+  .study-nep2une .editorial-meta dd { font-size: 13px; }
+}
